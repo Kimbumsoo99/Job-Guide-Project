@@ -1,0 +1,25 @@
+doctype html
+html(lang="ko")
+    head
+        title #{pageTitle} | JobGuide
+        link(rel="stylesheet" href="https://unpkg.com/mvp.css")
+    body
+        header
+            h1=pageTitle 
+            nav
+                ul 
+                    li
+                        a(href="http://localhost:4000") 메인
+                    li
+                        a(href="http://localhost:4000/board") 게시판
+                    li
+                        a(href="http://localhost:4000/users") 프로필
+                    li
+                        if loggedIn
+                            a(href="logout") 로그아웃
+                        else
+                            a(href="login") 로그인
+        main
+            block content
+
+    include partials/footer
