@@ -1,11 +1,14 @@
 import Board from "../models/Board";
 
-export const home = async (req, res) => {
-  const boards = await Board.find({});
-  return res.render("home", { pageTitle: "Home", boards });
+export const home = (req, res) => {
+  return res.render("home", { pageTitle: "Home" });
 };
 
-export const view = (req, res) => res.render("board", { pageTitle: "Board" });
+export const view = async (req, res) => {
+  const boards = await Board.find({});
+
+  return res.render("board", { pageTitle: "Board", boards });
+};
 
 export const getUpload = (req, res) => {
   return res.render("create", { pageTitle: "Board" });

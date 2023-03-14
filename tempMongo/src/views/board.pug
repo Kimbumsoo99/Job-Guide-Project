@@ -1,5 +1,9 @@
 extends base.pug
+include mixins/board
 
 block content 
-    h1 게시판입니다!
+    each board in boards
+        +board(board)
+    else
+        li Sorry nothing found.
     
