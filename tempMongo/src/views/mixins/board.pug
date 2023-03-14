@@ -1,7 +1,9 @@
-mixin board(info)
+mixin board(board)
     div
-        h4=info.title
-        ul
-            li #{info.comments} comments.
-            li Posted #{info.createdAt}.
-            li #{info.views} views.
+        h3 제목 : #{board.title}
+        h4 작성자 : #{board.writer}
+        p 내용 : #{board.content}
+        small=board.createdAt
+        button 
+            a(href="/delete") 삭제
+        hr

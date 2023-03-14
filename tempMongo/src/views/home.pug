@@ -6,8 +6,8 @@ block content
         h1 #{user}님 안녕하세요
     else
         h1 메인화면 입니다
+    hr
     each board in boards
         +board(board)
-        hr
     else
         li Sorry nothing found.
