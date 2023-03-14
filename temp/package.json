@@ -1,0 +1,29 @@
+{
+  "name": "sk-job-guide",
+  "version": "1.0.0",
+  "description": "Department of Information and Communication Engineering Job Guide WebServer, SKU",
+  "scripts": {
+    "dev": "nodemon --exec babel-node src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kimbumsoo99/Job-Guide-Project.git"
+  },
+  "author": "Kimbumsoo99",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kimbumsoo99/Job-Guide-Project/issues"
+  },
+  "homepage": "https://github.com/Kimbumsoo99/Job-Guide-Project#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "morgan": "^1.10.0",
+    "serve-favicon": "^2.5.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.21.3",
+    "@babel/node": "^7.20.7",
+    "@babel/preset-env": "^7.20.2",
+    "nodemon": "^2.0.21"
+  }
+}
