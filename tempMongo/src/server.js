@@ -16,6 +16,7 @@ app.set("view engine", "pug");
 app.set("views", process.cwd() + "/src/views");
 app.use(logger); //morgan GET, path, status code, 응답 시간 등 request에 대한 정보를 준다
 app.use(express.urlencoded());
+app.use(express.static("client"));
 
 app.use(
   session({
