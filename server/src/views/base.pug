@@ -1,0 +1,21 @@
+doctype html
+html(lang="ko")
+    head
+        title Watch Dog
+        link(rel="stylesheet" href="https://unpkg.com/mvp.css")
+    body
+        header
+            .container
+                h1(style='text-align="center"')
+                    button#img_btn.btn_image(type='button')
+                        img(src='image.png')
+                nav
+                    ul 
+                        li
+                            a(href="login") 로그인
+                        li
+                            a(href="login") 회원가입
+        main
+            block content
+
+    include partials/footer

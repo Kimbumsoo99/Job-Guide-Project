@@ -1,41 +1,22 @@
 const express = require("express");
-const https = require("https");
+const { default: rootRouter } = require("./routers/rootRouters");
+import morgan from "morgan";
 
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 4000;
 
-// vSphere API 인증 정보
-const username = "vSphere_username";
-const password = "vSphere_password";
-const host = "vCenter_Server_IP_Address";
-const vmwareHeaders = {
-  "Content-Type": "application/json",
-  Authorization:
-    "Basic " + Buffer.from(username + ":" + password).toString("base64"),
-};
+const logger = morgan("dev");
 
-app.get("/", (req, res) => {
-  // HTTPS 요청 보내기
-  const options = {
-    headers: vmwareHeaders,
-  };
-  https.get(`https://${host}/rest/vcenter/vm`, options, (response) => {
-    let data = "";
+app.set("view engine", "pug");
+app.set("views", process.cwd() + "/src/views");
 
-    response.on("data", (chunk) => {
-      data += chunk;
-    });
+app.use(logger); //morgan
+app.use(express.urlencoded({ extended: true })); //express가 form의 value들을 이해할 수 있도록 함.
+// app.use(express.text()); express에 내장된 미들웨어 기능으로 body-parser를 기반으로 request payload로 전달한 문자열을 파싱
+app.use(express.json());
 
-    response.on("end", () => {
-      const vms = JSON.parse(data);
-      console.log("사용자 A의 가상 머신 정보:");
-      const userAVMs = vms.value.filter((vm) => vm.owner === "userA");
-      console.log(userAVMs);
-      res.send(userAVMs);
-    });
-  });
-});
+app.use("/", rootRouter);
 
-app.listen(port, () => {
-  console.log(`Express app listening at http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`✅ Server listening on port http://localhost:${PORT} 🚀`);
 });
