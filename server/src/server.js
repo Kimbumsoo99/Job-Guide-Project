@@ -15,6 +15,7 @@ app.use(express.urlencoded({ extended: true })); //express가 form의 value들�
 // app.use(express.text()); express에 내장된 미들웨어 기능으로 body-parser를 기반으로 request payload로 전달한 문자열을 파싱
 app.use(express.json());
 
+app.use("/uploads", express.static("uploads"));
 app.use("/", rootRouter);
 
 app.listen(PORT, () => {
