@@ -25,7 +25,7 @@ export const host = (req, res) => {
       const vms = JSON.parse(data);
       console.log("모든 가상 머신 정보:");
       console.log(vms);
-      res.send(vms);
+      return res.send(vms);
 
     });
   });
