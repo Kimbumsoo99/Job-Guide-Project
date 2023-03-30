@@ -2,9 +2,9 @@ const https = require("https");
 export const home = (req, res) => res.render("home");
 
 export const host = (req, res) => {
-  const username = "vSphere_username";
-  const password = "vSphere_password";
-  const host = "vCenter_Server_IP_Address";
+  const username = "administrator@vsphere.local";
+  const password = "123Qwer!";
+  const host = "192.168.0.102";
   const vmwareHeaders = {
     "Content-Type": "application/json",
     Authorization:
@@ -23,10 +23,10 @@ export const host = (req, res) => {
 
     response.on("end", () => {
       const vms = JSON.parse(data);
-      console.log("사용자 A의 가상 머신 정보:");
-      const userAVMs = vms.value.filter((vm) => vm.owner === "userA");
-      console.log(userAVMs);
-      res.send(userAVMs);
+      console.log("모든 가상 머신 정보:");
+      console.log(vms);
+      res.send(vms);
+
     });
   });
 };
