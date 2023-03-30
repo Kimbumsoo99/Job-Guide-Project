@@ -1,10 +1,13 @@
 const https = require("https");
+
+const username = "administrator@vsphere.local";
+const password = "123Qwer!";
+const hostIP = "192.168.0.102";
+
+
 export const home = (req, res) => res.render("home");
 
 export const host = (req, res) => {
-  const username = "administrator@vsphere.local";
-  const password = "123Qwer!";
-  const host = "192.168.0.102";
   const vmwareHeaders = {
     "Content-Type": "application/json",
     Authorization:
@@ -19,7 +22,7 @@ export const host = (req, res) => {
     },
     rejectUnauthorized: false
   };
-  https.get(`https://${host}/rest/vcenter/vm`, options, (response) => {
+  https.get(`https://${hostIP}/rest/vcenter/vm`, options, (response) => {
     let data = "";
 
     response.on("data", (chunk) => {
@@ -35,15 +38,11 @@ export const host = (req, res) => {
     });
   });
 };
-
-export const host2 = (request,res)=>{
-  const username = "administrator@vsphere.local";
-  const password = "123Qwer!";
-  const host = "192.168.0.102";
+const getSesssionId=()=>{
   const data = JSON.stringify({});
 
   const options = {
-    hostname: host,
+    hostname: hostIP,
     port: 443,
     path: "/rest/com/vmware/cis/session",
     method: "POST",
@@ -53,7 +52,7 @@ export const host2 = (request,res)=>{
     },
     rejectUnauthorized: false,
   };
-  
+
   const req = https.request(options, (res) => {
     let responseBody = "";
   
@@ -70,7 +69,34 @@ export const host2 = (request,res)=>{
   req.on("error", (error) => {
     console.error(error);
   });
-  
-  req.write(data);
-  req.end();
+  return jsonResponse
+}
+
+export const host2 = (request,res)=>{
+  const sessionId = getSesssionId();
+  const vmwareHeaders = {
+    "Content-Type": "application/json",
+    Authorization:
+      "Basic " + Buffer.from(username + ":" + password).toString("base64"),
+    "vmware-api-session-id" : sessionId
+  };
+
+  const options = {
+    headers: vmwareHeaders,
+    rejectUnauthorized: false
+  };
+  https.get(`https://${hostIP}/rest/vcenter/vm`, options, (response) => {
+    let data = "";
+
+    response.on("data", (chunk) => {
+      data += chunk;
+    });
+
+    response.on("end", () => {
+      const vms = JSON.parse(data);
+      console.log("모든 가상 머신 정보:");
+      console.log(vms);
+      return res.send(vms);
+    });
+  });
 }
