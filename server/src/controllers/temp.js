@@ -63,7 +63,7 @@ const getSesssionId=()=>{
   
     res.on("end", () => {
       const jsonResponse = JSON.parse(responseBody);
-      console.log(jsonResponse);
+      console.log("나는 Res 값이야"+jsonResponse);
       jsonData=jsonResponse
     });
   });
@@ -72,12 +72,13 @@ const getSesssionId=()=>{
     console.error(error);
   });
 
-  console.log(data);
+  console.log("나는 Data 값" +data);
   return jsonData
 }
 
 export const host2 = (request,res)=>{
   const sessionId = getSesssionId();
+  console.log("받은 session값 " +sessionId)
   const vmwareHeaders = {
     "Content-Type": "application/json",
     Authorization:
