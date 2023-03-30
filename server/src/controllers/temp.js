@@ -35,6 +35,7 @@ export const host2 = async(req,res)=>{
   const username = "administrator@vsphere.local";
   const password = "123Qwer!";
   const host = "192.168.0.102";
+  const vmId = "vc.stz.local"
 
   const VcenterClient = require('vmware-web-automation-sdk').VcenterClient;
 
