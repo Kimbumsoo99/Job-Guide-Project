@@ -13,6 +13,7 @@ export const host = (req, res) => {
 
   const options = {
     headers: vmwareHeaders,
+    rejectUnauthorized: false
   };
   https.get(`https://${host}/rest/vcenter/vm`, options, (response) => {
     let data = "";
