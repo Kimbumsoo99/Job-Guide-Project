@@ -45,16 +45,15 @@ export const host2 = (request,res)=>{
   const options = {
     hostname: host,
     port: 443,
-    path: "/api/session",
+    path: "/rest/com/vmware/cis/session",
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Content-Length": data.length,
-      Authorization:
-        "Basic " + Buffer.from(username + ":" + password).toString("base64"),
+      Authorization: "Basic " + Buffer.from(username + ":" + password).toString("base64"),
     },
     rejectUnauthorized: false,
   };
+  
   const req = https.request(options, (res) => {
     let responseBody = "";
   
