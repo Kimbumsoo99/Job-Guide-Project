@@ -37,6 +37,7 @@ export const host = (req, res) => {
 
     });
   });
+  async
 };
 const getSesssionId=()=>{
   const data = JSON.stringify({});
@@ -63,8 +64,9 @@ const getSesssionId=()=>{
   
     res.on("end", () => {
       const jsonResponse = JSON.parse(responseBody);
-      console.log(jsonResponse.vaule);
-      jsonData=jsonResponse.vaule;
+      console.log("JSON 객체 값")
+      console.log(jsonResponse)
+      return jsonResponse;
     });
   });
   
@@ -78,14 +80,14 @@ const getSesssionId=()=>{
   return jsonData
 }
 
-export const host2 = (request,res)=>{
-  const sessionId = getSesssionId();
-  console.log("받은 session값 " +sessionId)
+export const host2 = async(req, res)=>{
+  const sessionIdJson = await getSesssionId();
+  console.log(sessionIdJson);
   const vmwareHeaders = {
     "Content-Type": "application/json",
     Authorization:
       "Basic " + Buffer.from(username + ":" + password).toString("base64"),
-    "vmware-api-session-id" : sessionId
+    "vmware-api-session-id" : sessionIdJson.vaule
   };
 
   const options = {
@@ -111,7 +113,7 @@ export const host2 = (request,res)=>{
 export const host3 = (request,res)=>{
   const data = JSON.stringify({});
   const options = {
-    hostname: host,
+    hostname: hostIP,
     port: 443,
     path: "/api/session",
     path: "/rest/com/vmware/cis/session",
