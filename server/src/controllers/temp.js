@@ -40,6 +40,7 @@ export const host = (req, res) => {
 };
 const getSesssionId=()=>{
   const data = JSON.stringify({});
+  let jsonData;
 
   const options = {
     hostname: hostIP,
@@ -63,13 +64,16 @@ const getSesssionId=()=>{
     res.on("end", () => {
       const jsonResponse = JSON.parse(responseBody);
       console.log(jsonResponse);
+      jsonData=jsonResponse
     });
   });
   
   req.on("error", (error) => {
     console.error(error);
   });
-  return jsonResponse
+
+  console.log(data);
+  return jsonData
 }
 
 export const host2 = (request,res)=>{
