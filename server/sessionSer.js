@@ -1,3 +1,4 @@
+const https = require("https");
 const username = "administrator@vsphere.local";
 const password = "123Qwer!";
 const host = "192.168.0.102";
