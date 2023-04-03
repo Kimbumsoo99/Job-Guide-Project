@@ -1,12 +1,11 @@
 import express from "express";
-import { home, host, host2, host3 } from "../controllers/temp";
+import { home, hostGetSessionGetVM } from "../controllers/temp";
+import { hostAxios } from "../controllers/tempAxios";
 
 const rootRouter = express.Router();
 
 rootRouter.get("/", home);
-rootRouter.get("/host", host);
-rootRouter.get("/host2",host2)
-rootRouter.get("/host3",host3)
-
+rootRouter.get("/host", hostGetSessionGetVM);
+rootRouter.get("/host/axios", hostAxios);
 
 export default rootRouter;

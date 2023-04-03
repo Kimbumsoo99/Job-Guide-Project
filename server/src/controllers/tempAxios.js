@@ -28,7 +28,7 @@ const getSessionId = async () => {
   }
 };
 
-export const host2 = async (req, res) => {
+export const hostAxios = async (req, res) => {
   try {
     const sessionId = await getSessionId();
     console.log(sessionId);
