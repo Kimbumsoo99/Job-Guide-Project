@@ -13,14 +13,14 @@ const getSessionId = async () => {
         "Basic " + Buffer.from(username + ":" + password).toString("base64"),
     },
   };
-
+  console.log("CreateSession 이전");
   try {
     const response = await axios.post(
       `https://${hostIP}/rest/com/vmware/cis/session`,
       data,
       config
     );
-    console.log("JSON 객체 값:");
+    console.log("CreateSession 전송 JSON 객체 값:");
     console.log(response.data);
     return response.data.value;
   } catch (error) {
@@ -31,6 +31,7 @@ const getSessionId = async () => {
 export const hostAxios = async (req, res) => {
   try {
     const sessionId = await getSessionId();
+    console.log("CreateSession 이후 sessionId");
     console.log(sessionId);
 
     const vmwareHeaders = {
