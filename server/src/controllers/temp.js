@@ -4,44 +4,11 @@ const username = "administrator@vsphere.local";
 const password = "123Qwer!";
 const hostIP = "192.168.0.102";
 
-
 export const home = (req, res) => res.render("home");
 
-export const host = (req, res) => {
-  const vmwareHeaders = {
-    "Content-Type": "application/json",
-    Authorization:
-      "Basic " + Buffer.from(username + ":" + password).toString("base64"),
-    
-  };
-
-  const options = {
-    headers: {
-      ...vmwareHeaders,
-      "User-Agent": "Mozilla/5.0",
-    },
-    rejectUnauthorized: false
-  };
-  https.get(`https://${hostIP}/rest/vcenter/vm`, options, (response) => {
-    let data = "";
-
-    response.on("data", (chunk) => {
-      data += chunk;
-    });
-
-    response.on("end", () => {
-      const vms = JSON.parse(data);
-      console.log("모든 가상 머신 정보:");
-      console.log(vms);
-      return res.send(vms);
-
-    });
-  });
-  async
-};
-const getSesssionId=async()=>{
+const getSessionId = async () => {
   const data = JSON.stringify({});
-  let jsonData;
+  let sessionIdJson;
 
   const options = {
     hostname: hostIP,
@@ -50,126 +17,74 @@ const getSesssionId=async()=>{
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Basic " + Buffer.from(username + ":" + password).toString("base64"),
+      Authorization:
+        "Basic " + Buffer.from(username + ":" + password).toString("base64"),
     },
     rejectUnauthorized: false,
   };
 
-  const req = await https.request(options, (res) => {
-    let responseBody = "";
-  
-    res.on("data", (chunk) => {
-      responseBody += chunk;
+  const res = await new Promise((resolve, reject) => {
+    const req = https.request(options, (res) => {
+      let responseBody = "";
+
+      res.on("data", (chunk) => {
+        responseBody += chunk;
+      });
+
+      res.on("end", () => {
+        const jsonResponse = JSON.parse(responseBody);
+        console.log("JSON 객체 값");
+        console.log(jsonResponse);
+        resolve(jsonResponse);
+      });
     });
-  
-    res.on("end", () => {
-      const jsonResponse = JSON.parse(responseBody);
-      console.log("JSON 객체 값")
-      console.log(jsonResponse)
-      return jsonResponse;
+
+    req.on("error", (error) => {
+      console.error(error);
+      reject(error);
     });
+
+    req.write(data);
+    req.end();
   });
-  
-  req.on("error", (error) => {
-    console.error(error);
-  });
 
-  req.write(data);
+  sessionIdJson = res.value;
+  console.log("session ID:", sessionIdJson);
+  return sessionIdJson;
+};
 
-  console.log("나는 Data 값" +data);
-  return jsonData
-}
-
-export const host2 = async(req, res)=>{
-  const sessionIdJson = await getSesssionId();
-  console.log(sessionIdJson);
-  const vmwareHeaders = {
-    "Content-Type": "application/json",
-    Authorization:
-      "Basic " + Buffer.from(username + ":" + password).toString("base64"),
-    "vmware-api-session-id" : sessionIdJson.vaule
-  };
-
-  const options = {
-    headers: vmwareHeaders,
-    rejectUnauthorized: false
-  };
-  https.get(`https://${hostIP}/rest/vcenter/vm`, options, (response) => {
-    let data = "";
-
-    response.on("data", (chunk) => {
-      data += chunk;
-    });
-
-    response.on("end", () => {
-      const vms = JSON.parse(data);
-      console.log("모든 가상 머신 정보:");
-      console.log(vms);
-      return res.send(vms);
-    });
-  });
-}
-
-export const host3 = async(request,res)=>{
-  let sessionIdJson;
-  const data = JSON.stringify({});
-  const options = {
-    hostname: hostIP,
-    port: 443,
-    path: "/api/session",
-    path: "/rest/com/vmware/cis/session",
-    method: "POST",
-    headers: {
+export const hostGetSessionGetVM = async (req, req) => {
+  try {
+    const sessionIdJson = await getSessionId();
+    console.log(sessionIdJson);
+    const vmwareHeaders = {
       "Content-Type": "application/json",
-  Authorization: "Basic " + Buffer.from(username + ":" + password).toString("base64"),
-  },
-  rejectUnauthorized: false,
-  };
-  
-  const req = https.request(options, (res) => {
-  let responseBody = "";
-  
-  res.on("data", (chunk) => {
-    responseBody += chunk;
-  });
-  
-  res.on("end", () => {
-    const jsonResponse = JSON.parse(responseBody);
-    console.log(jsonResponse);
-    sessionIdJson=jsonResponse
-  });
-  });
-  
-  req.on("error", (error) => {
-  console.error(error);
-  });
-  
-  req.write(data);
-  req.end();
-  
-  const vmwareHeaders = {
-    "Content-Type": "application/json",
-    Authorization:
-      "Basic " + Buffer.from(username + ":" + password).toString("base64"),
-    "vmware-api-session-id" : sessionIdJson.vaule
-  };
+      Authorization:
+        "Basic " + Buffer.from(username + ":" + password).toString("base64"),
+      "vmware-api-session-id": sessionIdJson.vaule,
+    };
 
-  const optionsVM = {
-    headers: vmwareHeaders,
-    rejectUnauthorized: false
-  };
-  https.get(`https://${hostIP}/rest/vcenter/vm`, optionsVM, (response) => {
-    let data = "";
+    const options = {
+      headers: vmwareHeaders,
+      rejectUnauthorized: false,
+    };
 
-    response.on("data", (chunk) => {
-      data += chunk;
+    https.get(`https://${hostIP}/rest/vcenter/vm`, options, (response) => {
+      let data = "";
+
+      response.on("data", (chunk) => {
+        data += chunk;
+      });
+
+      response.on("end", () => {
+        const vms = JSON.parse(data);
+        console.log("모든 가상 머신 정보:");
+        console.log(vms);
+        return res.send(vms);
+      });
     });
-
-    response.on("end", () => {
-      const vms = JSON.parse(data);
-      console.log("모든 가상 머신 정보:");
-      console.log(vms);
-      return res.send(vms);
-    });
-  });
-}
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Error");
+  }
+};
