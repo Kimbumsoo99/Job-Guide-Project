@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  getVmAfterHostCPU,
   home,
   hostGetSessionGetVM,
   hostSesssionCreate,
@@ -17,7 +18,8 @@ rootRouter.get("/session/pre", preGetSessionId);
 rootRouter.get("/session/api", hostSesssionCreate);
 rootRouter.get("/host/nomal", hostGetSessionGetVM);
 rootRouter.get("/host/axios", hostAxios);
-rootRouter.get("/dif/ip", getSessionDifIPAddr);
+// dif/ip 대신 host로 변경
+rootRouter.get("/dif/ip", getVmAfterHostCPU);
 rootRouter.get("/dif/username", getSessionDifUsername);
 rootRouter.get("/basic/no", noBasicAPI);
 
