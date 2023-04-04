@@ -1,10 +1,11 @@
-export const home = (req, res) => res.render("home");
-
 const https = require("https");
 
 const username = "administrator@vsphere.local";
 const password = "123Qwer!";
 const hostIP = "192.168.0.102";
+
+export const home = (req, res) => res.render("home");
+
 
 const getSessionId = async () => {
   const data = JSON.stringify({});
