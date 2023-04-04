@@ -56,13 +56,15 @@ const getSessionId = async () => {
 // GPT https로 Session 얻고 바로 VM 정보
 export const hostGetSessionGetVM = async (req, res) => {
   try {
-    const sessionIdJson = await getSessionId();
-    console.log(sessionIdJson);
+    const sessionIdJson = await getSessionId();    //sessionIdJson == vmware-api-session-id
+    console.log("SessionID GET After: " +sessionIdJson); // 이부분에서 가져온 Session ID를 확인
+    console.log("Error SessionID: " +sessionIdJson.value); // 이 부분은 에러
+    
     const vmwareHeaders = {
       "Content-Type": "application/json",
       Authorization:
         "Basic " + Buffer.from(username + ":" + password).toString("base64"),
-      "vmware-api-session-id": sessionIdJson.vaule,
+      "vmware-api-session-id": sessionIdJson,
     };
 
     const options = {
@@ -70,7 +72,7 @@ export const hostGetSessionGetVM = async (req, res) => {
       rejectUnauthorized: false,
     };
 
-    https.get(`https://${hostIP}/rest/vcenter/vm`, options, (response) => {
+    https.get(`https://${hostIP}/rest/vcenter/host`, options, (response) => {
       let data = "";
 
       response.on("data", (chunk) => {
@@ -80,7 +82,9 @@ export const hostGetSessionGetVM = async (req, res) => {
       response.on("end", () => {
         const vms = JSON.parse(data);
         console.log("모든 가상 머신 정보:");
-        console.log(vms);
+        console.log(vms.value[0].host);
+        hostId=vms.value[0].host;
+        
         return res.send(vms);
       });
     });
@@ -175,4 +179,57 @@ export const preGetSessionId = (request, res) => {
   console.log("나는 data", jsonResponse);
   req.write(data);
   req.end();
+};
+
+export const getVmAfterHostCPU = async (req, res) => {
+  try {
+    const sessionIdJson = await getSessionId();    //sessionIdJson == vmware-api-session-id
+    console.log("SessionID GET After: " +sessionIdJson); // 이부분에서 가져온 Session ID를 확인
+    console.log("Error SessionID: " +sessionIdJson.value); // 이 부분은 에러
+    
+    const vmwareHeaders = {
+      "Content-Type": "application/json",
+      Authorization:
+        "Basic " + Buffer.from(username + ":" + password).toString("base64"),
+      "vmware-api-session-id": sessionIdJson,
+    };
+
+    const options = {
+      headers: vmwareHeaders,
+      rejectUnauthorized: false,
+    };
+
+    https.get(`https://${hostIP}/rest/vcenter/host`, options, (response) => {
+      let data = "";
+
+      response.on("data", (chunk) => {
+        data += chunk;
+      });
+
+      response.on("end", () => {
+        const vms = JSON.parse(data);
+        console.log("모든 가상 머신 정보:");
+        console.log(vms.value[0].host);
+        hostId=vms.value[0].host;
+        
+        return https.get(`https://${hostIP}/rest/vcenter/host/${hostId}/cpu`, options, (response) => {
+        let data = "";
+            
+        response.on("data", (chunk) => {
+          data += chunk;
+        });
+      
+        response.on("end", () => {
+          const cpuInfo = JSON.parse(data);
+          console.log("CPU 사용량 정보:");
+          console.log(cpuInfo);
+          return res.send(cpuInfo);
+          });
+        });
+      });
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Error");
+  }
 };
