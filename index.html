@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zxx">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Final Project</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <!-- HTML 구조의 핵심인 container 클래스가 포함된 div 태그 -->
+        <h1>
+          <button type="button" class="btm_image" id="img_btn">
+            <img src="image.png" />
+          </button>
+        </h1>
+        <nav>
+          <ul>
+            <!-- 구조 동일, button 태그의 텍스트(Features, Portfolio, Contact)만 변경 -->
+            <li>
+              <button data-animation-scroll="true" data-target="#about">
+                About
+              </button>
+            </li>
+            <li>
+              <button data-animation-scroll="true" data-target="#features">
+                Monitoring
+              </button>
+            </li>
+            <li>
+              <button data-animation-scroll="true" data-target="#portfolio">
+                VM Supervison
+              </button>
+            </li>
+            <li>
+              <button data-animation-scroll="true" data-target="#contact">
+                Contact
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <!-- end header -->
+    <!-- main -->
+    <main id="main">
+      <div class="container">
+        <h4>Welcome</h4>
+        <h2>I`M A <span>WatchDog</span></h2>
+        <p>Monitoring 시스템과 VM 관리를 합니다.</p>
+        <button class="download">Monitoring Start</button>
+        <button class="mouse">
+          <i class="fa-solid fa-computer-mouse"></i>
+        </button>
+      </div>
+    </main>
+    <!-- end main -->
+    <section id="about" class="about">
+      <div class="container">
+        <div class="title">
+          <h4>What Am I ?</h4>
+          <h2>About Me</h2>
+        </div>
+        <div class="about-self">
+          <div class="left">
+            <img
+              src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20120306_6%2Fkhanslove_1331004333548TUzhp_JPEG%2Fnaver_com_20120216_162020.jpg&type=sc960_832"
+              alt=""
+            />
+          </div>
+          <div class="right">
+            <h3>Hello, <strong>I`m WatchDog</strong></h3>
+            <p>I`m Web VM Monitoring Service</p>
+            <div class="social">
+              <!-- 반복, fa-brands fa-instagram, fa-brands fa-twitch, fa-brands fa-youtube -->
+              <a href="#">
+                <i class="fa-brands fa-instagram"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="features" class="do">
+      <div class="container">
+        <div class="title">
+          <h4>Features</h4>
+          <h2>What Can I Do?</h2>
+        </div>
+        <div class="do-me">
+          <div class="do-inner">
+            <div class="icon">
+              <!-- class="fa-brands fa-css3-alt", class="fa-brands fa-bootstrap" -->
+              <i class="fa-brands fa-computer-mouse"></i>
+            </div>
+            <div class="content">
+              <!-- CSS3, BootStrap v5.0 -->
+              <h3>Monitoring</h3>
+              <p>
+                CPU,메모리,디스크,네트워크,프로세스,로그,URL 사용률을 확인할 수
+                있습니다.
+              </p>
+            </div>
+          </div>
+          <div class="do-inner">
+            <div class="icon">
+              <!-- class="fa-brands fa-css3-alt", class="fa-brands fa-bootstrap" -->
+              <i class="fa-brands fa-computer-mouse"></i>
+            </div>
+            <div class="content">
+              <!-- CSS3, BootStrap v5.0 -->
+              <h3>Monitoring</h3>
+              <p>
+                CPU,메모리,디스크,네트워크,프로세스,로그,URL 사용률을 확인할 수
+                있습니다.
+              </p>
+            </div>
+          </div>
+          <div class="do-inner">
+            <div class="icon">
+              <!-- class="fa-brands fa-css3-alt", class="fa-brands fa-bootstrap" -->
+              <i class="fa-brands fa-computer-mouse"></i>
+            </div>
+            <div class="content">
+              <!-- CSS3, BootStrap v5.0 -->
+              <h3>Monitoring</h3>
+              <p>
+                CPU,메모리,디스크,네트워크,프로세스,로그,URL 사용률을 확인할 수
+                있습니다.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- <div class="bg"></div> -->
+    <section id="portfolio" class="portfolio">
+      <div class="container">
+        <div class="title">
+          <h4>결혼해듀오</h4>
+          <h2>오늘의 남자</h2>
+        </div>
+        <div class="portfolio-me">
+          <div class="portfolio-inner">
+            <!-- mock2.png~mock6.png -->
+            <img
+              src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20120306_6%2Fkhanslove_1331004333548TUzhp_JPEG%2Fnaver_com_20120216_162020.jpg&type=sc960_832"
+              alt="샘플이미지"
+            />
+            <!-- DEVELOPMENT, MARKETING, APP, APP, WEB -->
+            <strong>김은수</strong>
+            <!-- Tablet App Dev, Coka Cola, FaceBook Clone, Netflix Clone, FirmBee Web -->
+            <h3>이 남자는 무료로 해줍니다.</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="text.js"></script>
+  </body>
+</html>
