@@ -1,9 +1,9 @@
 {
-  "name": "sk-job-guide",
+  "name": "private_cloud_monitoring",
   "version": "1.0.0",
-  "description": "Department of Information and Communication Engineering Job Guide WebServer, SKU",
+  "description": "Your Private Cloud Monitoring",
   "scripts": {
-    "dev": "nodemon --exec babel-node src/server.js"
+    "dev": "nodemon"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,7 @@
 const express = require("express");
 const { default: rootRouter } = require("./routers/rootRouters");
 import morgan from "morgan";
+import vmRouter from "./routers/vmRouter";
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -17,6 +18,7 @@ app.use(express.json());
 
 app.use("/uploads", express.static("uploads"));
 app.use("/", rootRouter);
+app.use("/vm", vmRouter);
 
 app.listen(PORT, () => {
   console.log(`✅ Server listening on port http://localhost:${PORT} 🚀`);

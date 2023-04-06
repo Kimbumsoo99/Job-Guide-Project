@@ -1,19 +1,11 @@
 import express from "express";
-import {
-  getVmAfterHostCPU,
-  home,
-  hostGetSessionGetVM,
-  hostSesssionCreate,
-  preGetSessionId,
-} from "../controllers/temp";
-import { hostAxios } from "../controllers/tempAxios";
-import { getSessionDifIPAddr } from "../controllers/diffIPAddr";
-import { getSessionDifUsername } from "../controllers/diffUsername";
-import { noBasicAPI } from "../controllers/noBasicAPI";
+import { home } from "../controllers/vmController";
+import { getJoin, getLogin } from "../controllers/userController";
 
 const rootRouter = express.Router();
 
 rootRouter.get("/", home);
-rootRouter.get("/dif/ip", getVmAfterHostCPU);
+rootRouter.route("/login").get(getLogin);
+rootRouter.route("/join").get(getJoin);
 
 export default rootRouter;

@@ -1,0 +1,10 @@
+extends base.pug
+
+block content 
+   form(method="POST") 
+      input(name="username", type="text", required, placeholder="아이디")
+      input(name="password", type="password", required, placeholder="비밀번호")
+      input(type="submit", value="Login")
+   div
+      span Don't have an account? 
+      a(href="/join") Sign up
