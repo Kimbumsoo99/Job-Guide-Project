@@ -7,7 +7,7 @@
 a,
 a:link,
 a:visited {
-  color: inherit;
+  color: white;
   text-decoration: none;
 }
 li {
@@ -41,6 +41,7 @@ header nav ul {
 header nav ul li {
   padding: 10px;
 }
+
 header button {
   background: transparent;
   border: 0;
@@ -53,12 +54,13 @@ header h1 button {
 header nav ul li button {
   font-size: 1.2rem;
 }
+
 main {
   width: 100%;
   height: 100vh;
   color: white;
   background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-    url("images/me.jpg") center center;
+    url("") center center;
   background-size: cover;
   display: flex;
   justify-content: center;
@@ -80,11 +82,11 @@ main p {
 }
 main button.download {
   background-color: transparent;
-  border: 3px solid white;
+  border: 3px solid#f5cc62;
   border-radius: 20px;
   padding: 1rem 2rem;
   margin-top: 3rem;
-  color: white;
+  color: #f5cc62;
   font-weight: bold;
   cursor: pointer;
 }
@@ -115,7 +117,8 @@ main h2 span::after {
   content: "";
   height: 40px;
   width: 3px;
-  background-color: #fff;
+  background: white;
+
   display: inline-block;
   animation: blink 0.7s ease-in-out infinite;
 }
@@ -141,24 +144,29 @@ header nav ul li button {
 }
 section {
   font-family: "oppins", sans-serif;
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+    url("") center center;
   padding: 5rem 0;
 }
 section:nth-child(2n) {
-  background-color: #f8f8f8;
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+    url("") center center;
 }
 section .title {
   margin-bottom: 3rem;
 }
 section .title h4 {
   font-size: 1.35rem;
-  color: #ed4848;
+  color: #f5cc62;
   position: relative;
 }
 section .title h2 {
   font-size: 3.5rem;
+  color: white;
 }
 section .title p {
   font-size: 1.15rem;
+  color: white;
 }
 section .about-self::after {
   content: "";
@@ -183,15 +191,17 @@ section .about-self .right {
 section .about-self .right h3 {
   font-size: 2.25rem;
   margin-bottom: 1rem;
+  color: white;
 }
 /* 본문 오른쪽 h3 태그의 strong 태그 색상 강조 */
 section .about-self .right h3 strong {
-  color: #ed4848;
+  color: #f5cc62;
 }
 /* 본문 오른쪽 p 태그의 크기와 여백 지정 */
 section .about-self .right p {
   font-size: 1.15rem;
   margin: 1rem 0;
+  color: white;
 }
 /* 본문 오른쪽의 아이콘 폰트 크기와 여백 지정 */
 section .about-self .right .social a {
@@ -205,10 +215,10 @@ section .do-me::after {
 }
 /* 사각형 크기와 간격, 내부 여백 설정 */
 section .do-me .do-inner {
-  background-color: #fff;
-  width: 40%;
+  background-color: #333333;
+  width: 30%;
   padding: 2rem;
-  float: inline-start;
+  float: left;
   margin-right: 5%;
   cursor: pointer;
 }
@@ -218,16 +228,18 @@ section .do-me .do-inner:last-child {
 }
 section .do-me .do-inner .icon i {
   font-size: 2.5rem;
-  color: #ff6a6a;
+  color: #f5cc62;
 }
 /* HTML5, CSS3, BootStrap v5.0 텍스트 크기와 간격 */
 section .do-me .do-inner .content h3 {
   font-size: 2rem;
   margin: 1rem 0;
+  color: #f5cc62;
 }
 /* 사각형 텍스트 크기 */
 section .do-me .do-inner .content p {
   font-size: 1.15rem;
+  color: white;
 }
 /* .bg {
   background: url("./img/main.jpg") center center;
@@ -242,12 +254,12 @@ section.portfolio::after {
 }
 /* portfolio-inner 사각형 꾸미기 */
 section.portfolio .portfolio-inner {
-  width: 30%;
+  width: 100%;
   margin-right: 5%;
   padding: 1rem 1rem 1.5rem 1rem;
   float: left;
-  background-color: #f8f8f8;
-  border: 1px solid #ccc;
+  background-color: #333333;
+  border: 1px solid #333333;
   margin-bottom: 3rem;
 }
 /* 3번째마다 margin-right 0 적용 */
@@ -260,13 +272,14 @@ section.portfolio .portfolio-inner img {
 }
 /* strong 태그 색상과 간격 */
 section.portfolio .portfolio-inner strong {
-  color: #ff6a6a;
+  color: #f5cc62;
   margin: 0.5rem 0;
   display: block;
 }
 /* h3 태그 색상과 간격 */
 section.portfolio .portfolio-inner h3 {
   font-size: 1.75rem;
+  color: white;
 }
 
 /* 화면 너비가 1140px 이하일 때 */
@@ -410,4 +423,82 @@ header.active {
   100% {
     opacity: 1;
   }
+}
+footer {
+  width: 1080px;
+  height: 310px;
+  margin: auto;
+  padding: 0 8px 0 8px; /* 각각 위 오른쪽 아래 왼쪽 */
+  display: flex;
+  flex-direction: column; /* 요소들을 수평정렬 */
+  font-size: 12px;
+}
+.notice_box {
+  flex: 1;
+  display: flex;
+  justify-content: space-between; /* 양끝 정렬 */
+  align-items: center;
+  border-bottom: 1px solid #f1f3f6;
+}
+.notice_box a {
+  font-weight: bold;
+  color: white;
+}
+.aside_box {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #f1f3f6;
+}
+.area_user {
+  color: white;
+  flex: 4;
+  line-height: 2em; /* 줄간격 */
+}
+.area_user_row {
+  color: white;
+  display: flex;
+}
+.area_user_row span {
+  flex: 1;
+}
+.area_user_row ul {
+  flex: 6;
+}
+.aur_title {
+  font-size: 13px;
+  font-weight: bold;
+}
+.area_user_row ul > li {
+  display: inline-block; /* li 수평정렬하는 방법 */
+  margin-left: 8px;
+}
+.area_col {
+  flex: 1;
+  display: flex;
+}
+.area_col .ac_content {
+  line-height: 20px;
+}
+.area_col .ac_img {
+  width: 60px;
+  height: 60px;
+}
+.bottom_box {
+  flex: 3;
+  padding-top: 20px;
+  font-size: 14px;
+}
+.bottom_box ul > li {
+  display: inline-block; /* 수평정렬 */
+  margin-left: 8px;
+}
+.bottom_box ul > li:last-child {
+  /* 마지막 li요소 (Naver Corp.) 굵게 */
+  font-weight: bold;
+}
+.footer-classic,
+.footer-classic a:focus,
+.footer-classic a:active {
+  color: #000;
 }

@@ -1,10 +1,20 @@
-extends base.pug
-
-block content 
-   form(method="POST") 
-      input(name="username", type="text", required, placeholder="아이디")
-      input(name="password", type="password", required, placeholder="비밀번호")
-      input(type="submit", value="Login")
-   div
-      span Don't have an account? 
-      a(href="/join") Sign up
+doctype html
+html(lang='ko')
+    head
+        meta(charset='UTF-8')
+        title WatchDog
+        link(rel='stylesheet' href='/assets/css/login.css')
+    body
+        div.animated.bounceInDown
+            div.container
+                span#msg.error.animated.tada
+                form.box(method="POST" name='form1' onsubmit='return checkStuff()')
+                    h4 WATCH
+                        span DOG
+                    h5 Sign in to your account.
+                    input(type='text' name='email' placeholder='Email' autocomplete='off')
+                    i#eye.typcn.typcn-eye
+                    input#pwd(type='password' name='password' placeholder='Passsword' autocomplete='off')
+                    input.btn1(type='submit' value='Sign in')
+                a.dnthave(href='join') Don&rsquo;t have an account? Sign up
+            script(src='login.js')

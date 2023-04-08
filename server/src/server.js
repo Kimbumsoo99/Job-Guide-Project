@@ -17,6 +17,7 @@ app.use(express.urlencoded({ extended: true })); //express가 form의 value들�
 app.use(express.json());
 
 app.use("/uploads", express.static("uploads"));
+app.use("/assets", express.static("assets"));
 app.use("/", rootRouter);
 app.use("/vm", vmRouter);
 
