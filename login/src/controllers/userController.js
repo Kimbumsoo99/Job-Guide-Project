@@ -6,4 +6,6 @@ export const getLogin = (req, res) => {
 
 export const postLogin = (req, res) => {};
 
-export const getJoin = (req, res) => {};
+export const getJoin = (req, res) => {
+  return res.render("join");
+};

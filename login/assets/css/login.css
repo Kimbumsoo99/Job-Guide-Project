@@ -34,8 +34,13 @@ html {
   border-top: 10px solid#f5cc62;
   border-bottom: 10px solid #333333;
   width: 400px;
-  height: 500px;
   box-shadow: 1px 1px 108.8px 19.2px rgb(25, 31, 53);
+}
+.container .loginForm {
+  height: 350px;
+}
+.container .joinForm {
+  height: 600px;
 }
 
 .box h4 {
@@ -60,6 +65,7 @@ html {
 }
 
 .box input[type="text"],
+.box input[type="email"],
 .box input[type="password"] {
   display: block;
   margin: 20px auto;

@@ -7,6 +7,7 @@ html(lang='ko')
    body
       div.animated.bounceInDown
          div.container
+            div.joinForm
                span#msg.error.animated.tada
                form.box(method="POST" name='form1' onsubmit='return checkStuff()')
                   h4 WATCH
@@ -19,5 +20,5 @@ html(lang='ko')
                   input#pwd(type='password' name='password' placeholder='Passsword' autocomplete='off')
                   input(name="password2", type="password", required, placeholder="Confirm Password")
                   input.btn1(type='submit' value='Sign in')
-               a.dnthave(href='join') Don&rsquo;t have an account? Sign up       
+               a.dnthave(href='login') Don&rsquo;t have an account? Sign up       
 include partials/footer
