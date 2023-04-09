@@ -2,7 +2,6 @@ const express = require("express");
 import morgan from "morgan"; // HTTP 요청과 응답에 대한 로그를 생성하는 미들웨어
 import rootRouter from "./routers/rootRouter";
 const app = express();
-const PORT = process.env.PORT || 3500;
 const logger = morgan("dev");
 
 app.use(logger);
@@ -19,6 +18,4 @@ app.use("/assets", express.static("assets")); //정적파일 넣는 용도
 
 app.use("/", rootRouter);
 
-app.listen(PORT, () => {
-  console.log(`✅ Login Server http://localhost:${PORT} 🚀`);
-});
+export default app;
