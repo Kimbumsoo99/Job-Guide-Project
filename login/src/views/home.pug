@@ -1,0 +1,19 @@
+doctype html
+html(lang="ko")
+    head
+        title Watch Dog
+        link(rel="stylesheet" href="https://unpkg.com/mvp.css")
+    body
+        header
+            div.container(style="background-color:gray")
+                h1 Watch Dog
+                nav
+                    ul 
+                        li
+                            a(href="login" style="color:white") 로그인
+                        li
+                            a(href="join" style="color:white") 회원가입
+        main
+            a(href="/vm/cpu") 정상 동작 VM GET
+            hr
+include partials/footer
