@@ -9,7 +9,7 @@ const UserSchema = new mongoose.Schema({
 });
 
 // Mongo 6.0에 save 없어짐 insertOne
-UserSchema.pre("insertOne", async function () {
+UserSchema.pre("save", async function () {
   //비밀번호가 수정될때만 미들웨어 동작
   if (this.isModified("password")) {
     this.password = await bcrypt.hash(this.password, 5);
