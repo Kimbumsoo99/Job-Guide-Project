@@ -1,0 +1,6 @@
+vm
+Datacenter
+host
+Datastore
+disk
+network

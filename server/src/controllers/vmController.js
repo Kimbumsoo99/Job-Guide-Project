@@ -81,8 +81,8 @@ export const getVm = async (req, res) => {
       response.on("end", () => {
         const vms = JSON.parse(data);
         console.log("모든 가상 머신 정보:");
-        console.log(vms.value[0].vm);
-        const vmId = vms.value[0].vm;
+        console.log(vms);
+        return vms; //json
 
         return https.get(
           `https://${hostIP}/rest/vcenter/vm/${vmId}`,
