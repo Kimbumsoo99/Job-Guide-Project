@@ -28,7 +28,7 @@ export const getVmAfterHostCPU = async (req, res) => {
       rejectUnauthorized: false,
     };
 
-    https.get(`https://${hostIP}/rest/vcenter/host`, options, (response) => {
+    https.get(`https://${hostIP}/rest/vcenter/vm`, options, (response) => {
       let data = "";
 
       response.on("data", (chunk) => {
@@ -38,8 +38,9 @@ export const getVmAfterHostCPU = async (req, res) => {
       response.on("end", () => {
         const vms = JSON.parse(data);
         console.log("모든 가상 머신 정보:");
-        console.log(vms.value[0].vm);
-        const vmId=vms.value[0].vm;
+        console.log(vms);
+        
+        return res.send(vms);
         
         return https.get(`https://${hostIP}/rest/vcenter/vm/${vmId}`, options, (response) => {
         let data = "";
