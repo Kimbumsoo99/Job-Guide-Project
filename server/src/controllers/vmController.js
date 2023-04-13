@@ -1,5 +1,6 @@
 import { resolve } from "path";
 import { getSessionId } from "./headerGet";
+import exp from "constants";
 
 const https = require("https");
 
@@ -112,7 +113,7 @@ export const getVMName = async (sessionId) => {
   return vmId;
 };
 
-export const getVMInfo = async () => {
+export const getVMInfo = async (req, res) => {
   try {
     const sessionId = await getSessionId();
     const vmId = await getVMName(sessionId);
@@ -147,6 +148,158 @@ export const getVMInfo = async () => {
         });
       }
     );
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Error");
+  }
+};
+
+export const getDataCenterList = async (req, res) => {
+  try {
+    const sessionId = await getSessionId();
+
+    const vmwareHeaders = {
+      "Content-Type": "application/json",
+      Authorization:
+        "Basic " + Buffer.from(username + ":" + password).toString("base64"),
+      "vmware-api-session-id": sessionId,
+    };
+
+    const options = {
+      headers: vmwareHeaders,
+      rejectUnauthorized: false,
+    };
+
+    https.get(
+      `https://${hostIP}/rest/vcenter/datacenter`,
+      options,
+      (response) => {
+        let data = "";
+
+        response.on("data", (chunk) => {
+          data += chunk;
+        });
+
+        response.on("end", () => {
+          const dataCenterList = JSON.parse(data);
+          console.log("DataCenter 정보:");
+          console.log(dataCenterList);
+          return res.send(dataCenterList);
+        });
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Error");
+  }
+};
+
+export const getDataStoreList = async (req, res) => {
+  try {
+    const sessionId = await getSessionId();
+
+    const vmwareHeaders = {
+      "Content-Type": "application/json",
+      Authorization:
+        "Basic " + Buffer.from(username + ":" + password).toString("base64"),
+      "vmware-api-session-id": sessionId,
+    };
+
+    const options = {
+      headers: vmwareHeaders,
+      rejectUnauthorized: false,
+    };
+
+    https.get(
+      `https://${hostIp}/rest/vcenter/datastore`,
+      options,
+      (response) => {
+        let data = "";
+
+        response.on("data", (chunk) => {
+          data += chunk;
+        });
+
+        response.on("end", () => {
+          const dataStoreList = JSON.parse(data);
+          console.log("DataStore 정보:");
+          console.log(dataStoreList);
+          return res.send(dataStoreList);
+        });
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Error");
+  }
+};
+
+export const getHost = async (req, res) => {
+  try {
+    const sessionId = await getSessionId();
+
+    const vmwareHeaders = {
+      "Content-Type": "application/json",
+      Authorization:
+        "Basic " + Buffer.from(username + ":" + password).toString("base64"),
+      "vmware-api-session-id": sessionId,
+    };
+
+    const options = {
+      headers: vmwareHeaders,
+      rejectUnauthorized: false,
+    };
+
+    https.get(`https://${hostIp}/rest/vcenter/host`, options, (response) => {
+      let data = "";
+
+      response.on("data", (chunk) => {
+        data += chunk;
+      });
+
+      response.on("end", () => {
+        const hostList = JSON.parse(data);
+        console.log("Host 정보:");
+        console.log(hostList);
+        return res.send(hostList);
+      });
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Error");
+  }
+};
+
+export const getNetwork = async (req, res) => {
+  try {
+    const sessionId = await getSessionId();
+
+    const vmwareHeaders = {
+      "Content-Type": "application/json",
+      Authorization:
+        "Basic " + Buffer.from(username + ":" + password).toString("base64"),
+      "vmware-api-session-id": sessionId,
+    };
+
+    const options = {
+      headers: vmwareHeaders,
+      rejectUnauthorized: false,
+    };
+
+    https.get(`https://${hostIp}/rest/vcenter/network`, options, (response) => {
+      let data = "";
+
+      response.on("data", (chunk) => {
+        data += chunk;
+      });
+
+      response.on("end", () => {
+        const networkList = JSON.parse(data);
+        console.log("Network 정보:");
+        console.log(networkList);
+        return res.send(networkList);
+      });
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).send("Error");
