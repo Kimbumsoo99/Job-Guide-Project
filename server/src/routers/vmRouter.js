@@ -6,6 +6,7 @@ import {
   getNetwork,
   getVMInfo,
   getVmAfterHostCPU,
+  patchMemory,
 } from "../controllers/vmController";
 
 const vmRouter = express.Router();
@@ -16,5 +17,6 @@ vmRouter.get("/d/center", getDataCenterList);
 vmRouter.get("/d/store", getDataStoreList);
 vmRouter.get("/host", getHost);
 vmRouter.get("/network", getNetwork);
+vmRouter.get("/patch/memory", patchMemory);
 
 export default vmRouter;

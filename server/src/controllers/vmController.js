@@ -316,12 +316,14 @@ export const patchMemory = async (req, response) => {
     const options = {
       hostname: hostIP,
       path: `/rest/vcenter/vm/${vmId}/hardware/memory`,
+      port: 443,
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         "Content-Length": Buffer.byteLength(JSON.stringify(memoryUpdate)),
         "vmware-api-session-id": sessionId,
       },
+      rejectUnauthorized: false,
     };
 
     const req = https.request(options, (res) => {
