@@ -306,12 +306,49 @@ export const getNetwork = async (req, res) => {
   }
 };
 
-export const patchMemory = async (req, response) => {
+export const getHardMemory = async (req, res) => {
+  try {
+    const sessionId = await getSessionId();
+    const vm = await getVMName(sessionId);
+
+    const vmwareHeaders = {
+      "Content-Type": "application/json",
+      "vmware-api-session-id": sessionId,
+    };
+
+    const options = {
+      headers: vmwareHeaders,
+      rejectUnauthorized: false,
+    };
+
+    https.get(
+      `https://${hostIP}/rest/vcenter/vm/${vm}/hardware/memory`,
+      options,
+      (response) => {
+        let data = "";
+
+        response.on("data", (chunk) => {
+          data += chunk;
+        });
+
+        response.on("end", () => {
+          const memoryInfo = JSON.parse(data);
+          console.log("Memory 정보:");
+          console.log(memoryInfo);
+          return res.send(memoryInfo);
+        });
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Error");
+  }
+};
+
+export const patchMemory = async (request, response) => {
   try {
     const sessionId = await getSessionId();
     const vmId = await getVMName(sessionId);
-
-    const memoryUpdate = { size_mib: 2048 };
 
     const options = {
       hostname: hostIP,
@@ -320,37 +357,116 @@ export const patchMemory = async (req, response) => {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        "Content-Length": Buffer.byteLength(JSON.stringify(memoryUpdate)),
         "vmware-api-session-id": sessionId,
       },
       rejectUnauthorized: false,
     };
 
-    const req = https.request(options, (res) => {
-      console.log(`statusCode: ${res.statusCode}`);
+    const apiReq = https.request(options, (apiRes) => {
+      console.log(`statusCode: ${apiRes.statusCode}`);
 
-      res.on("data", (d) => {
+      apiRes.on("data", (d) => {
         process.stdout.write(d);
       });
     });
 
-    req.on("error", (error) => {
+    apiReq.on("error", (error) => {
       console.error(error);
     });
 
     const postData = JSON.stringify({
       spec: {
-        hot_add_enabled: false,
+        hot_add_enabled: true,
         size_MiB: 2048, // Set the new memory size in MiB
       },
     });
 
-    req.write(postData);
-    req.end();
+    apiReq.write(postData);
+    apiReq.end();
     console.log("요청 성공");
     return response.redirect("/");
   } catch (error) {
     console.error(error);
-    return res.status(500).send("Error");
+    return response.status(500).send("Error");
+  }
+};
+
+export const stopPower = async (request, response) => {
+  try {
+    const sessionId = await getSessionId();
+    const vm = await getVMName(sessionId);
+    const data = JSON.stringify({});
+
+    const options = {
+      hostname: hostIP,
+      path: `/rest/vcenter/vm/${vm}/power/stop`,
+      port: 443,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "vmware-api-session-id": sessionId,
+      },
+      rejectUnauthorized: false,
+    };
+
+    const apiReq = https.request(options, (apiRes) => {
+      console.log(`statusCode: ${apiRes.statusCode}`);
+
+      apiRes.on("data", (d) => {
+        process.stdout.write(d);
+      });
+    });
+
+    apiReq.on("error", (error) => {
+      console.error(error);
+    });
+
+    apiReq.write(data);
+    apiReq.end();
+    console.log("요청 성공");
+    return response.redirect("/");
+  } catch (error) {
+    console.error(error);
+    return response.status(500).send("Error");
+  }
+};
+
+export const startPower = async (request, response) => {
+  try {
+    const sessionId = await getSessionId();
+    const vm = await getVMName(sessionId);
+    const data = JSON.stringify({});
+
+    const options = {
+      hostname: hostIP,
+      path: `/rest/vcenter/vm/${vm}/power/start`,
+      port: 443,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "vmware-api-session-id": sessionId,
+      },
+      rejectUnauthorized: false,
+    };
+
+    const apiReq = https.request(options, (apiRes) => {
+      console.log(`statusCode: ${apiRes.statusCode}`);
+
+      apiRes.on("data", (d) => {
+        process.stdout.write(d);
+      });
+    });
+
+    apiReq.on("error", (error) => {
+      console.error(error);
+    });
+
+    apiReq.write(data);
+    apiReq.end();
+    console.log("요청 성공");
+    return response.redirect("/");
+  } catch (error) {
+    console.error(error);
+    return response.status(500).send("Error");
   }
 };
