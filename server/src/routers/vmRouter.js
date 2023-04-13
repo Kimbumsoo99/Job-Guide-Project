@@ -3,6 +3,7 @@ import {
   getDataCenterList,
   getDataStoreList,
   getHost,
+  getNetwork,
   getVMInfo,
   getVmAfterHostCPU,
 } from "../controllers/vmController";
@@ -14,5 +15,6 @@ vmRouter.get("/info", getVMInfo);
 vmRouter.get("/d/center", getDataCenterList);
 vmRouter.get("/d/store", getDataStoreList);
 vmRouter.get("/host", getHost);
+vmRouter.get("/network", getNetwork);
 
 export default vmRouter;

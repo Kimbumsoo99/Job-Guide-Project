@@ -211,7 +211,7 @@ export const getDataStoreList = async (req, res) => {
     };
 
     https.get(
-      `https://${hostIp}/rest/vcenter/datastore`,
+      `https://${hostIP}/rest/vcenter/datastore`,
       options,
       (response) => {
         let data = "";
@@ -250,7 +250,7 @@ export const getHost = async (req, res) => {
       rejectUnauthorized: false,
     };
 
-    https.get(`https://${hostIp}/rest/vcenter/host`, options, (response) => {
+    https.get(`https://${hostIP}/rest/vcenter/host`, options, (response) => {
       let data = "";
 
       response.on("data", (chunk) => {
@@ -286,7 +286,7 @@ export const getNetwork = async (req, res) => {
       rejectUnauthorized: false,
     };
 
-    https.get(`https://${hostIp}/rest/vcenter/network`, options, (response) => {
+    https.get(`https://${hostIP}/rest/vcenter/network`, options, (response) => {
       let data = "";
 
       response.on("data", (chunk) => {
@@ -300,6 +300,53 @@ export const getNetwork = async (req, res) => {
         return res.send(networkList);
       });
     });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Error");
+  }
+};
+
+export const patchMemory = async (req, response) => {
+  try {
+    const sessionId = await getSessionId();
+    const vmId = await getVMName(sessionId);
+
+    const memoryUpdate = { size_mib: 2048 };
+
+    const options = {
+      hostname: hostIP,
+      path: `/rest/vcenter/vm/${vmId}/hardware/memory`,
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Content-Length": Buffer.byteLength(JSON.stringify(memoryUpdate)),
+        "vmware-api-session-id": sessionId,
+      },
+    };
+
+    const req = https.request(options, (res) => {
+      console.log(`statusCode: ${res.statusCode}`);
+
+      res.on("data", (d) => {
+        process.stdout.write(d);
+      });
+    });
+
+    req.on("error", (error) => {
+      console.error(error);
+    });
+
+    const postData = JSON.stringify({
+      spec: {
+        hot_add_enabled: false,
+        size_MiB: 2048, // Set the new memory size in MiB
+      },
+    });
+
+    req.write(postData);
+    req.end();
+    console.log("요청 성공");
+    return response.redirect("/");
   } catch (error) {
     console.error(error);
     return res.status(500).send("Error");
