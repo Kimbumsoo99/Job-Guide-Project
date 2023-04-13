@@ -67,41 +67,48 @@ export const getVmAfterHostCPU = async (req, res) => {
 };
 
 export const getVMName = async (sessionId) => {
-  try {
-    const sessionIdJson = sessionId; //sessionIdJson == vmware-api-session-id
-    console.log("SessionID GET After: " + sessionIdJson); // 이부분에서 가져온 Session ID를 확인
+  const sessionIdJson = sessionId; //sessionIdJson == vmware-api-session-id
+  console.log("SessionID GET After: " + sessionIdJson); // 이부분에서 가져온 Session ID를 확인
 
-    const vmwareHeaders = {
+  const options = {
+    hostname: hostIP,
+    port: 443,
+    path: "/rest/vcenter/vm",
+    method: "GET",
+    headers: {
       "Content-Type": "application/json",
       Authorization:
         "Basic " + Buffer.from(username + ":" + password).toString("base64"),
       "vmware-api-session-id": sessionIdJson,
-    };
-
-    const options = {
-      headers: vmwareHeaders,
-      rejectUnauthorized: false,
-    };
-
-    https.get(`https://${hostIP}/rest/vcenter/vm`, options, (response) => {
+    },
+    rejectUnauthorized: false,
+  };
+  const res = await new Promise((resolve, reject) => {
+    const req = https.request(options, (res) => {
       let data = "";
 
-      response.on("data", (chunk) => {
+      res.on("data", (chunk) => {
         data += chunk;
       });
 
-      response.on("end", () => {
+      res.on("end", () => {
         const vms = JSON.parse(data);
         console.log("모든 가상 머신 정보:");
         console.log(vms);
-        const vmId = vms.value[0].vm;
-        return vmId;
+        resolve(vms);
       });
     });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).send("Error");
-  }
+    req.on("error", (error) => {
+      console.error(error);
+      reject(error);
+    });
+    req.write(data);
+    req.end();
+  });
+
+  const vmId = res.value;
+  console.log("VM name:", vmId);
+  return vmId;
 };
 
 export const getVMInfo = async () => {
