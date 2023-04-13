@@ -1,8 +1,9 @@
 import express from "express";
-import { getVmAfterHostCPU } from "../controllers/vmController";
+import { getVMInfo, getVmAfterHostCPU } from "../controllers/vmController";
 
 const vmRouter = express.Router();
 
 vmRouter.get("/cpu", getVmAfterHostCPU);
+vmRouter.get("/vm/info", getVMInfo);
 
 export default vmRouter;
