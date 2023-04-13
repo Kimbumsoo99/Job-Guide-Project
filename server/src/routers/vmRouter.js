@@ -4,6 +4,6 @@ import { getVMInfo, getVmAfterHostCPU } from "../controllers/vmController";
 const vmRouter = express.Router();
 
 vmRouter.get("/cpu", getVmAfterHostCPU);
-vmRouter.get("/vm/info", getVMInfo);
+vmRouter.get("/info", getVMInfo);
 
 export default vmRouter;

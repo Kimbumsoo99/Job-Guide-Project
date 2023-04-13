@@ -67,6 +67,7 @@ export const getVmAfterHostCPU = async (req, res) => {
 };
 
 export const getVMName = async (sessionId) => {
+  const data = JSON.stringify({});
   const sessionIdJson = sessionId; //sessionIdJson == vmware-api-session-id
   console.log("SessionID GET After: " + sessionIdJson); // 이부분에서 가져온 Session ID를 확인
 
@@ -85,14 +86,14 @@ export const getVMName = async (sessionId) => {
   };
   const res = await new Promise((resolve, reject) => {
     const req = https.request(options, (res) => {
-      let data = "";
+      let responseBody = "";
 
       res.on("data", (chunk) => {
-        data += chunk;
+        responseBody += chunk;
       });
 
       res.on("end", () => {
-        const vms = JSON.parse(data);
+        const vms = JSON.parse(responseBody);
         console.log("모든 가상 머신 정보:");
         console.log(vms);
         resolve(vms);
@@ -106,7 +107,7 @@ export const getVMName = async (sessionId) => {
     req.end();
   });
 
-  const vmId = res.value;
+  const vmId = res.value[0].vm;
   console.log("VM name:", vmId);
   return vmId;
 };
