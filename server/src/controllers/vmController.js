@@ -39,8 +39,7 @@ export const getVmAfterHostCPU = async (req, res) => {
         const vms = JSON.parse(data);
         console.log("모든 가상 머신 정보:");
         console.log(vms);
-        
-        return res.send(vms);
+        const vmId = vms.[0].vm;
         
         return https.get(`https://${hostIP}/rest/vcenter/vm/${vmId}`, options, (response) => {
         let data = "";

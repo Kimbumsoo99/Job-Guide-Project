@@ -1,3 +1,9 @@
+const https = require("https");
+
+const username = "administrator@vsphere.local";
+const password = "123Qwer!";
+const hostIP = "192.168.0.102";
+
 export const getSessionId = async () => {
     const data = JSON.stringify({});
     let sessionIdJson;
