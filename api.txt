@@ -1,6 +1,24 @@
-vm
-Datacenter
-host
-Datastore
-disk
-network
+vm: 해당 VM에 대한 정보를 가져옴 (제일 가능성 높아 보임)
+Datacenter: DataCenter 이름
+host: host 이름
+Datastore: DataStore 이름
+disk: Disk 이름
+network: Network 이름
+Memory: Memory 양 + Memory 동적 변경
+Power: Power 제어
+
+DB 관련(MongoDB)
+USER 정보
+{
+    name: 사용자 이름,
+    email: 사용자 이메일,
+    username: 사용자 ID(WatchDog),
+    password: 사용자 PASSWORD
+}
+
+Private Cloud 분석 시 필요 정보
+{
+    vSphere_ID,
+    vSphere_PASSWORD,
+    vCenter_IP_ADDRESS
+}

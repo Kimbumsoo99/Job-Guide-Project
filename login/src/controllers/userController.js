@@ -1,3 +1,4 @@
+import { localsMiddleware } from "../middlewares";
 import User from "../models/User";
 import bcrypt from "bcrypt"; // 비밀번호 암호화
 
@@ -23,7 +24,9 @@ export const postLogin = async (req, res) => {
     return res.status(400).render("login");
   }
 
-  //세션 추가
+  req.session.loggedIn = true;
+  req.session.user = user;
+
   return res.redirect("/");
 };
 
