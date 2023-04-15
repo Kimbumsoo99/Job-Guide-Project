@@ -27,11 +27,14 @@ app.use(
     },*/
     store: MongoStore.create({
       mongoUrl: "mongodb://localhost:27017/testlogin",
+      ttl: 30, //초 단위
       autoRemove: "interval",
-      autoRemoveInterval: 20, // In minutes. Default
+      autoRemoveInterval: 10, // In minutes. Default
     }),
   })
 );
+
+app.use(localsMiddleware);
 
 app.use("/assets", express.static("assets")); //정적파일 넣는 용도
 app.use("/", rootRouter);

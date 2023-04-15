@@ -6,6 +6,7 @@ import {
   postJoin,
   postLogin,
 } from "../controllers/userController";
+import { localsMiddleware } from "../middlewares";
 
 const rootRouter = express.Router();
 
