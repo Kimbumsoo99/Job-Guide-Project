@@ -11,10 +11,11 @@ import {
   startPower,
   stopPower,
 } from "../controllers/vmController";
+import { getCloudData } from "../controllers/cloudData";
 
 const vmRouter = express.Router();
 
-vmRouter.get("/cpu", getVmAfterHostCPU);
+vmRouter.get("/data", getCloudData);
 vmRouter.get("/info", getVMInfo);
 vmRouter.get("/d/center", getDataCenterList);
 vmRouter.get("/d/store", getDataStoreList);
