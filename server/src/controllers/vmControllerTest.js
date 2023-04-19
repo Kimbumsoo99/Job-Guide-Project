@@ -73,7 +73,7 @@ export const getVMInfo = async (sessionId) => {
     return vmInfo;
   } catch (error) {
     console.error(error);
-    throw new Error("Error");
+    throw new Error("Get VM Info Error");
   }
 };
 
@@ -87,7 +87,7 @@ export const getDataCenterList = async (sessionId) => {
     return dataCenterList;
   } catch (error) {
     console.error(error);
-    throw new Error("Error");
+    throw new Error("Data Center Error");
   }
 };
 
@@ -101,7 +101,7 @@ export const getDataStoreList = async (sessionId) => {
     return dataStoreList;
   } catch (error) {
     console.error(error);
-    throw new Error("Error");
+    throw new Error("Data Store Error");
   }
 };
 
@@ -115,7 +115,7 @@ export const getHost = async (sessionId) => {
     return hostInfo;
   } catch (error) {
     console.error(error);
-    throw new Error("Error");
+    throw new Error("Get Host Error");
   }
 };
 
@@ -129,7 +129,7 @@ export const getNetwork = async (sessionId) => {
     return networkInfo;
   } catch (error) {
     console.error(error);
-    throw new Error("Error");
+    throw new Error("Get Network Error");
   }
 };
 
@@ -144,7 +144,7 @@ export const getHardMemory = async (sessionId) => {
     return memoryInfo;
   } catch (error) {
     console.error(error);
-    throw new Error("Error");
+    throw new Error("Get Memory Error");
   }
 };
 
