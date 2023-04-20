@@ -19,6 +19,7 @@ app.use(express.urlencoded({ extended: true })); //express가 form의 value들�
 // app.use(express.text()); express에 내장된 미들웨어 기능으로 body-parser를 기반으로 request payload로 전달한 문자열을 파싱
 app.use(express.json());
 
+/*
 app.use(
   session({
     secret: "secret_key",
@@ -27,6 +28,7 @@ app.use(
     /*cookie: {
       maxAge: 10000, //세션 정보 유지 시간
     },*/
+/*
     store: MongoStore.create({
       mongoUrl: "mongodb://localhost:27017/testlogin",
       ttl: 30, //초 단위
@@ -36,8 +38,8 @@ app.use(
     }),
   })
 );
-
-app.use(localsMiddleware);
+*/
+//app.use(localsMiddleware);
 
 app.use("/uploads", express.static("uploads"));
 app.use("/assets", express.static("assets"));
