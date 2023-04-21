@@ -1,8 +1,32 @@
 import { getSessionId } from "./headerGet";
+import User from "../models/User";
 
 const https = require("https");
 
-const hostIP = "192.168.0.102";
+let hostIP = "192.168.0.102";
+
+export const getAddBasicInfo = (req, res) => res.render("cloudinput");
+
+export const postAddBasicInfo = async (req, res) => {
+  const { vm_id, vm_pw, vm_ip } = req.body;
+  const { user } = req.session;
+  const { _id } = user;
+
+  const updatedUser = await User.findByIdAndUpdate(
+    _id,
+    {
+      vsphere: {
+        vs_id: vm_id,
+        vs_pw: vm_pw,
+        vs_ip: vm_ip,
+      },
+    },
+    { new: true } // 최근 업데이트 된 데이터로 변경
+  );
+  req.session.user = updatedUser;
+  console.log(req.session.user);
+  return res.redirect("bb");
+};
 
 /**
  * 공통으로 사용되는 옵션 객체 반환
@@ -180,7 +204,7 @@ export const patchMemory = async (request, response) => {
     const postData = JSON.stringify({
       spec: {
         hot_add_enabled: true,
-        size_MiB: 2048, // Set the new memory size in MiB
+        size_MiB: 6144, // Set the new memory size in MiB
       },
     });
 

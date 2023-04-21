@@ -6,15 +6,24 @@ import {
   getHost,
   getNetwork,
   getVMInfo,
-  getVmAfterHostCPU,
   patchMemory,
   startPower,
   stopPower,
 } from "../controllers/vmController";
 import { getCloudData } from "../controllers/cloudData";
+import {
+  getAddBasicInfo,
+  postAddBasicInfo,
+} from "../controllers/vmControllerTest";
+import { protectorMiddleware } from "../middlewares";
 
 const vmRouter = express.Router();
 
+vmRouter
+  .route("/")
+  .all(protectorMiddleware)
+  .get(getAddBasicInfo)
+  .post(postAddBasicInfo);
 vmRouter.get("/data", getCloudData);
 vmRouter.get("/info", getVMInfo);
 vmRouter.get("/d/center", getDataCenterList);

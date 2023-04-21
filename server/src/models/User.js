@@ -6,6 +6,13 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  vsphere: [
+    {
+      vs_id: { type: String },
+      vs_pw: { type: String },
+      vs_ip: { type: String },
+    },
+  ],
 });
 
 // Mongo 6.0에 save 없어짐 insertOne

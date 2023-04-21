@@ -7,16 +7,15 @@ html(lang='ko')
     body
         div.animated.bounceInDown
             div.container
-                div.loginForm
+                div.cloudAddForm
                     span#msg.error.animated.tada
                     form.box(method="POST" name='form1' onsubmit='return checkStuff()')
                         div.logo(onclick="location.href='/';")
                             h4 WATCH
                                 span DOG
-                        h5 Sign in to your account.
-                        input(type='text' name='username' placeholder='ID' autocomplete='off')
-                        i#eye.typcn.typcn-eye
-                        input#pwd(type='password' name='password' placeholder='Passsword' autocomplete='off')
-                        input.btn1(type='submit' value='Sign in')
-                    a.dnthave(href='join') Don&rsquo;t have an account? Sign up       
+                        h5 Private Cloud accesee Info
+                        input(type='text' name='vm_id' placeholder='vSphere ID' autocomplete='off')
+                        input#pwd(type='password' name='vm_pw' placeholder='vSphere Password' autocomplete='off')
+                        input(type='text' name='vm_ip' placeholder='VM IP Address' autocomplete='off')
+                        input.btn1(type='submit' value='Submit')
         

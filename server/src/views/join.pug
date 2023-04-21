@@ -10,8 +10,9 @@ html(lang='ko')
             div.joinForm
                span#msg.error.animated.tada
                form.box(method="POST" name='form1' onsubmit='return checkStuff()')
-                  h4 WATCH
-                     span DOG
+                  div.logo(onclick="location.href='/';")
+                     h4 WATCH
+                        span DOG
                   h5 Sign in to your account.
                   input(name="name", type="text", required, placeholder="Name")
                   input(type='email' name='email' placeholder='Email' autocomplete='off')
