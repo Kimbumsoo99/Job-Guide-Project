@@ -1,11 +1,5 @@
 import express from "express";
 import {
-  getDataCenterList,
-  getDataStoreList,
-  getHardMemory,
-  getHost,
-  getNetwork,
-  getVMInfo,
   patchMemory,
   startPower,
   stopPower,
@@ -16,6 +10,11 @@ import {
   postAddBasicInfo,
 } from "../controllers/vmControllerTest";
 import { protectorMiddleware } from "../middlewares";
+import {
+  patchMemoryTest,
+  startPowerTest,
+  stopPowerTest,
+} from "../controllers/vmChangeSet";
 
 const vmRouter = express.Router();
 
@@ -24,15 +23,15 @@ vmRouter
   .all(protectorMiddleware)
   .get(getAddBasicInfo)
   .post(postAddBasicInfo);
+
 vmRouter.get("/data", getCloudData);
-vmRouter.get("/info", getVMInfo);
-vmRouter.get("/d/center", getDataCenterList);
-vmRouter.get("/d/store", getDataStoreList);
-vmRouter.get("/host", getHost);
-vmRouter.get("/network", getNetwork);
-vmRouter.get("/memory", getHardMemory);
 vmRouter.get("/patch/memory", patchMemory);
 vmRouter.get("/stop/power", stopPower);
 vmRouter.get("/start/power", startPower);
+
+// 테스트
+vmRouter.get("/test/memory", patchMemoryTest);
+vmRouter.get("/test/power/off", stopPowerTest);
+vmRouter.get("/test/power/on", startPowerTest);
 
 export default vmRouter;

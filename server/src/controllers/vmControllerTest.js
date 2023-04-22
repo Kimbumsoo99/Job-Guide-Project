@@ -34,7 +34,7 @@ export const postAddBasicInfo = async (req, res) => {
  * @param sessionId
  * @returns options
  */
-const getOptions = (sessionId) => {
+export const getOptions = (sessionId) => {
   return {
     headers: {
       "Content-Type": "application/json",
@@ -49,7 +49,7 @@ const getOptions = (sessionId) => {
  * @param sessionId
  * @returns VM 이름
  */
-const getVMName = async (sessionId) => {
+export const getVMName = async (sessionId) => {
   const options = getOptions(sessionId);
   options.hostname = hostIP;
   options.port = 443;
