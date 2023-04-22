@@ -27,6 +27,7 @@ export const getCloudData = async (req, res) => {
       memoryInfo,
     };
 
+    console.log(cloudData);
     return res.send(cloudData);
   } catch (error) {
     console.error(error);
