@@ -1,11 +1,13 @@
-vm: 해당 VM에 대한 정보를 가져옴 (제일 가능성 높아 보임)
-Datacenter: DataCenter 이름
-host: host 이름
-Datastore: DataStore 이름
-disk: Disk 이름
-network: Network 이름
-Memory: Memory 양 + Memory 동적 변경
-Power: Power 제어
+vm: 해당 VM에 대한 정보를 가져옴 -> {
+
+}
+Datacenter: DataCenter 이름 -> {}
+host: host 이름 -> {}
+Datastore: DataStore 이름 -> {}
+disk: Disk 이름 -> {}
+network: Network 이름 -> {}
+Memory: Memory 양 + Memory 동적 변경 -> {}
+Power: Power 제어 -> {}
 
 DB 관련(MongoDB)
 USER 정보
@@ -13,8 +15,11 @@ USER 정보
     name: 사용자 이름,
     email: 사용자 이메일,
     username: 사용자 ID(WatchDog),
-    password: 사용자 PASSWORD
+    password: 사용자 PASSWORD,
 }
+
+sessionID 추가 여부?? -> 매번 API 가져올 때마다 같은 sessionID인지 확인
+
 
 Private Cloud 분석 시 필요 정보
 {
@@ -22,3 +27,34 @@ Private Cloud 분석 시 필요 정보
     vSphere_PASSWORD,
     vCenter_IP_ADDRESS
 }
+
+Host 정보 표시
+1. Host 이름
+2. Host hostIP
+3. CPU
+4. Memory 크기
+5. Disk 크기(capacity: 용량 )
+6. Power 정보
+
+Host 내 VM 정보 표시
+1. VM 이름
+2. VM IP
+3. CPU
+4. Memory
+5. Disk
+6. 파워 정보
+
+VM 정보 표시
+1. CPU 사용 분석
+2. Memory 사용 분석
+3. Network 사용 분석
+4. log 파일
+
+그 외 기능
+1. 푸시 알림 구현
+
+
+문제점
+1. 실시간 사용 분석
+2. 향후 위험 요소 분석
+3. 알림 기능 구현
