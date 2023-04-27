@@ -30,8 +30,17 @@ const callAPI = async (url, method, data, sessionId) => {
 };
 
 export const patchMemoryTest = async (request, response) => {
+  const {
+    session: {
+      user: { _id },
+    },
+  } = request;
+  const user = await User.findById(_id);
+  const vs_id = user.vsphere[0].vs_id;
+  const vs_pw = user.vsphere[0].vs_pw;
+  const vs_ip = user.vsphere[0].vs_ip;
   try {
-    const sessionId = await getSessionId();
+    const sessionId = await getSessionId(vs_id, vs_pw, vs_ip);
     const vmId = await getVMName(sessionId);
 
     const postData = JSON.stringify({
@@ -55,8 +64,17 @@ export const patchMemoryTest = async (request, response) => {
 };
 
 export const executePowerAction = async (request, response, action) => {
+  const {
+    session: {
+      user: { _id },
+    },
+  } = request;
+  const user = await User.findById(_id);
+  const vs_id = user.vsphere[0].vs_id;
+  const vs_pw = user.vsphere[0].vs_pw;
+  const vs_ip = user.vsphere[0].vs_ip;
   try {
-    const sessionId = await getSessionId();
+    const sessionId = await getSessionId(vs_id, vs_pw, vs_ip);
     const vm = await getVMName(sessionId);
     const data = JSON.stringify({});
 
