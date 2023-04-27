@@ -15,6 +15,8 @@ export const getCloudData = async (req, res) => {
       user: { _id },
     },
   } = req;
+  console.log("유저 정보");
+  console.log("user");
   const user = await User.findById(_id);
   const vs_id = user.vsphere[0].vs_id;
   const vs_pw = user.vsphere[0].vs_pw;

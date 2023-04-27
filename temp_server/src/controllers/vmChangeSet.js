@@ -1,5 +1,6 @@
 import { getSessionId } from "./headerGet";
 import { getOptions, getVMName } from "./vmControllerTest";
+import User from "../models/User";
 
 let hostIP = "192.168.0.102";
 
@@ -30,11 +31,13 @@ const callAPI = async (url, method, data, sessionId) => {
 };
 
 export const patchMemoryTest = async (request, response) => {
+  console.log(request);
   const {
     session: {
       user: { _id },
     },
   } = request;
+  console.log(user);
   const user = await User.findById(_id);
   const vs_id = user.vsphere[0].vs_id;
   const vs_pw = user.vsphere[0].vs_pw;

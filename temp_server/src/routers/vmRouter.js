@@ -3,7 +3,7 @@ import {
   patchMemory,
   startPower,
   stopPower,
-} from "../controllers/vmController";
+} from "../controllers/vmControllerTest";
 import { getCloudData } from "../controllers/cloudData";
 import {
   getAddBasicInfo,
