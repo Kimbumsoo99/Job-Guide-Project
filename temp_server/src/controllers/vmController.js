@@ -346,8 +346,11 @@ export const getHardMemory = async (req, res) => {
 };
 
 export const patchMemory = async (request, response) => {
+  const username = "administrator@vsphere.local";
+  const password = "123Qwer!";
+  const hostIP = "192.168.0.102";
   try {
-    const sessionId = await getSessionId();
+    const sessionId = await getSessionId(username, password, hostIP);
     const vmId = await getVMName(sessionId);
 
     const options = {
