@@ -25,7 +25,7 @@ export const postAddBasicInfo = async (req, res) => {
   );
   req.session.user = updatedUser;
   console.log(req.session.user);
-  return res.redirect("data");
+  return res.redirect("vm/data");
 };
 
 /**

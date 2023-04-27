@@ -7,10 +7,20 @@ import {
   getNetwork,
   getVMInfo,
 } from "./vmControllerTest";
+import User from "../models/User";
 
 export const getCloudData = async (req, res) => {
+  const {
+    session: {
+      user: { _id },
+    },
+  } = req;
+  const user = await User.findById(_id);
+  const vs_id = user.vsphere[0].vs_id;
+  const vs_pw = user.vsphere[0].vs_pw;
+  const vs_ip = user.vsphere[0].vs_ip;
   try {
-    const sessionId = await getSessionId();
+    const sessionId = await getSessionId(vs_id, vs_pw, vs_ip);
     const vmInfo = await getVMInfo(sessionId);
     const dataCenterList = await getDataCenterList(sessionId);
     const dataStoreList = await getDataStoreList(sessionId);

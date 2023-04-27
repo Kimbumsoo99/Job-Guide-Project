@@ -11,6 +11,7 @@ const UserSchema = new mongoose.Schema({
       vs_id: { type: String },
       vs_pw: { type: String },
       vs_ip: { type: String },
+      info: [{ type: Object }],
     },
   ],
 });
