@@ -18,11 +18,7 @@ import {
 
 const vmRouter = express.Router();
 
-vmRouter
-  .route("/")
-  .all(protectorMiddleware)
-  .get(getAddBasicInfo)
-  .post(postAddBasicInfo);
+//vmRouter.route("/").get(getAddBasicInfo).post(postAddBasicInfo);
 
 vmRouter.get("/data", getCloudData);
 vmRouter.get("/patch/memory", patchMemory);

@@ -1,5 +1,5 @@
-import "./db";
-import "./models/User";
+//import "./db";
+//import "./models/User";
 import app from "./server";
 
 const PORT = process.env.PORT || 4000;

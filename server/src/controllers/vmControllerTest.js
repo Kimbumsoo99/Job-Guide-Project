@@ -1,5 +1,5 @@
 import { getSessionId } from "./headerGet";
-import User from "../models/User";
+//import User from "../models/User";
 
 const https = require("https");
 
@@ -12,7 +12,7 @@ export const postAddBasicInfo = async (req, res) => {
   const { user } = req.session;
   const { _id } = user;
 
-  const updatedUser = await User.findByIdAndUpdate(
+  /*const updatedUser = await User.findByIdAndUpdate(
     _id,
     {
       vsphere: {
@@ -22,7 +22,7 @@ export const postAddBasicInfo = async (req, res) => {
       },
     },
     { new: true } // 최근 업데이트 된 데이터로 변경
-  );
+  );*/
   req.session.user = updatedUser;
   console.log(req.session.user);
   return res.redirect("bb");
