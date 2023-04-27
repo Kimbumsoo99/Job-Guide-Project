@@ -1,0 +1,21 @@
+doctype html
+html(lang='ko')
+    head
+        meta(charset='UTF-8')
+        title WatchDog
+        link(rel='stylesheet' href='/assets/css/login.css')
+    body
+        div.animated.bounceInDown
+            div.container
+                div.cloudAddForm
+                    span#msg.error.animated.tada
+                    form.box(method="POST" name='form1' onsubmit='return checkStuff()')
+                        div.logo(onclick="location.href='/';")
+                            h4 WATCH
+                                span DOG
+                        h5 Private Cloud accesee Info
+                        input(type='text' name='vm_id' placeholder='vSphere ID' autocomplete='off')
+                        input#pwd(type='password' name='vm_pw' placeholder='vSphere Password' autocomplete='off')
+                        input(type='text' name='vm_ip' placeholder='VM IP Address' autocomplete='off')
+                        input.btn1(type='submit' value='Submit')
+        
