@@ -50,7 +50,7 @@ export const patchMemoryTest = async (request, response) => {
     const postData = JSON.stringify({
       spec: {
         hot_add_enabled: true,
-        size_MiB: 1024, // Set the new memory size in MiB
+        size_MiB: 6144, // Set the new memory size in MiB
       },
     });
 

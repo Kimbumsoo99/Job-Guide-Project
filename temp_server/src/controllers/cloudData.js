@@ -40,6 +40,9 @@ export const getCloudData = async (req, res) => {
     };
 
     console.log(cloudData);
+    user.vsphere[0].info = cloudData;
+    console.log("유저 정보");
+    console.log(user);
     return res.send(cloudData);
   } catch (error) {
     console.error(error);
