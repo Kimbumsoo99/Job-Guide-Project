@@ -5,7 +5,19 @@ const https = require("https");
 
 let hostIP = "192.168.0.102";
 
-export const getAddBasicInfo = (req, res) => res.render("cloudinput");
+function isEmptyArr(arr) {
+  if (Array.isArray(arr) && arr.length === 0) {
+    return true;
+  }
+
+  return false;
+}
+
+export const getAddBasicInfo = (req, res) => {
+  const { user } = req.session;
+  if (isEmptyArr(user.vsphere)) return res.render("cloudinput");
+  return res.redirect("vm/data");
+};
 
 export const postAddBasicInfo = async (req, res) => {
   const { vm_id, vm_pw, vm_ip } = req.body;

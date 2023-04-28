@@ -6,7 +6,7 @@ import {
   getHost,
   getNetwork,
   getVMInfo,
-} from "./vmControllerTest";
+} from "./vmController";
 import User from "../models/User";
 
 export const getCloudData = async (req, res) => {

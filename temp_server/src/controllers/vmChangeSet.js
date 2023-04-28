@@ -1,5 +1,5 @@
 import { getSessionId } from "./headerGet";
-import { getOptions, getVMName } from "./vmControllerTest";
+import { getOptions, getVMName } from "./vmController";
 const https = require("https");
 import User from "../models/User";
 
@@ -31,7 +31,7 @@ const callAPI = async (url, method, data, sessionId) => {
   console.log("요청 성공");
 };
 
-export const patchMemoryTest = async (request, response) => {
+export const patchMemory = async (request, response) => {
   console.log(request);
   const {
     session: {
@@ -96,10 +96,10 @@ export const executePowerAction = async (request, response, action) => {
   }
 };
 
-export const stopPowerTest = async (request, response) => {
+export const stopPower = async (request, response) => {
   await executePowerAction(request, response, "stop");
 };
 
-export const startPowerTest = async (request, response) => {
+export const startPower = async (request, response) => {
   await executePowerAction(request, response, "start");
 };
