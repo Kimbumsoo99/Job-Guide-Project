@@ -1,5 +1,6 @@
 import { getSessionId } from "./headerGet";
 import User from "../models/User";
+import TestData from "./data.json";
 
 const https = require("https");
 
@@ -319,4 +320,10 @@ export const startPower = async (request, response) => {
     console.error(error);
     return response.status(500).send("Error");
   }
+};
+
+export const testHostInfo = (req, res) => {
+  const data = JSON.parse(JSON.stringify(TestData));
+  console.log(data);
+  return res.redirect("/");
 };
