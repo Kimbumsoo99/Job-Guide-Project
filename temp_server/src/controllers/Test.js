@@ -5,6 +5,8 @@ const https = require("https");
 
 let hostIP = "192.168.0.102";
 
+export const hostPage = (req, res) => res.render("host");
+
 function isEmptyArr(arr) {
   if (Array.isArray(arr) && arr.length === 0) {
     return true;

@@ -1,0 +1,185 @@
+{
+  "vmInfo": {
+    "value": {
+      "instant_clone_frozen": false,
+      "cdroms": [
+        {
+          "value": {
+            "start_connected": false,
+            "backing": {
+              "device_access_type": "PASSTHRU",
+              "type": "CLIENT_DEVICE"
+            },
+            "allow_guest_control": true,
+            "label": "CD/DVD drive 1",
+            "state": "NOT_CONNECTED",
+            "type": "SATA",
+            "sata": { "bus": 0, "unit": 0 }
+          },
+          "key": "16000"
+        }
+      ],
+      "memory": {
+        "hot_add_increment_size_MiB": 128,
+        "size_MiB": 2048,
+        "hot_add_enabled": true,
+        "hot_add_limit_MiB": 3072
+      },
+      "disks": [
+        {
+          "value": {
+            "scsi": { "bus": 0, "unit": 0 },
+            "backing": {
+              "vmdk_file": "[Datastore 2] ubuntu/ubuntu.vmdk",
+              "type": "VMDK_FILE"
+            },
+            "label": "Hard disk 1",
+            "type": "SCSI",
+            "capacity": 75161927680
+          },
+          "key": "2000"
+        }
+      ],
+      "parallel_ports": [],
+      "sata_adapters": [
+        {
+          "value": {
+            "bus": 0,
+            "pci_slot_number": 32,
+            "label": "SATA controller 0",
+            "type": "AHCI"
+          },
+          "key": "15000"
+        }
+      ],
+      "cpu": {
+        "hot_remove_enabled": false,
+        "count": 2,
+        "hot_add_enabled": false,
+        "cores_per_socket": 1
+      },
+      "scsi_adapters": [
+        {
+          "value": {
+            "pci_slot_number": 16,
+            "scsi": { "bus": 0, "unit": 7 },
+            "label": "SCSI controller 0",
+            "sharing": "NONE",
+            "type": "LSILOGIC"
+          },
+          "key": "1000"
+        }
+      ],
+      "power_state": "POWERED_ON",
+      "floppies": [],
+      "identity": {
+        "name": "ubuntu",
+        "instance_uuid": "5022e2a7-7bbc-145e-02cb-ec8f0cee43a4",
+        "bios_uuid": "42227dc0-bef0-96be-b5a7-cf3dedc6bb7d"
+      },
+      "nvme_adapters": [],
+      "name": "ubuntu",
+      "nics": [
+        {
+          "value": {
+            "start_connected": true,
+            "pci_slot_number": 160,
+            "backing": {
+              "network_name": "VM Network",
+              "type": "STANDARD_PORTGROUP",
+              "network": "network-35019"
+            },
+            "mac_address": "00:50:56:a2:fd:91",
+            "mac_type": "ASSIGNED",
+            "allow_guest_control": true,
+            "wake_on_lan_enabled": true,
+            "label": "Network adapter 1",
+            "state": "CONNECTED",
+            "type": "VMXNET3",
+            "upt_compatibility_enabled": true
+          },
+          "key": "4000"
+        }
+      ],
+      "boot": {
+        "delay": 0,
+        "retry_delay": 10000,
+        "enter_setup_mode": false,
+        "type": "BIOS",
+        "retry": false
+      },
+      "serial_ports": [],
+      "boot_devices": [],
+      "guest_OS": "UBUNTU_64",
+      "hardware": {
+        "upgrade_policy": "NEVER",
+        "upgrade_status": "NONE",
+        "version": "VMX_17"
+      }
+    }
+  },
+  "dataCenterList": {
+    "value": [
+      { "name": "STZDC", "datacenter": "datacenter-35011" },
+      { "name": "Datacenter", "datacenter": "datacenter-38001" }
+    ]
+  },
+  "dataStoreList": {
+    "value": [
+      {
+        "datastore": "datastore-36007",
+        "name": "Datastore 2",
+        "type": "VMFS",
+        "free_space": 97441021952,
+        "capacity": 107105746944
+      },
+      {
+        "datastore": "datastore-37004",
+        "name": "datastore1",
+        "type": "VMFS",
+        "free_space": 11107565568,
+        "capacity": 12616466432
+      },
+      {
+        "datastore": "datastore-37006",
+        "name": "Datastore",
+        "type": "VMFS",
+        "free_space": 105595797504,
+        "capacity": 107105746944
+      }
+    ]
+  },
+  "hostInfo": {
+    "value": [
+      {
+        "host": "host-36006",
+        "name": "esxi02.stz.local",
+        "connection_state": "CONNECTED",
+        "power_state": "POWERED_ON"
+      },
+      {
+        "host": "host-37003",
+        "name": "esxi01.stz.local",
+        "connection_state": "CONNECTED",
+        "power_state": "POWERED_ON"
+      }
+    ]
+  },
+  "networkInfo": {
+    "value": [
+      {
+        "name": "VM Network",
+        "type": "STANDARD_PORTGROUP",
+        "network": "network-35019"
+      }
+    ]
+  },
+  "memoryInfo": {
+    "value": {
+      "hot_add_increment_size_MiB": 128,
+      "size_MiB": 2048,
+      "hot_add_enabled": true,
+      "hot_add_limit_MiB": 3072
+    }
+  }
+}
