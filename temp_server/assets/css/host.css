@@ -4,6 +4,9 @@
   padding: 0;
   box-sizing: border-box;
 }
+body {
+  background: rgba(0, 0, 0, 0.8);
+}
 a,
 a:link,
 a:visited {
@@ -42,13 +45,10 @@ header nav ul {
 }
 header nav ul li {
   padding: 10px;
+  font-size: 1.2rem;
 }
 .HostIP {
   color: #f5cc62;
-  font-size: 1.2rem;
-}
-.HostAddress {
-  font-size: 1.2rem;
 }
 header button {
   background: transparent;
@@ -65,14 +65,16 @@ header nav ul li button {
 }
 main {
   width: 100%;
-  /*height: 130vh;*/
   color: #333333;
-  background: rgba(0, 0, 0, 0.8);
+
   background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+#main {
+  height: 100%;
 }
 main h2 {
   font-size: 3.5rem;

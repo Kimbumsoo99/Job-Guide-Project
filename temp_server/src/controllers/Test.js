@@ -325,40 +325,40 @@ export const startPower = async (request, response) => {
 export const testGetData = async (req, res) => {
   console.log(req.query);
 
-  const {
-    session: {
-      user: { _id },
-    },
-    query: { vs_id, vs_pw, vs_ip },
-  } = req;
+  const { session } = req;
+  const { _id } = session.user;
+  const { vs_id, vs_pw, vs_ip } = req.query ? req.query : null;
 
   //  const user = req.session.user ? req.session.user : null;
   //  console.log(user);
   //  console.log(req.session.user);
 
   const testData = JSON.parse(JSON.stringify(TestData));
-
-  try {
-    const updatedUser = await User.findByIdAndUpdate(
-      _id,
-      {
-        $push: {
-          vsphere: {
-            vs_id,
-            vs_pw,
-            vs_ip,
-            info: testData,
+  if (req.query) {
+    try {
+      const updatedUser = await User.findByIdAndUpdate(
+        _id,
+        {
+          $push: {
+            vsphere: {
+              vs_id,
+              vs_pw,
+              vs_ip,
+              info: testData,
+            },
           },
         },
-      },
-      { new: true } // 최근 업데이트 된 데이터로 변경
-    );
-    req.session.user = updatedUser;
-  } catch (err) {
-    console.log(err);
-    return res.redirect("/").statusCode(400);
+        { new: true } // 최근 업데이트 된 데이터로 변경
+      );
+      req.session.user = updatedUser;
+      return res.redirect("/test/page");
+    } catch (err) {
+      console.log(err);
+      return res.redirect("/").statusCode(400);
+    }
+  } else {
+    return res.redirect("/test/page");
   }
-  return res.redirect("/");
 };
 
 export const testHostInfo = async (req, res) => {

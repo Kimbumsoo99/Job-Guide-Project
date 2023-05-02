@@ -13,13 +13,16 @@ body
         div.container
             h1
                 button#img_btn.btm_image(type='button')
-                    img(src='/uploads/logo.png')
+                    img(src='/uploads/logo.png' onclick="location.href='/';")
             nav
                 ul
                     li
                         div.HostIP HostIP
                     li
                         div.HostAddress HostAddress
+                    li 
+                        div(style='cursor: pointer;' onclick="location.href='/vm?add=1';")
+                            p 호스트 정보 추가
     // end header
     // main
     main#main

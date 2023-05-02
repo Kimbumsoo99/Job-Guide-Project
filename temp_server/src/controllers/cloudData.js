@@ -9,6 +9,8 @@ import {
 } from "./vmController";
 import User from "../models/User";
 
+export const cloudData = async (req, res) => {};
+
 export const getCloudData = async (req, res) => {
   console.log(req.query);
 
