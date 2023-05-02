@@ -16,7 +16,6 @@ rootRouter.get("/", home);
 rootRouter.route("/login").get(getLogin).post(postLogin);
 rootRouter.route("/join").get(getJoin).post(postJoin);
 rootRouter.get("/logout", getLogout);
-rootRouter.get("/host", hostPage);
 rootRouter.route("/test").all(protectorMiddleware).get(testGetData);
 rootRouter.route("/test/page").get(testHostInfo);
 

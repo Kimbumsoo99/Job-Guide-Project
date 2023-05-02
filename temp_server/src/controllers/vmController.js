@@ -20,29 +20,16 @@ function isEmptyArr(arr) {
 
 export const getAddBasicInfo = (req, res) => {
   const { user } = req.session;
-  if (isEmptyArr(user.vsphere)) return res.render("cloudinput");
-  return res.redirect("vm/data");
+  //if (isEmptyArr(user.vsphere)) return res.render("cloudinput");
+  //return res.redirect("vm/data");
+
+  return res.render("cloudinput");
 };
 
 export const postAddBasicInfo = async (req, res) => {
   const { vm_id, vm_pw, vm_ip } = req.body;
-  const { user } = req.session;
-  const { _id } = user;
 
-  const updatedUser = await User.findByIdAndUpdate(
-    _id,
-    {
-      vsphere: {
-        vs_id: vm_id,
-        vs_pw: vm_pw,
-        vs_ip: vm_ip,
-      },
-    },
-    { new: true } // 최근 업데이트 된 데이터로 변경
-  );
-  req.session.user = updatedUser;
-  console.log(req.session.user);
-  return res.redirect("vm/data");
+  return res.redirect(`vm/data?vs_id=${vm_id}&vs_pw=${vm_pw}&vs_ip=${vm_ip}`);
 };
 
 /**
@@ -65,6 +52,8 @@ export const getOptions = (sessionId) => {
  * Path Parameter로 사용되는 VM의 이름을 가져오는 함수
  * @param sessionId
  * @returns VM 이름
+ *
+ * GET List VM 문서
  */
 export const getVMName = async (sessionId) => {
   const options = getOptions(sessionId);
@@ -150,7 +139,7 @@ export const getHost = async (sessionId) => {
   try {
     const options = getOptions(sessionId);
     const hostInfo = await httpsGet(
-      `https://${hostIP}/rest/vcenter/host`,
+      `https://${hostIP}/rest/vcenter/hos t`,
       options
     );
     return hostInfo;

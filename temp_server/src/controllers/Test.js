@@ -323,20 +323,32 @@ export const startPower = async (request, response) => {
 };
 
 export const testGetData = async (req, res) => {
-  const user = req.session.user ? req.session.user : null;
-  console.log(user);
+  console.log(req.query);
 
-  console.log(req.session.user);
+  const {
+    session: {
+      user: { _id },
+    },
+    query: { vs_id, vs_pw, vs_ip },
+  } = req;
 
-  const data = JSON.parse(JSON.stringify(TestData));
-  console.log(data);
+  //  const user = req.session.user ? req.session.user : null;
+  //  console.log(user);
+  //  console.log(req.session.user);
+
+  const testData = JSON.parse(JSON.stringify(TestData));
 
   try {
     const updatedUser = await User.findByIdAndUpdate(
-      user._id,
+      _id,
       {
-        vsphere: {
-          info: data ? data : null,
+        $push: {
+          vsphere: {
+            vs_id,
+            vs_pw,
+            vs_ip,
+            info: testData,
+          },
         },
       },
       { new: true } // 최근 업데이트 된 데이터로 변경
