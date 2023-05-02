@@ -335,7 +335,7 @@ export const testGetData = async (req, res) => {
 
   const testData = JSON.parse(JSON.stringify(TestData));
 
-  if (req.query.vs_ip) {
+  if (vs_id && vs_pw && vs_ip) {
     try {
       const isDuplicated = await User.exists({
         _id,

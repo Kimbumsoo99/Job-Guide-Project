@@ -1,14 +1,14 @@
 mixin infoMixin(info)
-    div.HostIP(style='font-size:2rem') HostIP
+    div.HostIP(style='font-size:2rem') #{info.vs_ip}
     each hostInfo in info.info.hostInfo.value
         div.do-inner
             div.icon
                 if hostInfo.power_state=="POWERED_ON"
                     i.fa-solid.fa-desktop(style='color: #f5cc62;float:left')
-                    p(style='color: #d34242;width:auto') POWERED_OFF
+                    p(style='color: #00aa00;width:auto;') POWERED_ON
                 else 
                     i.fa-solid.fa-desktop(style='color: #f5cc62;float:left')
-                    p(style='color: #00aa00;width:auto;') POWERED_ON
+                    p(style='color: #d34242;width:auto') POWERED_OFF
             div.content
                 h3 #{hostInfo.host}
                 p #{hostInfo.name}
