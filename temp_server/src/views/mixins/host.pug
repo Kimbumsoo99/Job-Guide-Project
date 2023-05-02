@@ -1,0 +1,9 @@
+mixin hostMixin(host)
+    div.do-inner
+        div.icon
+            i.fa-solid.fa-desktop(style='color: #f5cc62')
+        div.content
+            h3 #{host.info[0].hostInfo.value[0].name} HOST1
+            p CPU : 2vCPUs
+            p MEM : #{Math.floor(host.info[0].memoryInfo.value.size_MiB/1000)} GB
+            p MEM : 300GB

@@ -322,8 +322,8 @@ export const startPower = async (request, response) => {
   }
 };
 
-export const testHostInfo = async (req, res) => {
-  const user = req.session.user;
+export const testGetData = async (req, res) => {
+  const user = req.session.user ? req.session.user : null;
   console.log(user);
 
   console.log(req.session.user);
@@ -347,4 +347,8 @@ export const testHostInfo = async (req, res) => {
     return res.redirect("/").statusCode(400);
   }
   return res.redirect("/");
+};
+
+export const testHostInfo = async (req, res) => {
+  return res.render("hostPage");
 };
