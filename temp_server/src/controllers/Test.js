@@ -322,8 +322,29 @@ export const startPower = async (request, response) => {
   }
 };
 
-export const testHostInfo = (req, res) => {
+export const testHostInfo = async (req, res) => {
+  const user = req.session.user;
+  console.log(user);
+
+  console.log(req.session.user);
+
   const data = JSON.parse(JSON.stringify(TestData));
   console.log(data);
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      user._id,
+      {
+        vsphere: {
+          info: data ? data : null,
+        },
+      },
+      { new: true } // 최근 업데이트 된 데이터로 변경
+    );
+    req.session.user = updatedUser;
+  } catch (err) {
+    console.log(err);
+    return res.redirect("/").statusCode(400);
+  }
   return res.redirect("/");
 };
