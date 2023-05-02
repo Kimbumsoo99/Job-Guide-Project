@@ -334,24 +334,35 @@ export const testGetData = async (req, res) => {
   //  console.log(req.session.user);
 
   const testData = JSON.parse(JSON.stringify(TestData));
-  if (req.query) {
+
+  if (req.query.vs_ip) {
     try {
-      const updatedUser = await User.findByIdAndUpdate(
+      const isDuplicated = await User.exists({
         _id,
-        {
-          $push: {
-            vsphere: {
-              vs_id,
-              vs_pw,
-              vs_ip,
-              info: testData,
+        "vsphere.vs_ip": vs_ip,
+      });
+      if (isDuplicated) {
+        console.log("Duplicate data");
+        return redirect("/");
+      } else {
+        const updatedUser = await User.findByIdAndUpdate(
+          _id,
+          {
+            $push: {
+              vsphere: {
+                vs_id,
+                vs_pw,
+                vs_ip,
+                info: testData,
+              },
             },
           },
-        },
-        { new: true } // 최근 업데이트 된 데이터로 변경
-      );
-      req.session.user = updatedUser;
-      return res.redirect("/test/page");
+
+          { new: true } // 최근 업데이트 된 데이터로 변경
+        );
+        req.session.user = updatedUser;
+        return res.redirect("/test/page");
+      }
     } catch (err) {
       console.log(err);
       return res.redirect("/").statusCode(400);
