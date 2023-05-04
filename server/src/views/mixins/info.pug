@@ -4,7 +4,7 @@ mixin infoMixin(info)
     div.HostIP(style='font-size:2rem') #{info.vs_ip}
     each hostInfo in info.info.hostInfo.value
         div.do-inner
-            a(href=`vm?hosts=${hostInfo.host}&vs_id=${info.vs_id}&vs_pw=${info.vs_pw}&vs_ip=${info.vs_ip}`)
+            a(href=`/hosts/vm?hosts=${hostInfo.host}&vs_id=${info.vs_id}&vs_pw=${info.vs_pw}&vs_ip=${info.vs_ip}`)
                 div.icon
                     if hostInfo.power_state=="POWERED_ON"
                         i.fa-solid.fa-desktop(style='color: #f5cc62;float:left')
