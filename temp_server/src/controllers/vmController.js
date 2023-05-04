@@ -2,11 +2,9 @@ import User from "../models/User";
 
 const https = require("https");
 
-/*
 const username = "administrator@vsphere.local";
 const password = "123Qwer!";
 const hostIP = "192.168.0.102";
-*/
 
 export const home = (req, res) => res.render("home");
 
@@ -63,6 +61,8 @@ export const getVMName = async (sessionId) => {
   options.method = "GET";
 
   const res = await httpsGet(`https://${hostIP}/rest/vcenter/vm`, options);
+  return res.send(res);
+  console.log(res);
   const vmId = res.value[0].vm;
   return vmId;
 };
@@ -139,7 +139,7 @@ export const getHost = async (sessionId) => {
   try {
     const options = getOptions(sessionId);
     const hostInfo = await httpsGet(
-      `https://${hostIP}/rest/vcenter/hos t`,
+      `https://${hostIP}/rest/vcenter/host`,
       options
     );
     return hostInfo;
