@@ -5,6 +5,8 @@ const https = require("https");
 
 let hostIP = "192.168.0.102";
 
+export const home = (req, res) => res.render("home");
+
 export const getAddBasicInfo = (req, res) => {
   const { user } = req.session;
   console.log(user.vsphere);
