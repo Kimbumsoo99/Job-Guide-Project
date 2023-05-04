@@ -1,14 +1,6 @@
 import User from "../models/User";
 import { getSessionId } from "./headerGet";
-import { getVMList } from "./vmController";
-import {
-  getDataCenterList,
-  getDataStoreList,
-  getHardMemory,
-  getHost,
-  getNetwork,
-  getVMInfo,
-} from "./vmControllerTest";
+import { getHost, getVMList } from "./vmController";
 
 export const getCloudHost = async (req, res) => {
   console.log(req.query);
