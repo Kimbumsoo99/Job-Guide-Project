@@ -1,4 +1,4 @@
-import User from "../../../temp_server/src/models/User";
+import User from "../models/User";
 import { getSessionId } from "./headerGet";
 import { getVMList } from "./vmController";
 import {
