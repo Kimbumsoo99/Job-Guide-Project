@@ -109,6 +109,7 @@ export const testGetHost = async (req, res) => {
       } else {
         const sessionId = await getSessionId(vs_id, vs_pw, vs_ip);
         const hostInfo = await getHost(sessionId);
+        //const hostInfo = HostData;
 
         const updatedUser = await User.findByIdAndUpdate(
           _id,

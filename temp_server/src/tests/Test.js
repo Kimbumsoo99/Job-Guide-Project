@@ -327,8 +327,11 @@ export const startPower = async (request, response) => {
 export const testGetHost = async (req, res) => {
   console.log(req.query);
 
-  const { session } = req;
-  const { _id } = session.user;
+  const {
+    session: {
+      user: { _id },
+    },
+  } = req;
   const { vs_id, vs_pw, vs_ip } = req.query ? req.query : null;
 
   //  const user = req.session.user ? req.session.user : null;

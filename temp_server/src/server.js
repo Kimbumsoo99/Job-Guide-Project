@@ -36,10 +36,10 @@ app.use(
     },*/
     store: MongoStore.create({
       mongoUrl: "mongodb://localhost:27017/testlogin",
-      ttl: 30, //초 단위
+      ttl: 3600, //초 단위
       autoRemove: "interval",
-      autoRemoveInterval: 10, // In minutes. Default
-      touchAfter: 30, // time period in seconds
+      autoRemoveInterval: 60, // In minutes. Default
+      touchAfter: 60, // time period in seconds
     }),
   })
 );

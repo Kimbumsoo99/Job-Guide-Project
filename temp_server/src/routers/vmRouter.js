@@ -4,10 +4,10 @@ import {
   getHost,
   postAddBasicInfo,
 } from "../controllers/vmController";
-import { getCloudData, testGetHost } from "../controllers/cloudData";
+import { getCloudData } from "../controllers/cloudData";
 import { protectorMiddleware } from "../middlewares";
 import { patchMemory, startPower, stopPower } from "../controllers/vmChangeSet";
-import { testGetData } from "../controllers/Test";
+import { testGetHost } from "../tests/Test";
 
 const vmRouter = express.Router();
 
@@ -18,7 +18,7 @@ vmRouter
   .post(postAddBasicInfo);
 
 vmRouter.get("/data", getCloudData);
-vmRouter.get("/data/t", testGetData);
+vmRouter.get("/data/t", testGetHost);
 vmRouter.get("/patch/memory", patchMemory);
 vmRouter.get("/stop/power", stopPower);
 vmRouter.get("/start/power", startPower);

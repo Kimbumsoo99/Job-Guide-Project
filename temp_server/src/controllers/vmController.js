@@ -21,13 +21,15 @@ export const getAddBasicInfo = (req, res) => {
   console.log(user.vsphere);
   if (isEmptyArr(user.vsphere) || req.query.add == 1)
     return res.render("cloudinput");
-  return res.redirect("/vm/data");
+  //return res.redirect("/vm/data");
+  return res.redirect("/vm/host");
 };
 
 export const postAddBasicInfo = async (req, res) => {
   const { vm_id, vm_pw, vm_ip } = req.body;
 
-  return res.redirect(`/vm/data?vs_id=${vm_id}&vs_pw=${vm_pw}&vs_ip=${vm_ip}`);
+  //return res.redirect(`/vm/data?vs_id=${vm_id}&vs_pw=${vm_pw}&vs_ip=${vm_ip}`);
+  return res.redirect(`/vm/host?vs_id=${vm_id}&vs_pw=${vm_pw}&vs_ip=${vm_ip}`);
 };
 
 /**

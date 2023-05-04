@@ -125,7 +125,45 @@ label span {
   background: #f5cc62;
   color: #000;
   border-radius: 100px;
-  width: 140px;
+  width: 340px;
+  height: 49px;
+  font-size: 16px;
+  position: absolute;
+  top: 79%;
+  right: 8%;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.btn1:hover {
+  background: #5d33e6;
+}
+
+#btn1 {
+  border: 0;
+  background: #f5cc62;
+  color: #000;
+  border-radius: 100px;
+  width: 160px;
+  height: 49px;
+  font-size: 16px;
+  position: absolute;
+  top: 79%;
+  right: 8%;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+#btn1:hover {
+  background: #5d33e6;
+}
+
+#btn2 {
+  border: 0;
+  background: #f5cc62;
+  color: #000;
+  border-radius: 100px;
+  width: 160px;
   height: 49px;
   font-size: 16px;
   position: absolute;
@@ -135,7 +173,7 @@ label span {
   cursor: pointer;
 }
 
-.btn1:hover {
+#btn2:hover {
   background: #5d33e6;
 }
 

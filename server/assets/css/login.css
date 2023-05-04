@@ -135,6 +135,10 @@ label span {
   cursor: pointer;
 }
 
+.btn1:hover {
+  background: #5d33e6;
+}
+
 #btn1 {
   border: 0;
   background: #f5cc62;
