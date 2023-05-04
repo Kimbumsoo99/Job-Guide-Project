@@ -425,19 +425,55 @@ export const testVMPage = async (req, res) => {
       );
       req.session.user = updatedUser;
       console.log("여까지 옴  2222222222");
-      return res.redirect(`/test/page/vm?hosts=${hosts}`);
+      return res.redirect(
+        `/test/page/vm?hosts=${hosts}&vs_id=${vs_id}&vs_ip=${vs_ip}`
+      );
     } catch (err) {
       console.log(err);
       return res.redirect("/").statusCode(400);
     }
   } else {
-    return res.redirect(`/test/page/vm?hosts=${hosts}`);
+    return res.redirect(
+      `/test/page/vm?hosts=${hosts}&vs_id=${vs_id}&vs_ip=${vs_ip}`
+    );
   }
 };
 
 export const testVMInfo = async (req, res) => {
-  const { hosts } = req.query ? req.query : null;
+  const {
+    session: {
+      user: { _id },
+    },
+  } = req;
+  const { hosts, vs_id, vs_ip } = req.query ? req.query : null;
   console.log(req.query);
   console.log(hosts);
-  return res.render("vmPage", { hosts: hosts });
+
+  const user = await User.findById({
+    _id,
+    "vsphere.vs_id": vs_id,
+    "vsphere.vs_ip": vs_ip,
+  });
+
+  let VMArray;
+  console.log(user.vsphere.length);
+  for (let i = 0; i < user.vsphere.length; i++) {
+    if (user.vsphere[i].vs_id === vs_id && user.vsphere[i].vs_ip === vs_ip) {
+      VMArray = user.vsphere[i];
+      break;
+    }
+  }
+  console.log(VMArray);
+  let hostVMArray;
+  console.log(VMArray.info.hostInfo.value.length);
+  for (let i = 0; i < VMArray.info.hostInfo.value.length; i++) {
+    if (VMArray.info.hostInfo.value[i].host === hosts) {
+      hostVMArray = VMArray.info.hostInfo.value[i].vmInfo.value;
+      break;
+    }
+  }
+  console.log(hostVMArray);
+
+  //return res.redirect("/");
+  return res.render("vmPage", { hosts: hosts, vmList: hostVMArray });
 };

@@ -1,3 +1,4 @@
+include mixins/vmList
 doctype html
 head
     meta(charset='UTF-8')
@@ -20,5 +21,9 @@ body
             div.container
                 div.title
                     h2 Host Name: 
-                       span.HostIP #{hosts}
-                
+                        span.HostIP #{hosts}
+                div.do-me
+                    each vm in vmList
+                        +vmListMixin(vm)
+                    else
+                        span.empty__message No host found
