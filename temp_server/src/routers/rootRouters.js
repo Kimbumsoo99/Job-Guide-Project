@@ -12,6 +12,9 @@ import {
   testGetHost,
   testGetVMList,
   testHostInfo,
+  testVMInfo,
+  testVMPage,
+  testgetCloudVM,
 } from "../tests/Test";
 import { localsMiddleware, protectorMiddleware } from "../middlewares";
 import { testGetVM } from "../controllers/cloudData";
@@ -23,10 +26,12 @@ rootRouter.route("/login").get(getLogin).post(postLogin);
 rootRouter.route("/join").get(getJoin).post(postJoin);
 rootRouter.get("/logout", getLogout);
 rootRouter.route("/test").all(protectorMiddleware).get(testGetHost);
-rootRouter.route("/test/page").get(testHostInfo);
 
 //
 //Test 코드
-rootRouter.get("/test/host", testGetVM);
+//rootRouter.get("/test/host", testGetVM);
+rootRouter.route("/test/page").get(testHostInfo);
+rootRouter.get("/host/vm", testVMPage);
+rootRouter.get("/test/page/vm", testVMInfo);
 
 export default rootRouter;

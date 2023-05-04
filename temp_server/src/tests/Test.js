@@ -381,12 +381,63 @@ export const testHostInfo = async (req, res) => {
   return res.render("hostPage");
 };
 
-export const testGetVMList = async (sessionId, vCenterIP, hosts) => {
-  const options = getOptions(sessionId);
+export const testgetCloudVM = async (req, res) => {
+  const vmList = VmData;
 
-  const vmList = await httpsGet(
-    `https://${vCenterIP}/rest/vcenter/vm?filter.hosts=${hosts}`,
-    options
-  );
   return vmList;
+};
+
+export const testVMPage = async (req, res) => {
+  const vmInfo = await testgetCloudVM();
+  console.log("여까지 옴  11111111");
+  console.log(req.query);
+
+  const {
+    session: {
+      user: { _id },
+    },
+  } = req;
+  const { vs_id, vs_pw, vs_ip, hosts } = req.query ? req.query : null;
+
+  console.log(vmInfo);
+  if (vs_id && vs_pw && vs_ip && hosts) {
+    try {
+      const updatedUser = await User.findByIdAndUpdate(
+        {
+          _id,
+          "vsphere.vs_id": vs_id,
+          "vsphere.vs_pw": vs_pw,
+          "vsphere.vs_ip": vs_ip,
+          "vsphere.info.hostInfo.value.host": hosts, // host가 host-36006인 객체를 찾음
+        },
+        {
+          $set: {
+            "vsphere.$[outer].info.hostInfo.value.$[inner].vmInfo": vmInfo,
+          },
+        },
+        {
+          new: true, // 최근 업데이트 된 데이터로 변경
+          arrayFilters: [
+            { "outer.vs_id": vs_id }, // vs_id가 일치하는 객체를 찾음
+            { "inner.host": hosts }, // host가 host-36006인 객체를 찾음
+          ],
+        }
+      );
+      req.session.user = updatedUser;
+      console.log("여까지 옴  2222222222");
+      return res.redirect(`/test/page/vm?hosts=${hosts}`);
+    } catch (err) {
+      console.log(err);
+      return res.redirect("/").statusCode(400);
+    }
+  } else {
+    return res.redirect(`/test/page/vm?hosts=${hosts}`);
+  }
+};
+
+export const testVMInfo = async (req, res) => {
+  const { hosts } = req.query ? req.query : null;
+  console.log(req.query);
+  console.log(hosts);
+  return res.render("vmPage", { hosts: hosts });
 };

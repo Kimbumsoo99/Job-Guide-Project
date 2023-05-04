@@ -7,7 +7,7 @@ import {
 import { getCloudData } from "../controllers/cloudData";
 import { protectorMiddleware } from "../middlewares";
 import { patchMemory, startPower, stopPower } from "../controllers/vmChangeSet";
-import { testGetHost } from "../tests/Test";
+import { testGetHost, testGetVMList } from "../tests/Test";
 
 const vmRouter = express.Router();
 
