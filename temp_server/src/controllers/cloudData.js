@@ -6,8 +6,10 @@ import {
   getHost,
   getNetwork,
   getVMInfo,
+  getVMName,
 } from "./vmController";
 import User from "../models/User";
+import { testGetVMList } from "./Test";
 
 export const cloudData = async (req, res) => {};
 
@@ -133,4 +135,20 @@ export const testGetHost = async (req, res) => {
     // 쿼리 없으면 -> 그냥 기존 데이터 보여줌
     return res.redirect("/test/page");
   }
+};
+
+export const testGetVM = async (req, res) => {
+  console.log(req.query);
+  const {
+    session: {
+      user: { _id },
+    },
+  } = req;
+
+  const { hosts, vs_id, vs_pw, vs_ip } = req.query ? req.query : null;
+
+  const sessionId = await getSessionId(vs_id, vs_pw, vs_ip);
+  const vmList = await testGetVMList(sessionId, vs_ip, hosts);
+
+  return res.send(vmList);
 };

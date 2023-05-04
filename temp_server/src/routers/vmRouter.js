@@ -18,7 +18,7 @@ vmRouter
   .post(postAddBasicInfo);
 
 vmRouter.get("/data", getCloudData);
-//vmRouter.get("/data", testGetData);
+vmRouter.get("/data/t", testGetData);
 vmRouter.get("/patch/memory", patchMemory);
 vmRouter.get("/stop/power", stopPower);
 vmRouter.get("/start/power", startPower);

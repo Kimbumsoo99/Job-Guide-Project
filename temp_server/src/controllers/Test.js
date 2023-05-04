@@ -375,3 +375,13 @@ export const testGetData = async (req, res) => {
 export const testHostInfo = async (req, res) => {
   return res.render("hostPage");
 };
+
+export const testGetVMList = async (sessionId, vCenterIP, hosts) => {
+  const options = getOptions(sessionId);
+
+  const vmList = await httpsGet(
+    `https://${vCenterIP}/rest/vcenter/vm?filter.hosts=${hosts}`,
+    options
+  );
+  return vmList;
+};
