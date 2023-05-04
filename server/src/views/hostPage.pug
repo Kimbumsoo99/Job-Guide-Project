@@ -33,6 +33,6 @@ body
                 div.do-me
                     - var vsphere = user.vsphere
                     each info in vsphere
-                        +infoMixin(info)
+                        +hostMixin(info)
                     else
                         span.empty__message No host found

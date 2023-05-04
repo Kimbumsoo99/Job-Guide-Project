@@ -8,11 +8,11 @@ import {
   postLogin,
 } from "../controllers/userController";
 import {
-  hostPage,
-  testGetData,
+  hostPetHotestGetHost,
+  testGetHost,
   testGetVMList,
   testHostInfo,
-} from "../controllers/Test";
+} from "../tests/Test";
 import { localsMiddleware, protectorMiddleware } from "../middlewares";
 import { testGetVM } from "../controllers/cloudData";
 
@@ -22,7 +22,7 @@ rootRouter.get("/", home);
 rootRouter.route("/login").get(getLogin).post(postLogin);
 rootRouter.route("/join").get(getJoin).post(postJoin);
 rootRouter.get("/logout", getLogout);
-rootRouter.route("/test").all(protectorMiddleware).get(testGetData);
+rootRouter.route("/test").all(protectorMiddleware).get(testGetHost);
 rootRouter.route("/test/page").get(testHostInfo);
 
 //

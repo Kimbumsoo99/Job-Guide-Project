@@ -9,7 +9,14 @@ import path from "path";
 
 const app = express();
 
-const logger = morgan("dev");
+const logger = morgan("dev", {
+  skip: (req) => {
+    return (
+      req.originalUrl.includes("/assets/") ||
+      req.originalUrl.includes("/uploads/")
+    );
+  },
+});
 
 app.set("view engine", "pug");
 app.set("views", process.cwd() + "/src/views");
@@ -29,10 +36,10 @@ app.use(
     },*/
     store: MongoStore.create({
       mongoUrl: "mongodb://localhost:27017/testlogin",
-      ttl: 3600, //초 단위
+      ttl: 300, //초 단위
       autoRemove: "interval",
-      autoRemoveInterval: 60, // In minutes. Default
-      touchAfter: 30, // time period in seconds
+      autoRemoveInterval: 5, // In minutes. Default
+      touchAfter: 5, // time period in seconds
     }),
   })
 );

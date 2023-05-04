@@ -9,7 +9,7 @@ import {
   getVMName,
 } from "./vmController";
 import User from "../models/User";
-import { testGetVMList } from "./Test";
+import { testGetVMList } from "../tests/Test";
 
 export const cloudData = async (req, res) => {};
 

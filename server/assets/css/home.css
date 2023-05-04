@@ -120,7 +120,7 @@ main h2 span::after {
   background: white;
 
   display: inline-block;
-  animation: blink 0.7s ease-in-out infinite;
+  animation: blink 1s ease-in-out infinite;
 }
 @keyframes blink {
   0% {

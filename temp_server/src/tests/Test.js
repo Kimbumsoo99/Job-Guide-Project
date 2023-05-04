@@ -1,6 +1,8 @@
-import { getSessionId } from "./headerGet";
+import { getSessionId } from "../controllers/headerGet";
 import User from "../models/User";
 import TestData from "./data.json";
+import HostData from "./host.json";
+import VmData from "./vmlist.json";
 
 const https = require("https");
 
@@ -322,7 +324,7 @@ export const startPower = async (request, response) => {
   }
 };
 
-export const testGetData = async (req, res) => {
+export const testGetHost = async (req, res) => {
   console.log(req.query);
 
   const { session } = req;
@@ -333,7 +335,7 @@ export const testGetData = async (req, res) => {
   //  console.log(user);
   //  console.log(req.session.user);
 
-  const testData = JSON.parse(JSON.stringify(TestData));
+  const testData = JSON.parse(JSON.stringify(HostData));
 
   if (vs_id && vs_pw && vs_ip) {
     try {
@@ -353,7 +355,7 @@ export const testGetData = async (req, res) => {
                 vs_id,
                 vs_pw,
                 vs_ip,
-                info: testData,
+                info: { hostInfo: testData },
               },
             },
           },
