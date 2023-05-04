@@ -6,7 +6,7 @@ import {
   getAddBasicInfo,
   postAddBasicInfo,
 } from "../controllers/vmController";
-import { getCloudData, getCloudHost } from "../controllers/cloudData";
+import { getCloudHost } from "../controllers/cloudData";
 import { protectorMiddleware } from "../middlewares";
 import {
   patchMemoryTest,

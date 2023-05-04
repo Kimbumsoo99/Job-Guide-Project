@@ -1,5 +1,5 @@
 import { getSessionId } from "./headerGet";
-import { getOptions, getVMName } from "./vmControllerTest";
+import { getOptions, getVMName } from "./vmController";
 
 let hostIP = "192.168.0.102";
 

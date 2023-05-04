@@ -7,7 +7,7 @@ import {
   postJoin,
   postLogin,
 } from "../controllers/userController";
-import { getCloudHost, getCloudVM } from "../controllers/cloudData";
+import { getCloudVM } from "../controllers/cloudData";
 
 const rootRouter = express.Router();
 
