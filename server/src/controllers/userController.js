@@ -53,3 +53,10 @@ export const postJoin = async (req, res) => {
     return res.status(400).render("join");
   }
 };
+
+export const getLogout = (req, res) => {
+  req.session.user = null;
+  res.locals.loggedInUser = req.session.user;
+  req.session.loggedIn = false;
+  return res.redirect("/");
+};
