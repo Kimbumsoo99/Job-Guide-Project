@@ -5,6 +5,14 @@ const https = require("https");
 
 let hostIP = "192.168.0.102";
 
+function isEmptyArr(arr) {
+  if (Array.isArray(arr) && arr.length === 0) {
+    return true;
+  }
+
+  return false;
+}
+
 export const home = (req, res) => res.render("home");
 
 export const getAddBasicInfo = (req, res) => {
