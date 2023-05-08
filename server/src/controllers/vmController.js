@@ -25,9 +25,9 @@ export const getAddBasicInfo = (req, res) => {
 };
 
 export const postAddBasicInfo = async (req, res) => {
-  const { vm_id, vm_pw, vm_ip } = req.body;
+  const { vs_id, vs_pw, vs_ip } = req.body;
 
-  return res.redirect(`/vm/data?vs_id=${vm_id}&vs_pw=${vm_pw}&vs_ip=${vm_ip}`);
+  return res.redirect(`/vm/data?vs_id=${vs_id}&vs_pw=${vs_pw}&vs_ip=${vs_ip}`);
 };
 
 /**
