@@ -4,6 +4,7 @@ import morgan from "morgan";
 import MongoStore from "connect-mongo";
 import session from "express-session";
 import vmRouter from "./routers/vmRouter";
+import favicon from "serve-favicon";
 import { localsMiddleware } from "./middlewares";
 import path from "path";
 
@@ -17,7 +18,8 @@ const logger = morgan("dev", {
     );
   },
 });
-
+app.use(favicon(path.join(__dirname, "..", "uploads", "favicon.ico")));
+console.log(path.join(__dirname, "..", "uploads", "favicon.ico"));
 app.set("view engine", "pug");
 app.set("views", process.cwd() + "/src/views");
 
