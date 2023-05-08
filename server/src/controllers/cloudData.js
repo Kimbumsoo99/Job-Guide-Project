@@ -77,6 +77,7 @@ export const getCloudVMList = async (
  */
 export const getCloudVM = async (req, res) => {
   //console.log(req.query);
+  console.log("getCloudVM");
   const {
     session: {
       user: { _id },
@@ -87,6 +88,7 @@ export const getCloudVM = async (req, res) => {
   }
 
   const { hosts, vs_id, vs_pw, vs_ip } = req.query ? req.query : null;
+  console.log(req.query);
   if (vs_id && vs_pw && vs_ip && hosts) {
     try {
       const vmList = await getCloudVMList(vs_id, vs_pw, vs_ip, hosts);
