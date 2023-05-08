@@ -82,7 +82,7 @@ export const getCloudVM = async (req, res) => {
       user: { _id },
     },
   } = req;
-  if (!_Id) {
+  if (!_id) {
     return res.redirect("/").statusCode(400);
   }
 

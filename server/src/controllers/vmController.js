@@ -327,11 +327,15 @@ export const hostVMPageRender = async (req, res) => {
     "vsphere.vs_id": vs_id,
     "vsphere.vs_ip": vs_ip,
   });
+  console.log("hostVMPageRender");
+  console.log(user);
 
   let findUserVSphere;
   for (let i = 0; i < user.vsphere.length; i++) {
     if (user.vsphere[i].vs_id === vs_id && user.vsphere[i].vs_ip === vs_ip) {
       findUserVSphere = user.vsphere[i];
+      console.log(findUserVSphere);
+      break;
     }
   }
 
@@ -339,6 +343,7 @@ export const hostVMPageRender = async (req, res) => {
   for (let i = 0; i < findUserVSphere.info.hostInfo.value.length; i++) {
     if ((findUserVSphere.info.hostInfo.value[i].host = hosts)) {
       vmList = findUserVSphere.info.hostInfo.value[i].vmInfo.value;
+      console.log(vmList);
       break;
     }
   }
