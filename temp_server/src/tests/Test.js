@@ -382,12 +382,14 @@ export const testHostInfo = async (req, res) => {
 };
 
 export const testgetCloudVM = async (req, res) => {
+  //getCloudVMList
   const vmList = VmData;
 
   return vmList;
 };
 
 export const testVMPage = async (req, res) => {
+  //getCloudVM
   const vmInfo = await testgetCloudVM();
   console.log("여까지 옴  11111111");
   console.log(req.query);

@@ -1,5 +1,10 @@
 import express from "express";
-import { getVMList, home, hostPageRender } from "../controllers/vmController";
+import {
+  getVMList,
+  home,
+  hostPageRender,
+  hostVMPageRender,
+} from "../controllers/vmController";
 import {
   getJoin,
   getLogin,
@@ -15,7 +20,9 @@ rootRouter.get("/", home);
 rootRouter.route("/login").get(getLogin).post(postLogin);
 rootRouter.route("/join").get(getJoin).post(postJoin);
 rootRouter.get("/logout", getLogout);
+
 rootRouter.route("/hosts").get(hostPageRender);
-rootRouter.route("/hosts/vm").get(getCloudVM);
+rootRouter.route("/hosts/get-vm").get(getCloudVM);
+rootRouter.route("/hosts/vms").get(hostVMPageRender);
 
 export default rootRouter;

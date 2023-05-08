@@ -4,6 +4,7 @@ import morgan from "morgan";
 import MongoStore from "connect-mongo";
 import session from "express-session";
 import vmRouter from "./routers/vmRouter";
+import favicon from "serve-favicon";
 import { localsMiddleware } from "./middlewares";
 import path from "path";
 
@@ -22,6 +23,7 @@ app.set("view engine", "pug");
 app.set("views", process.cwd() + "/src/views");
 
 app.use(logger); //morgan
+app.use(favicon(path.join(__dirname, "..", "uploads", "favicon.ico")));
 app.use(express.urlencoded({ extended: true })); //express가 form의 value들을 이해할 수 있도록 함.
 // app.use(express.text()); express에 내장된 미들웨어 기능으로 body-parser를 기반으로 request payload로 전달한 문자열을 파싱
 app.use(express.json());
@@ -36,10 +38,10 @@ app.use(
     },*/
     store: MongoStore.create({
       mongoUrl: "mongodb://localhost:27017/testlogin",
-      ttl: 300, //초 단위
+      ttl: 3600, //초 단위
       autoRemove: "interval",
-      autoRemoveInterval: 5, // In minutes. Default
-      touchAfter: 5, // time period in seconds
+      autoRemoveInterval: 60, // In minutes. Default
+      touchAfter: 60, // time period in seconds
     }),
   })
 );

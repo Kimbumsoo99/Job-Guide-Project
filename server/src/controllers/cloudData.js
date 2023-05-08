@@ -55,18 +55,74 @@ export const getCloudHost = async (req, res) => {
   }
 };
 
+export const getCloudVMList = async (
+  vsphereId,
+  vspherePw,
+  vcenterIp,
+  hosts
+) => {
+  const sessionId = await getSessionId(vsphereId, vspherePw, vcenterIp);
+  const vmList = await getVMList(sessionId, vcenterIp, hosts);
+
+  return vmList;
+};
+
+/**
+ * /hosts/vm GET 요청시 동작 함수
+ *
+ * query에 host 이름, vSphere 정보를 토대로 해당 host 하위 VM List를 가져옴.
+ *
+ * 이후 가져온 VM List를 User 정보에 host에 저장 후 해당 페이지 출력하는 함수로 redircet
+ * @returns
+ */
 export const getCloudVM = async (req, res) => {
-  console.log(req.query);
+  //console.log(req.query);
   const {
     session: {
       user: { _id },
     },
   } = req;
+  if (!_Id) {
+    return res.redirect("/").statusCode(400);
+  }
 
   const { hosts, vs_id, vs_pw, vs_ip } = req.query ? req.query : null;
+  if (vs_id && vs_pw && vs_ip && hosts) {
+    try {
+      const vmList = await getCloudVMList(vs_id, vs_pw, vs_ip, hosts);
+      console.log(vmList);
 
-  const sessionId = await getSessionId(vs_id, vs_pw, vs_ip);
-  const vmList = await getVMList(sessionId, vs_ip, hosts);
-
-  return res.send(vmList);
+      const updatedUser = await User.findByIdAndUpdate(
+        {
+          _id,
+          "vsphere.vs_id": vs_id,
+          "vsphere.vs_pw": vs_pw,
+          "vsphere.vs_ip": vs_ip,
+          "vsphere.info.hostInfo.value.host": hosts, // host가 host-36006인 객체를 찾음
+        },
+        {
+          $set: {
+            "vsphere.$[outer].info.hostInfo.value.$[inner].vmInfo": vmList,
+          },
+        },
+        {
+          new: true, // 최근 업데이트 된 데이터로 변경
+          arrayFilters: [
+            { "outer.vs_id": vs_id }, // vs_id가 일치하는 객체를 찾음
+            { "inner.host": hosts }, // host가 host-36006인 객체를 찾음
+          ],
+        }
+      );
+      req.session.user = updatedUser;
+      return res.redirect(
+        `/hosts/vms?hosts=${hosts}&vs_id=${vs_id}&vs_ip=${vs_ip}`
+      );
+    } catch (err) {
+      console.log(err);
+      return res.redirect("/").statusCode(400);
+    }
+  } else {
+    return res.redirect(`/hosts/vms`);
+  }
+  //return res.send(vmList);
 };

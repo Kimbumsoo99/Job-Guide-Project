@@ -313,3 +313,36 @@ export const getVMList = async (sessionId, vCenterIP, hosts) => {
   );
   return vmList;
 };
+
+export const hostVMPageRender = async (req, res) => {
+  const {
+    session: {
+      user: { _id },
+    },
+  } = req;
+  const { hosts, vs_id, vs_ip } = req.query ? req.query : null;
+
+  const user = await User.findById({
+    _id,
+    "vsphere.vs_id": vs_id,
+    "vsphere.vs_ip": vs_ip,
+  });
+
+  let findUserVSphere;
+  for (let i = 0; i < user.vsphere.length; i++) {
+    if (user.vsphere[i].vs_id === vs_id && user.vsphere[i].vs_ip === vs_ip) {
+      findUserVSphere = user.vsphere[i];
+    }
+  }
+
+  let vmList;
+  for (let i = 0; i < findUserVSphere.info.hostInfo.value.length; i++) {
+    if ((findUserVSphere.info.hostInfo.value[i].host = hosts)) {
+      vmList = findUserVSphere.info.hostInfo.value[i].vmInfo.value;
+      break;
+    }
+  }
+  console.log(vmList);
+
+  return res.render("vmPage", { hosts, vmList });
+};
