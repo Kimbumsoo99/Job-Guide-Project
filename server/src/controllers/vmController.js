@@ -301,28 +301,33 @@ export const startPower = async (request, response) => {
 };
 
 export const hostPageRender = async (req, res) => {
+  console.log("hostPageRender 호출");
   return res.render("hostPage");
 };
 
 export const getVMList = async (sessionId, vCenterIP, hosts) => {
+  console.log("\ngetVMList 호출\n");
   const options = getOptions(sessionId);
 
-  const vmList = await httpsGet(
+  /*const vmList = await httpsGet(
     `https://${vCenterIP}/rest/vcenter/vm`,
     options
-  );
-  /*const vmList = await httpsGet(
+  );*/
+  const vmList = await httpsGet(
     `https://${vCenterIP}/rest/vcenter/vm?filter.hosts=${hosts}`,
     options
-  );*/
+  );
+
   console.log(
-    `https://${vCenterIP}/rest/vcenter/vm?filter.hosts=${hosts}: getVMList 함수`
+    `https://${vCenterIP}/rest/vcenter/vm?filter.hosts=${hosts} : getVMList 요청 링크`
   );
   console.log(vmList);
+  console.log("getVMList 종료");
   return vmList;
 };
 
 export const hostVMPageRender = async (req, res) => {
+  console.log("\nhostVMPageRender 호출\n");
   const {
     session: {
       user: { _id },
@@ -342,6 +347,7 @@ export const hostVMPageRender = async (req, res) => {
   for (let i = 0; i < user.vsphere.length; i++) {
     if (user.vsphere[i].vs_id === vs_id && user.vsphere[i].vs_ip === vs_ip) {
       findUserVSphere = user.vsphere[i];
+      console.log(`User.vsphere[${i}]`);
       console.log(findUserVSphere);
       break;
     }
@@ -351,11 +357,10 @@ export const hostVMPageRender = async (req, res) => {
   for (let i = 0; i < findUserVSphere.info.hostInfo.value.length; i++) {
     if ((findUserVSphere.info.hostInfo.value[i].host = hosts)) {
       vmList = findUserVSphere.info.hostInfo.value[i].vmInfo.value;
+      console.log(`info.hostInfo.value[${i}].vmInfo.value`);
       console.log(vmList);
       break;
     }
   }
-  console.log(vmList);
-
-  return res.render("vmPage", { hosts, vmList });
+  return res.render("vmPage", { hosts: hosts, vmList: vmList });
 };

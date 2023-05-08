@@ -5,6 +5,7 @@ const password = "123Qwer!";
 const hostIP = "192.168.0.102";
 
 export const getSessionId = async (username, password, hostIP) => {
+  console.log("\ngetSessionId 호출\n");
   const data = JSON.stringify({});
   let sessionIdJson;
 

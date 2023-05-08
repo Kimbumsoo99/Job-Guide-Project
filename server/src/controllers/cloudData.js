@@ -3,6 +3,7 @@ import { getSessionId } from "./headerGet";
 import { getHost, getVMList } from "./vmController";
 
 export const getCloudHost = async (req, res) => {
+  console.log("getCloudHost 호출");
   console.log(req.query);
 
   const {
@@ -61,14 +62,16 @@ export const getCloudVMList = async (
   vcenterIp,
   hosts
 ) => {
+  console.log("\ngetCloudVMList 호출\n");
   const sessionId = await getSessionId(vsphereId, vspherePw, vcenterIp);
   const vmList = await getVMList(sessionId, vcenterIp, hosts);
-
+  console.log("return온 vmList 확인");
+  console.log(vmList);
   return vmList;
 };
 
 /**
- * /hosts/vm GET 요청시 동작 함수
+ * /hosts/get-vm GET 요청시 동작 함수
  *
  * query에 host 이름, vSphere 정보를 토대로 해당 host 하위 VM List를 가져옴.
  *
@@ -76,22 +79,27 @@ export const getCloudVMList = async (
  * @returns
  */
 export const getCloudVM = async (req, res) => {
-  //console.log(req.query);
-  console.log("getCloudVM");
+  console.log("\ngetCloudVM 호출\n");
+  console.log(req.query);
   const {
     session: {
       user: { _id },
     },
   } = req;
   if (!_id) {
+    console.log("_id 세션 만료");
     return res.redirect("/").statusCode(400);
   }
 
   const { hosts, vs_id, vs_pw, vs_ip } = req.query ? req.query : null;
-  console.log(req.query);
   if (vs_id && vs_pw && vs_ip && hosts) {
     try {
+      console.log(req.session.user.vsphere[0]);
+      console.log(req.session.user.vsphere[0].info.hostInfo.value);
+      //console.log(req.session.user.vsphere[0].info.hostInfo.value[0]);
       const vmList = await getCloudVMList(vs_id, vs_pw, vs_ip, hosts);
+      console.log("\n다시 getCloudVM부터 시작\n");
+      console.log("vmList 부터");
       console.log(vmList);
 
       const updatedUser = await User.findByIdAndUpdate(
