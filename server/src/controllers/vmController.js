@@ -311,6 +311,8 @@ export const getVMList = async (sessionId, vCenterIP, hosts) => {
     `https://${vCenterIP}/rest/vcenter/vm?filter.hosts=${hosts}`,
     options
   );
+  console.log("getVMList 함수");
+  console.log(vmList);
   return vmList;
 };
 
