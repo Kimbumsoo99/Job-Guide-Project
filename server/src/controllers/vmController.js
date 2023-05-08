@@ -308,10 +308,16 @@ export const getVMList = async (sessionId, vCenterIP, hosts) => {
   const options = getOptions(sessionId);
 
   const vmList = await httpsGet(
-    `https://${vCenterIP}/rest/vcenter/vm?filter.hosts=${hosts}`,
+    `https://${vCenterIP}/rest/vcenter/vm`,
     options
   );
-  console.log("getVMList 함수");
+  /*const vmList = await httpsGet(
+    `https://${vCenterIP}/rest/vcenter/vm?filter.hosts=${hosts}`,
+    options
+  );*/
+  console.log(
+    `https://${vCenterIP}/rest/vcenter/vm?filter.hosts=${hosts}: getVMList 함수`
+  );
   console.log(vmList);
   return vmList;
 };
