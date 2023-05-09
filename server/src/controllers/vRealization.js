@@ -79,22 +79,26 @@ async function getAllCPUUsages() {
       res.on("data", (chunk) => {
         data += chunk;
       });
-
       res.on("end", () => {
-        const resources = JSON.parse(data)._embedded["vr:resourceDto"];
+        try {
+          console.log(data);
+          const resources = JSON.parse(data)._embedded["vr:resourceDto"];
 
-        const cpuMetricsPromises = resources.map((resource) => {
-          const resourceId = resource.identifier.id;
-          return getCPUUsage(resourceId);
-        });
-
-        Promise.all(cpuMetricsPromises)
-          .then((cpuUsages) => {
-            resolve(cpuUsages);
-          })
-          .catch((error) => {
-            reject(error);
+          const cpuMetricsPromises = resources.map((resource) => {
+            const resourceId = resource.identifier.id;
+            return getCPUUsage(resourceId);
           });
+
+          Promise.all(cpuMetricsPromises)
+            .then((cpuUsages) => {
+              resolve(cpuUsages);
+            })
+            .catch((error) => {
+              reject(error);
+            });
+        } catch (err) {
+          console.error(err);
+        }
       });
     });
 
@@ -107,7 +111,7 @@ async function getAllCPUUsages() {
 }
 
 // 5초마다 모든 가상 머신의 CPU 사용률을 가져와 출력하는 함수
-export const getCPUUsagefunction = async (req, res) => {
+export const getCPUUsagefucn = async (req, res) => {
   try {
     const cpuUsages = await getAllCPUUsages();
     console.log(cpuUsages);
