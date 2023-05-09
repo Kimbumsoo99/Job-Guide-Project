@@ -3,7 +3,7 @@ const https = require("https");
 // vRealize Operations API 호스트 이름
 const vropsHostname = "192.168.0.109";
 
-// vRealize Operations API 인증 토큰
+// vRealize Operations API 인증 토큰 (05100133 기준 토큰 오류 예상)
 const vropsToken =
   "40GNdlJaQexMHw9guyT772J3AAddabBOcHYUZkIi3REJYkDA56FV97/KFDMJujOV";
 
@@ -11,18 +11,22 @@ const vropsToken =
 const vropsPath =
   "/suite-api/api/resources?adapterKind=VMWARE&resourceKind=VirtualMachine";
 
-// vRealize Operations API 옵션
-const vropsOptions = {
-  hostname: vropsHostname,
-  port: 443,
-  path: vropsPath,
-  method: "GET",
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: `vRealizeOpsToken ${vropsToken}`,
-  },
-  rejectUnauthorized: false,
+const getOptions = (host, url, token) => {
+  return {
+    hostname: host,
+    port: 443,
+    path: url,
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `vRealizeOpsToken ${token}`,
+    },
+    rejectUnauthorized: false,
+  };
 };
+
+// vRealize Operations API 옵션
+const vropsOptions = getOptions(vropsHostname, vropsPath, vropsToken);
 
 // 가상 머신의 CPU 사용률을 가져오는 함수
 async function getCPUUsage(resourceId) {
@@ -31,17 +35,7 @@ async function getCPUUsage(resourceId) {
   const vropsPath = `/suite-api/api/resources/${resourceId}/stats?statKey=cpu|usage_average`;
 
   // vRealize Operations API 옵션
-  const vropsOptions = {
-    hostname: vropsHostname,
-    port: 443,
-    path: vropsPath,
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `vRealizeOpsToken ${vropsToken}`,
-    },
-    rejectUnauthorized: false,
-  };
+  const vropsOptions = getOptions(vropsHostname, vropsPath, vropsToken);
   console.log(vropsOptions);
 
   return await new Promise((resolve, reject) => {
