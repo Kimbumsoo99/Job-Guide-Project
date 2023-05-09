@@ -363,7 +363,7 @@ export const hostVMPageRender = async (req, res) => {
 
   let vmList;
   for (let i = 0; i < findUserVSphere.info.hostInfo.value.length; i++) {
-    if ((findUserVSphere.info.hostInfo.value[i].host = hosts)) {
+    if (findUserVSphere.info.hostInfo.value[i].host == hosts) {
       vmList = findUserVSphere.info.hostInfo.value[i].vmInfo.value
         ? findUserVSphere.info.hostInfo.value[i].vmInfo.value
         : null;
