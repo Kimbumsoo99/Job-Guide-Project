@@ -5,7 +5,7 @@ const vropsHostname = "192.168.0.109";
 
 // vRealize Operations API 인증 토큰
 const vropsToken =
-  "v1:geslnuXMSWyAmGwwRiuaOQ==:CxU07tVJYwDASLytZDPuGg==:H8sW+Hcq3s1cvhOSoUOUxDTtq4NUVcDCPsBYlUT2Eag47eSpm3n3OK2K4LrPSbd7:3971379722";
+  "v1:kx4E7K3sqLglOcvlCMW88Q==:GO472/nl9cd6fNomZntbWA==:40GNdlJaQexMHw9guyT772J3AAddabBOcHYUZkIi3REJYkDA56FV97/KFDMJujOV:1909831167";
 
 // vRealize Operations API 경로
 const vropsPath =
