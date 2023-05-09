@@ -26,6 +26,7 @@ const vropsOptions = {
 
 // 가상 머신의 CPU 사용률을 가져오는 함수
 async function getCPUUsage(resourceId) {
+  console.log("\ngetCPUUsage 호출\n");
   // vRealize Operations API 경로
   const vropsPath = `/suite-api/api/resources/${resourceId}/stats?statKey=cpu|usage_average`;
 
@@ -72,14 +73,17 @@ async function getCPUUsage(resourceId) {
 
 // 모든 가상 머신의 CPU 사용률을 가져오는 함수
 async function getAllCPUUsages() {
+  console.log("\ngetAllCPUUsages 호출\n");
   return await new Promise((resolve, reject) => {
     const req = https.request(vropsOptions, (res) => {
       let data = "";
-
+      let i = 0;
       res.on("data", (chunk) => {
+        console.log(i++ + "\n");
         data += chunk;
       });
       res.on("end", () => {
+        console.log("end 들어옴");
         try {
           console.log(data);
           const resources = JSON.parse(data)._embedded["vr:resourceDto"];
@@ -112,6 +116,7 @@ async function getAllCPUUsages() {
 
 // 5초마다 모든 가상 머신의 CPU 사용률을 가져와 출력하는 함수
 export const getCPUUsagefucn = async (req, res) => {
+  console.log("\ngetCPUUsagefucn 호출\n");
   try {
     const cpuUsages = await getAllCPUUsages();
     console.log(cpuUsages);
