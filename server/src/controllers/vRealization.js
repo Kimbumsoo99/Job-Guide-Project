@@ -5,7 +5,7 @@ const vropsHostname = "192.168.0.109";
 
 // vRealize Operations API 인증 토큰
 const vropsToken =
-  "v1:kx4E7K3sqLglOcvlCMW88Q==:GO472/nl9cd6fNomZntbWA==:40GNdlJaQexMHw9guyT772J3AAddabBOcHYUZkIi3REJYkDA56FV97/KFDMJujOV:1909831167";
+  "40GNdlJaQexMHw9guyT772J3AAddabBOcHYUZkIi3REJYkDA56FV97/KFDMJujOV";
 
 // vRealize Operations API 경로
 const vropsPath =
@@ -87,7 +87,7 @@ async function getAllCPUUsages() {
         console.log("end 들어옴");
         try {
           console.log("여긴 돼?");
-          console.log(data ? data : "안나옴");
+          console.log(data);
           const resources = JSON.parse(data)._embedded["vr:resourceDto"];
 
           const cpuMetricsPromises = resources.map((resource) => {
