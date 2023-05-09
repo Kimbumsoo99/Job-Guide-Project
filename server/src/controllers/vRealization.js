@@ -21,6 +21,7 @@ const vropsOptions = {
     "Content-Type": "application/json",
     Authorization: `vRealizeOpsToken ${vropsToken}`,
   },
+  rejectUnauthorized: false,
 };
 
 // 가상 머신의 CPU 사용률을 가져오는 함수
@@ -38,6 +39,7 @@ function getCPUUsage(resourceId) {
       "Content-Type": "application/json",
       Authorization: `vRealizeOpsToken ${vropsToken}`,
     },
+    rejectUnauthorized: false,
   };
 
   return new Promise((resolve, reject) => {
