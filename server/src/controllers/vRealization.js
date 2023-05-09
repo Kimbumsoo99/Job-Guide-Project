@@ -87,7 +87,7 @@ async function getAllCPUUsages() {
         console.log("end 들어옴");
         try {
           console.log("여긴 돼?");
-          console.log(data);
+          console.log(data ? data : "안나옴");
           const resources = JSON.parse(data)._embedded["vr:resourceDto"];
 
           const cpuMetricsPromises = resources.map((resource) => {
