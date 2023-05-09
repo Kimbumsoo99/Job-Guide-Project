@@ -80,11 +80,13 @@ async function getAllCPUUsages() {
       let i = 0;
       res.on("data", (chunk) => {
         console.log(i++ + "\n");
+        console.log(chunk);
         data += chunk;
       });
       res.on("end", () => {
         console.log("end 들어옴");
         try {
+          console.log("여긴 돼?");
           console.log(data);
           const resources = JSON.parse(data)._embedded["vr:resourceDto"];
 
