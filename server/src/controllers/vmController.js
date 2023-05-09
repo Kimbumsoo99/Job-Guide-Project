@@ -353,6 +353,12 @@ export const hostVMPageRender = async (req, res) => {
     }
   }
 
+  console.log("\n문제\n");
+  console.log(findUserVSphere.info.hostInfo);
+  console.log(findUserVSphere.info.hostInfo.value.length);
+  console.log(findUserVSphere.info.hostInfo.value[2]);
+  console.log(findUserVSphere.info.hostInfo.value);
+
   let vmList;
   for (let i = 0; i < findUserVSphere.info.hostInfo.value.length; i++) {
     if ((findUserVSphere.info.hostInfo.value[i].host = hosts)) {
