@@ -106,14 +106,14 @@ export async function getVCenterId(req, res) {
   });
 
   // 인증 토큰 얻기
-  return res.send(authToken);
+  //return res.send(token);
 
   // vCenter의 정보 조회
   const vCenterResponse = await fetch(
     `${apiEndpoint}/resources?resourceKind=VCENTER`,
     {
       headers: {
-        Authorization: `vRealizeOpsToken ${authToken}`,
+        Authorization: `vRealizeOpsToken ${token}`,
       },
       agent,
     }
@@ -125,7 +125,20 @@ export async function getVCenterId(req, res) {
     throw new Error("Failed to fetch vCenter data.");
   }
 
-  const vCenterData = await vCenterResponse.json();
+  const vCenterData = await vCenterResponse.text();
+  console.log("\nvCenterData\n");
+  console.log(vCenterData);
+
+  parser.parseString(vCenterData, (err, result) => {
+    if (err) {
+      console.error("Failed to parse XML:", err);
+      return;
+    }
+
+    console.log(result);
+    vCenterData = result[vCenterResponse];
+    console.log(vCenterData);
+  });
   console.log("vCenterData 지났음");
   console.log(vCenterData);
 
