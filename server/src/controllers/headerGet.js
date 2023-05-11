@@ -92,7 +92,8 @@ export async function getVCenterId(req, res) {
   console.log("authData 지남");
   console.log(authData);
 
-  let authJson = null;
+  let token;
+
   const parser = new xml2js.Parser({ explicitArray: false });
   parser.parseString(authData, (err, result) => {
     if (err) {
@@ -100,17 +101,11 @@ export async function getVCenterId(req, res) {
       return;
     }
 
-    console.log(result); // JSON 형식의 객체
-    authJson = result;
+    token = result["ops:auth-token"]["ops:token"];
+    console.log(token); // dcfa27e6-42ec-4ea4-928f-1ca308f2059e::7a7d6260-a3af-4818-9739-fbd807481b77
   });
-  console.log("parser");
-  console.log(parser);
-
-  console.log("authJson");
-  console.log(authJson);
 
   // 인증 토큰 얻기
-  const authToken = authJson.token;
   return res.send(authToken);
 
   // vCenter의 정보 조회
