@@ -1,5 +1,3 @@
-import { httpsGet } from "./vmController";
-
 const https = require("https");
 const fetch = require("node-fetch");
 const xml2js = require("xml2js");
@@ -210,6 +208,41 @@ export async function getVRealToken(req, res) {
   });
 }
 
+const parseXml = (xml) => {
+  return new Promise((resolve, reject) => {
+    const parser = new xml2js.Parser();
+    parser.parseString(xml, (error, result) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
+
+export const httpsGetXML = (url, options) => {
+  return new Promise((resolve, reject) => {
+    https.get(url, options, (response) => {
+      let data = "";
+      response.on("data", (chunk) => {
+        data += chunk;
+      });
+      response.on("end", async () => {
+        try {
+          const result = await parseXml(data);
+          resolve(result);
+        } catch (error) {
+          reject(error);
+        }
+      });
+      response.on("error", (error) => {
+        reject(error);
+      });
+    });
+  });
+};
+
 export async function getRealResources(req, res) {
   try {
     const token = await getVRealToken();
@@ -218,14 +251,14 @@ export async function getRealResources(req, res) {
     const url = "https://192.168.0.109/suite-api/api/resources";
     const options = {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/xml",
         Authorization: token,
       },
       port: "443",
       method: "GET",
       rejectUnauthorized: false,
     };
-    const result = await httpsGet(url, options);
+    const result = await httpsGetXML(url, options);
     console.log(result);
     return res.send(result);
   } catch (error) {
