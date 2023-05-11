@@ -1,3 +1,5 @@
+import { httpsGet } from "./vmController";
+
 const https = require("https");
 const fetch = require("node-fetch");
 const xml2js = require("xml2js");
@@ -208,12 +210,24 @@ export async function getVRealToken(req, res) {
   });
 }
 
-async function getRealResources() {
+export async function getRealResources(req, res) {
   try {
     const token = await getVRealToken();
     console.log("Token:", token);
     // 여기서 token을 사용하여 원하는 작업을 수행할 수 있습니다.
-    const apiEndpoint = "https://192.168.0.109/suite-api/api";
+    const url = "https://192.168.0.109/suite-api/api/resources";
+    const options = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      port: "443",
+      method: "GET",
+      rejectUnauthorized: false,
+    };
+    const result = await httpsGet(url, options);
+    console.log(result);
+    return res.send(result);
   } catch (error) {
     console.error("Failed to get token:", error);
   }

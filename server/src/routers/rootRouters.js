@@ -14,7 +14,7 @@ import {
 } from "../controllers/userController";
 import { getCloudVM } from "../controllers/cloudData";
 import { getCPUUsagefucn } from "../controllers/vRealization";
-import { getVCenterId } from "../controllers/headerGet";
+import { getRealResources, getVCenterId } from "../controllers/headerGet";
 
 const rootRouter = express.Router();
 
@@ -28,5 +28,6 @@ rootRouter.route("/hosts/get-vm").get(getCloudVM);
 rootRouter.route("/hosts/vms").get(hostVMPageRender);
 rootRouter.get("/real/cpu", getCPUUsagefucn);
 rootRouter.get("/real/token", getVCenterId);
+rootRouter.get("/real/res", getRealResources);
 
 export default rootRouter;

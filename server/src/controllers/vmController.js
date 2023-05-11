@@ -66,7 +66,7 @@ export const getVMName = async (sessionId) => {
 /**
  * GET 메소드에 대한 요청을 보내서 Promise 객체 반환
  */
-const httpsGet = (url, options) => {
+export const httpsGet = (url, options) => {
   return new Promise((resolve, reject) => {
     https.get(url, options, (response) => {
       let data = "";
