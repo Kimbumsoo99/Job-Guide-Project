@@ -129,23 +129,18 @@ export async function getVCenterId(req, res) {
   console.log("\nvCenterData\n");
   console.log(vCenterData);
 
-  parser.parseString(vCenterData, (err, result) => {
-    if (err) {
-      console.error("Failed to parse XML:", err);
-      return;
-    }
+  const vCenterDataParser = new xml2js.Parser();
+  const vCParsedData = await vCenterDataParser.parseStringPromise(vCenterData);
+  console.log("\nvCParsedData 호출\n");
 
-    console.log(result);
-    vCenterData = result[vCenterResponse];
-    console.log(vCenterData);
-  });
-  console.log("vCenterData 지났음");
-  console.log(vCenterData);
-
-  // vCenter의 ID 찾기
-  const vCenter = vCenterData.resources.find(
-    (resource) => resource.name === vCenterName
+  const resources = vCParsedData["ops:resources"]["ops:links"]["ops:link"];
+  console.log("\nresources 호출\n");
+  const vCenter = resources.find(
+    (resource) => resource["$"]["name"] === vCenterName
   );
+  console.log("\nvCenter 호출\n");
+  console.log("vCenter 지났음");
+  console.log(vCenter);
 
   if (!vCenter) {
     throw new Error(`vCenter '${vCenterName}' not found.`);
