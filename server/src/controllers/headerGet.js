@@ -64,7 +64,7 @@ export async function getVCenterId(req, res) {
 
   // vCenter의 이름
   const vCenterName = "192.168.0.102";
-
+  console.log(`${apiEndpoint}/auth/token/acquire 로 요청`);
   // vRealize Operations에 인증 요청 보내기
   const authResponse = await fetch(`${apiEndpoint}/auth/token/acquire`, {
     method: "POST",
@@ -73,10 +73,13 @@ export async function getVCenterId(req, res) {
   });
 
   if (!authResponse.ok) {
+    console.log("오류 났음");
     throw new Error("Failed to authenticate with vRealize Operations.");
   }
 
   const authData = await authResponse.json();
+  console.log("authData 지남");
+  console.log(authData);
 
   // 인증 토큰 얻기
   const authToken = authData.token;
@@ -90,12 +93,16 @@ export async function getVCenterId(req, res) {
       },
     }
   );
+  console.log(`${apiEndpoint}/resources?resourceKind=VCENTER 로 확인`);
 
   if (!vCenterResponse.ok) {
+    console.log("여기서 Error");
     throw new Error("Failed to fetch vCenter data.");
   }
 
   const vCenterData = await vCenterResponse.json();
+  console.log("vCenterData 지났음");
+  console.log(vCenterData);
 
   // vCenter의 ID 찾기
   const vCenter = vCenterData.resources.find(
@@ -110,12 +117,3 @@ export async function getVCenterId(req, res) {
 
   return vCenterId;
 }
-
-// vCenter의 ID 조회하기
-getVCenterId()
-  .then((vCenterId) => {
-    console.log("vCenter ID:", vCenterId);
-  })
-  .catch((error) => {
-    console.error("Error:", error);
-  });
