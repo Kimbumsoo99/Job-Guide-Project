@@ -1,5 +1,6 @@
 const https = require("https");
 const fetch = require("node-fetch");
+const { parseStringPromise } = require("xml2js");
 
 const username = "administrator@vsphere.local";
 const password = "123Qwer!";
