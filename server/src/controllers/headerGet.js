@@ -132,9 +132,11 @@ export async function getVCenterId(req, res) {
   const vCenterDataParser = new xml2js.Parser();
   const vCParsedData = await vCenterDataParser.parseStringPromise(vCenterData);
   console.log("\nvCParsedData 호출\n");
+  console.log(vCParsedData);
 
   const resources = vCParsedData["ops:resources"]["ops:links"]["ops:link"];
   console.log("\nresources 호출\n");
+  console.log(resources);
   const vCenter = resources.find(
     (resource) => resource["$"]["name"] === vCenterName
   );
@@ -146,7 +148,7 @@ export async function getVCenterId(req, res) {
     throw new Error(`vCenter '${vCenterName}' not found.`);
   }
 
-  const vCenterId = vCenter.identifier;
+  const vCenterId = vCenter["$"]["href"];
 
   return vCenterId;
 }
