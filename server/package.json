@@ -25,7 +25,8 @@
     "morgan": "^1.10.0",
     "node-fetch": "^2.6.11",
     "pug": "^3.0.2",
-    "serve-favicon": "^2.5.0"
+    "serve-favicon": "^2.5.0",
+    "xml2js": "^0.5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.21.3",

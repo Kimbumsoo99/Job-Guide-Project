@@ -5,6 +5,12 @@ const username = "administrator@vsphere.local";
 const password = "123Qwer!";
 const hostIP = "192.168.0.102";
 
+// XML을 JSON으로 변환하는 함수
+async function parseXmlResponse(xml) {
+  const parsedResult = await parseStringPromise(xml);
+  return parsedResult;
+}
+
 export const getSessionId = async (username, password, hostIP) => {
   console.log("\ngetSessionId 호출\n");
   const data = JSON.stringify({});
@@ -81,12 +87,15 @@ export async function getVCenterId(req, res) {
     throw new Error("Failed to authenticate with vRealize Operations.");
   }
 
-  const authData = await authResponse.json();
+  const authData = await authResponse.text();
   console.log("authData 지남");
   console.log(authData);
+  const authJson = await parseXmlResponse(authData);
+  console.log(authJson);
 
   // 인증 토큰 얻기
-  const authToken = authData.token;
+  const authToken = authJson.token;
+  return res.send(authToken);
 
   // vCenter의 정보 조회
   const vCenterResponse = await fetch(
