@@ -1,6 +1,6 @@
 const https = require("https");
 const fetch = require("node-fetch");
-const { parseStringPromise } = require("xml2js");
+const xml2js = require("xml2js");
 
 const username = "administrator@vsphere.local";
 const password = "123Qwer!";
@@ -91,7 +91,22 @@ export async function getVCenterId(req, res) {
   const authData = await authResponse.text();
   console.log("authData 지남");
   console.log(authData);
-  const authJson = await parseXmlResponse(authData);
+
+  let authJson = null;
+  const parser = new xml2js.Parser({ explicitArray: false });
+  parser.parseString(authData, (err, result) => {
+    if (err) {
+      console.error("Failed to parse XML:", err);
+      return;
+    }
+
+    console.log(result); // JSON 형식의 객체
+    authJson = result;
+  });
+  console.log("parser");
+  console.log(parser);
+
+  console.log("authJson");
   console.log(authJson);
 
   // 인증 토큰 얻기
