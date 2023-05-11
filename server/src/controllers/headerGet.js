@@ -70,7 +70,7 @@ export async function getVCenterId(req, res) {
   const password = "123Qwer!";
 
   // vCenter의 이름
-  const vCenterName = "192.168.0.102";
+  const vCenterName = "root";
   console.log(`${apiEndpoint}/auth/token/acquire 로 요청`);
 
   const agent = new https.Agent({ rejectUnauthorized: false });
@@ -166,7 +166,7 @@ export async function getVRealToken(req, res) {
     const password = "123Qwer!";
 
     // vCenter의 이름
-    const vCenterName = "192.168.0.102";
+    const vCenterName = "root";
     console.log(`${apiEndpoint}/auth/token/acquire 로 요청`);
 
     const agent = new https.Agent({ rejectUnauthorized: false });
@@ -206,4 +206,15 @@ export async function getVRealToken(req, res) {
 
     // 인증 토큰 얻기
   });
+}
+
+async function getRealResources() {
+  try {
+    const token = await getVRealToken();
+    console.log("Token:", token);
+    // 여기서 token을 사용하여 원하는 작업을 수행할 수 있습니다.
+    const apiEndpoint = "https://192.168.0.109/suite-api/api";
+  } catch (error) {
+    console.error("Failed to get token:", error);
+  }
 }
