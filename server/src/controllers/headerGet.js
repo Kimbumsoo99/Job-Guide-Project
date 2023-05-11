@@ -65,11 +65,15 @@ export async function getVCenterId(req, res) {
   // vCenter의 이름
   const vCenterName = "192.168.0.102";
   console.log(`${apiEndpoint}/auth/token/acquire 로 요청`);
+
+  const agent = new https.Agent({ rejectUnauthorized: false });
+
   // vRealize Operations에 인증 요청 보내기
   const authResponse = await fetch(`${apiEndpoint}/auth/token/acquire`, {
     method: "POST",
     body: JSON.stringify({ username, password }),
     headers: { "Content-Type": "application/json" },
+    agent,
   });
 
   if (!authResponse.ok) {
@@ -91,6 +95,7 @@ export async function getVCenterId(req, res) {
       headers: {
         Authorization: `vRealizeOpsToken ${authToken}`,
       },
+      agent,
     }
   );
   console.log(`${apiEndpoint}/resources?resourceKind=VCENTER 로 확인`);
