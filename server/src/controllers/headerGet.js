@@ -155,3 +155,55 @@ export async function getVCenterId(req, res) {
 
   return vCenterId;
 }
+
+export async function getVRealToken(req, res) {
+  return new Promise(async (resolve, reject) => {
+    // vRealize Operations API의 엔드포인트 URL
+    const apiEndpoint = "https://192.168.0.109/suite-api/api";
+
+    // vRealize Operations 인증 정보
+    const username = "admin";
+    const password = "123Qwer!";
+
+    // vCenter의 이름
+    const vCenterName = "192.168.0.102";
+    console.log(`${apiEndpoint}/auth/token/acquire 로 요청`);
+
+    const agent = new https.Agent({ rejectUnauthorized: false });
+
+    // vRealize Operations에 인증 요청 보내기
+    const authResponse = await fetch(`${apiEndpoint}/auth/token/acquire`, {
+      method: "POST",
+      body: JSON.stringify({ username, password }),
+      headers: { "Content-Type": "application/json" },
+      agent,
+    });
+
+    if (!authResponse.ok) {
+      console.log("오류 났음");
+      throw new Error("Failed to authenticate with vRealize Operations.");
+    }
+
+    const authData = await authResponse.text();
+    console.log("authData 지남");
+    console.log(authData);
+
+    let token;
+
+    const parser = new xml2js.Parser({ explicitArray: false });
+    parser.parseString(authData, (err, result) => {
+      if (err) {
+        console.error("Failed to parse XML:", err);
+        reject(err);
+        return;
+      }
+
+      token = result["ops:auth-token"]["ops:token"];
+      console.log(token); // dcfa27e6-42ec-4ea4-928f-1ca308f2059e::7a7d6260-a3af-4818-9739-fbd807481b77
+
+      resolve(token);
+    });
+
+    // 인증 토큰 얻기
+  });
+}
