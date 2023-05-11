@@ -134,7 +134,10 @@ export async function getVCenterId(req, res) {
   console.log("\nvCParsedData 호출\n");
   console.log(vCParsedData);
 
-  const resources = vCParsedData["ops:resources"]["ops:links"]["ops:link"];
+  console.log(vCParsedData["ops:resources"]);
+  console.log(vCParsedData["ops:resources"]["ops:links"][0]);
+  console.log("\n111\n");
+  const resources = vCParsedData["ops:resources"]["ops:links"][0]["ops:link"];
   console.log("\nresources 호출\n");
   console.log(resources);
   const vCenter = resources.find(
