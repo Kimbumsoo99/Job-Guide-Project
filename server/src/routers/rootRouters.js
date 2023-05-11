@@ -14,7 +14,6 @@ import {
 } from "../controllers/userController";
 import { getCloudVM } from "../controllers/cloudData";
 import { getCPUUsagefucn } from "../controllers/vRealization";
-import { getVmCpuUsage } from "../controllers/asd";
 import { getVCenterId } from "../controllers/headerGet";
 
 const rootRouter = express.Router();
