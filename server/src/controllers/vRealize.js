@@ -62,7 +62,7 @@ export const getVRealTokenJson = async () => {
 
 export const getRealResourcesV2 = async () => {
   console.log("\ngetREalResourcesV2 호출\n");
-  const token = token ? token : await getVRealTokenJson();
+  token = token ? token : await getVRealTokenJson();
   console.log("Token: ", token);
 
   const url = `${baseUrl}/resources?adapterKind=VMWARE&resourceKind=VirtualMachine&name=VM02&resourceHealth=GREEN`;
