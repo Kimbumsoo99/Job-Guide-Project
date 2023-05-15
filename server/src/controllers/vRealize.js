@@ -1,30 +1,29 @@
 import https from "https";
 import fetch from "node-fetch";
+import { httpsGet } from "./vmController";
 
 const vRealUrl = "192.168.0.109";
 const username = "admin";
 const password = "123Qwer!";
+const baseUrl = `https://${vRealUrl}/suite-api/api`;
 
 const getOptions = (host, url, token) => {
   return {
-    hostname: host,
-    port: 443,
-    path: url,
-    method: "GET",
     headers: {
       "Content-Type": "application/json",
       Authorization: `vRealizeOpsToken ${token}`,
+      //Authorization: token,
       Accept: "application/json",
     },
+    port: "443",
+    method: "GET",
     rejectUnauthorized: false,
   };
 };
 
 export const getVRealTokenJson = async (req, res) => {
   return new Promise(async (resolve, reject) => {
-    const baseUrl = `https://${vRealUrl}/suite-api/api`;
-
-    console.log(`${apiEndpoint}/auth/token/acquire 로 요청`);
+    console.log(`${baseUrl}/auth/token/acquire 로 요청`);
 
     const agent = new https.Agent({ rejectUnauthorized: false });
 
@@ -49,4 +48,16 @@ export const getVRealTokenJson = async (req, res) => {
 
     return res.send(authData);
   });
+};
+
+export const getRealResourcesV2 = async (req, res) => {
+  const token = await getVRealTokenJson();
+  console.log("Token: ", token);
+
+  const url = `${baseUrl}/resources`;
+  const options = getOptions(token);
+
+  const realResources = await httpsGet(url, options);
+  console.log(realResources);
+  return res.send(realResources);
 };
