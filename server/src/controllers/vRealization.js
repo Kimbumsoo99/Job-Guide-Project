@@ -20,6 +20,7 @@ const getOptions = (host, url, token) => {
     headers: {
       "Content-Type": "application/json",
       Authorization: `vRealizeOpsToken ${token}`,
+      //Accept: "application/json",
     },
     rejectUnauthorized: false,
   };
