@@ -1,0 +1,737 @@
+{
+  "values": [
+    {
+      "resourceId": "8ccfd8b5-9e14-4465-b076-bd6cddc22aa6",
+      "stat-list": {
+        "stat": [
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "System Attributes|alert_count_warning" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": {
+              "key": "virtualDisk:Aggregate of all instances|totalReadLatency_average"
+            },
+            "data": [8]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "virtualDisk|peak_vDisk_iops" },
+            "data": [353]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "net|broadcastTx_summation" },
+            "data": [12.5]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": {
+              "key": "OnlineCapacityAnalytics|cpu|capacityRemaining"
+            },
+            "data": [4665.14744714153]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": {
+              "key": "datastore:Aggregate of all instances|totalWriteLatency_average"
+            },
+            "data": [9.333333333333334]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "mem-host|workload" },
+            "data": [20.831807454427086]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "virtualDisk|peak_vDisk_readLatency" },
+            "data": [8]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": {
+              "key": "virtualDisk:Aggregate of all instances|numberWriteAveraged_average"
+            },
+            "data": [31]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "diskspace|provisionedSpace" },
+            "data": [28.080108838155866]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "cpu|usagemhz_average" },
+            "data": [1070.5]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "mem|overheadMax_average" },
+            "data": [62608]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "badge|workload" },
+            "data": [19.587993621826172]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "net:Aggregate of all instances|droppedPct" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "mem|nonzero_active" },
+            "data": [3900700]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "badge|risk" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "cpu|usagemhz_average_daily" },
+            "data": [1070.5]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": {
+              "key": "virtualDisk:Aggregate of all instances|totalLatency"
+            },
+            "data": [8.702549575070822]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "System Attributes|total_alert_count" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "badge|compliance" },
+            "data": [-1]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "diskspace|snapshot|used" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "System Attributes|alert_count_info" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "net|multicastTx_summation" },
+            "data": [22.5]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "mem|consumed_average" },
+            "data": [821580]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "cpu|workload" },
+            "data": [7.830854547465297]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "diskspace-total|workload" },
+            "data": [53.996014537634586]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "cpu|readyPct" },
+            "data": [0.9375]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": {
+              "key": "virtualDisk:scsi0:0|numberReadAveraged_average"
+            },
+            "data": [322]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "cpu|costopPct" },
+            "data": [0.0825]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "config|hardware|disk_Space" },
+            "data": [24]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "net|transmitted_average" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "disk|read_average" },
+            "data": [11012.5]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "net|usage_average" },
+            "data": [1]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "mem|guest_demand" },
+            "data": [4194304]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "System Attributes|alert_count_immediate" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684178586678],
+            "statKey": { "key": "guestfilesystem|usage_total" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "mem|swapped_average" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "cpu|vm_capacity_provisioned" },
+            "data": [4788.749398]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "cpu|effective_limit" },
+            "data": [4788.749398]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "OnlineCapacityAnalytics|mem|recommendedSize" },
+            "data": [2097152]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "mem|consumed_average_daily" },
+            "data": [821580]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": {
+              "key": "datastore:Aggregate of all instances|usage_average"
+            },
+            "data": [11563]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "datastore|demand_oio" },
+            "data": [2.380833333333333]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "cpu|demandmhz" },
+            "data": [375]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "disk|write_average" },
+            "data": [551.5]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "rescpu|actav5_latest" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "diskspace|used" },
+            "data": [15.162139650434256]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "mem|consumedPct" },
+            "data": [19.587993621826172]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "mem|host_demand" },
+            "data": [873749.3333333334]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "rescpu|actav1_latest" },
+            "data": [15.666666666666668]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "guest|tools_running_status" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684176447468],
+            "statKey": { "key": "summary|oversized|memory" },
+            "data": [2097152]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": {
+              "key": "virtualDisk:Aggregate of all instances|commandsAveraged_average"
+            },
+            "data": [353]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "net|droppedTx_summation_sum" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": {
+              "key": "net:Aggregate of all instances|packetsTxPerSec"
+            },
+            "data": [2.95]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "summary|running" },
+            "data": [1]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "mem|swapoutRate_average" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "net|droppedTx_summation" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "cpu|capacity_contentionPct" },
+            "data": [1.5]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "datastore|numberReadAveraged_average" },
+            "data": [329.5]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "cpu|iowaitPct" },
+            "data": [0.00375]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": {
+              "key": "virtualDisk:Aggregate of all instances|totalWriteLatency_average"
+            },
+            "data": [16]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "System Attributes|self_alert_count" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "virtualDisk|write_average" },
+            "data": [551]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "cpu|overlap_summation" },
+            "data": [17.5]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "cpu|peak_vcpu_usage" },
+            "data": [20.94492562962051]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "OnlineCapacityAnalytics|cpu|recommendedSize" },
+            "data": [2394.374699]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "System Attributes|all_metrics" },
+            "data": [41]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "performance|number_of_kpis_breached" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "mem|guest_usage" },
+            "data": [821580]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "cpu|peak_vcpu_ready" },
+            "data": [1.165]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "net|multicastTx_summation_sum" },
+            "data": [45]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "config|hardware|num_Cpu" },
+            "data": [2]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "mem|swapinRate_average" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "virtualDisk:scsi0:0|write_average" },
+            "data": [551]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": {
+              "key": "datastore:Aggregate of all instances|commandsAveraged_average"
+            },
+            "data": [361]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "virtualDisk|peak_vDisk_writeLatency" },
+            "data": [16]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "mem|compressed_average" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": {
+              "key": "virtualDisk:scsi0:0|totalWriteLatency_average"
+            },
+            "data": [16]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": {
+              "key": "virtualDisk:scsi0:0|totalReadLatency_average"
+            },
+            "data": [8]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": {
+              "key": "OnlineCapacityAnalytics|capacityRemainingPercentage"
+            },
+            "data": [93.54369536882926]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "OnlineCapacityAnalytics|timeRemaining" },
+            "data": [366]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "storage|totalReadLatency_average" },
+            "data": [8]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "virtualDisk|read_average" },
+            "data": [11011]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "badge|health" },
+            "data": [100]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "System Attributes|health" },
+            "data": [100]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": {
+              "key": "datastore:Aggregate of all instances|totalReadLatency_average"
+            },
+            "data": [6.333333333333333]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "mem|usage_average" },
+            "data": [92.99]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "cpu|swapwaitPct" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "diskspace|notshared" },
+            "data": [11.08203125]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "cpu|vcpu_usage_disparity" },
+            "data": [0.7517620365566664]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "mem|guest_provisioned" },
+            "data": [4194304]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "mem|overhead_average" },
+            "data": [52169.333333333336]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "datastore|read_average" },
+            "data": [11011.5]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "datastore|write_average" },
+            "data": [551.5]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "mem|reservation_used" },
+            "data": [62608]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "System Attributes|child_all_metrics" },
+            "data": [65]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": {
+              "key": "datastore:Aggregate of all instances|totalLatency_average"
+            },
+            "data": [6.595106186518929]
+          },
+          {
+            "timestamps": [1684176447468],
+            "statKey": { "key": "summary|oversized|vcpus" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "cpu|run_summation" },
+            "data": [8259]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "mem|vmMemoryDemand" },
+            "data": [821580]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "disk|usage_average" },
+            "data": [11565]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "OnlineCapacityAnalytics|mem|timeRemaining" },
+            "data": [366]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "power|energy_summation_sum" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": {
+              "key": "OnlineCapacityAnalytics|mem|capacityRemaining"
+            },
+            "data": [3923506.9566026204]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "diskspace|activeNotShared" },
+            "data": [11.08203125]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "mem|workload" },
+            "data": [19.587993621826172]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "net|broadcastTx_summation_sum" },
+            "data": [25]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "cpu|usage_average" },
+            "data": [22.355]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "virtualDisk:scsi0:0|read_average" },
+            "data": [11011]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "diskspace|snapshot" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "cpu|corecount_provisioned" },
+            "data": [2]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": {
+              "key": "virtualDisk:Aggregate of all instances|numberReadAveraged_average"
+            },
+            "data": [322]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "datastore|numberWriteAveraged_average" },
+            "data": [31.5]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "sys|poweredOn" },
+            "data": [1]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": {
+              "key": "virtualDisk:Aggregate of all instances|usage"
+            },
+            "data": [11562]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "cpu|demandPct" },
+            "data": [7.830854547465297]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "System Attributes|alert_count_critical" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": {
+              "key": "net:Aggregate of all instances|packetsRxPerSec"
+            },
+            "data": [2.3]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "OnlineCapacityAnalytics|cpu|timeRemaining" },
+            "data": [366]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "badge|efficiency" },
+            "data": [100]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "System Attributes|total_alarms" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": {
+              "key": "virtualDisk:Aggregate of all instances|vDiskOIO"
+            },
+            "data": [3.0720000000000005]
+          },
+          {
+            "timestamps": [1684176447468],
+            "statKey": { "key": "summary|oversized" },
+            "data": [1]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "mem|balloonPct" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": {
+              "key": "virtualDisk:scsi0:0|numberWriteAveraged_average"
+            },
+            "data": [31]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "net|received_average" },
+            "data": [0.5]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "storage|totalWriteLatency_average" },
+            "data": [16]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "System Attributes|availability" },
+            "data": [1]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "diskspace:76|perDsUsed" },
+            "data": [15.162139650434256]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "mem|effective_limit" },
+            "data": [4256912]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": {
+              "key": "disk:Aggregate of all instances|commandsAveraged_average"
+            },
+            "data": [362]
+          },
+          {
+            "timestamps": [1684178886725],
+            "statKey": { "key": "mem|host_contentionPct" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684176447468],
+            "statKey": { "key": "summary|undersized|memory" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684176447468],
+            "statKey": { "key": "summary|undersized|vcpus" },
+            "data": [0]
+          },
+          {
+            "timestamps": [1684176447468],
+            "statKey": { "key": "summary|undersized" },
+            "data": [0]
+          }
+        ]
+      }
+    }
+  ]
+}
