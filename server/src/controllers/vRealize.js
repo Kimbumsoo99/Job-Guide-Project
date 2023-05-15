@@ -21,8 +21,9 @@ const getOptions = (host, url, token) => {
   };
 };
 
-export const getVRealTokenJson = async (req, res) => {
-  return new Promise(async (resolve, reject) => {
+export const getVRealTokenJson = async () => {
+  console.log("\ngetVRealTokenJson 호출\n");
+  try {
     console.log(`${baseUrl}/auth/token/acquire 로 요청`);
 
     const agent = new https.Agent({ rejectUnauthorized: false });
@@ -36,26 +37,38 @@ export const getVRealTokenJson = async (req, res) => {
       },
       agent,
     });
+
     if (!authResponse.ok) {
       console.log("오류 났음");
       throw new Error("Failed to authenticate with vRealize Operations.");
     }
+
     console.log(authResponse);
 
     const authData = await authResponse.json();
     console.log("\nauthData\n");
     console.log(authData);
 
-    return res.send(authData);
-  });
+    const token = authData.token;
+
+    return token;
+  } catch (err) {
+    console.log("Error 발생");
+    console.log(err);
+    throw err;
+  }
 };
 
 export const getRealResourcesV2 = async (req, res) => {
+  console.log("\ngetREalResourcesV2 호출\n");
   const token = await getVRealTokenJson();
   console.log("Token: ", token);
 
   const url = `${baseUrl}/resources`;
   const options = getOptions(token);
+
+  console.log(url);
+  console.log(options);
 
   const realResources = await httpsGet(url, options);
   console.log(realResources);
