@@ -6,6 +6,7 @@ const vRealUrl = "192.168.0.109";
 const username = "admin";
 const password = "123Qwer!";
 const baseUrl = `https://${vRealUrl}/suite-api/api`;
+let token;
 
 const getOptions = (token) => {
   return {
@@ -59,9 +60,9 @@ export const getVRealTokenJson = async () => {
   }
 };
 
-export const getRealResourcesV2 = async (req, res) => {
+export const getRealResourcesV2 = async () => {
   console.log("\ngetREalResourcesV2 호출\n");
-  const token = await getVRealTokenJson();
+  const token = token ? token : await getVRealTokenJson();
   console.log("Token: ", token);
 
   const url = `${baseUrl}/resources?adapterKind=VMWARE&resourceKind=VirtualMachine&name=VM02&resourceHealth=GREEN`;
@@ -73,5 +74,19 @@ export const getRealResourcesV2 = async (req, res) => {
   const realResources = await httpsGet(url, options);
   console.log(realResources);
   console.log(realResources.resourceList[0].identifier);
-  return res.send(realResources);
+  const resourceId = realResources.resourceList[0].identifier;
+  return resourceId;
+};
+
+export const getRealCpuUsageV2 = async (req, res) => {
+  console.log("\ngetRealCpuUsageV2 호출\n");
+  const resourceId = await getRealResourcesV2();
+  console.log("\ngetRealCpuUsageV2 복귀\n");
+  console.log(token);
+  const url = `${baseUrl}/resources/${resourceId}/stats`;
+  const options = getOptions(token);
+
+  const realCpuStats = await httpsGet(url, options);
+  console.log(realCpuStats);
+  return res.realCpuStats;
 };

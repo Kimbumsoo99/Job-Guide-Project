@@ -14,7 +14,7 @@ import {
 import { getCloudVM } from "../controllers/cloudData";
 import { getCPUUsagefucn } from "../controllers/vRealization";
 import { getRealResources, getVCenterId } from "../controllers/headerGet";
-import { getRealResourcesV2 } from "../controllers/vRealize";
+import { getRealCpuUsageV2, getRealResourcesV2 } from "../controllers/vRealize";
 
 const rootRouter = express.Router();
 
@@ -31,5 +31,5 @@ rootRouter.get("/real/cpu", getCPUUsagefucn);
 rootRouter.get("/real/token", getVCenterId);
 rootRouter.get("/real/res", getRealResources);
 
-rootRouter.get("/test/real/v2", getRealResourcesV2);
+rootRouter.get("/test/real/v2", getRealCpuUsageV2);
 export default rootRouter;
