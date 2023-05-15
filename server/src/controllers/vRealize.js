@@ -7,7 +7,7 @@ const username = "admin";
 const password = "123Qwer!";
 const baseUrl = `https://${vRealUrl}/suite-api/api`;
 
-const getOptions = (host, url, token) => {
+const getOptions = (token) => {
   return {
     headers: {
       "Content-Type": "application/json",
