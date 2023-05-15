@@ -88,5 +88,5 @@ export const getRealCpuUsageV2 = async (req, res) => {
 
   const realCpuStats = await httpsGet(url, options);
   console.log(realCpuStats);
-  return res.realCpuStats;
+  return res.send(realCpuStats);
 };
