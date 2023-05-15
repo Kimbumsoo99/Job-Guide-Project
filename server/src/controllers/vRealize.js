@@ -85,8 +85,8 @@ export const getRealCpuUsageV2 = async (req, res) => {
   console.log(token);
   const url = `${baseUrl}/resources/${resourceId}/stats/latest?currentOnly=true&statKey=cpu|usage_average`;
   const options = getOptions(token);
-  //setInterval();
+  setInterval(console.log(await httpsGet(url, options)), 5000);
   const realCpuStats = await httpsGet(url, options);
-  console.log(realCpuStats);
-  return res.send(realCpuStats);
+  console.log("가가");
+  //return res.send(realCpuStats);
 };
