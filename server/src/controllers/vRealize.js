@@ -72,5 +72,6 @@ export const getRealResourcesV2 = async (req, res) => {
 
   const realResources = await httpsGet(url, options);
   console.log(realResources);
+  console.log(realResources.resourceList[0].identifier);
   return res.send(realResources);
 };
