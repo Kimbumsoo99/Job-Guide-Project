@@ -83,9 +83,10 @@ export const getRealCpuUsageV2 = async (req, res) => {
   const preTime = currentTime - 1000 * 60 * 60;
   console.log("\ngetRealCpuUsageV2 호출\n");
   const resourceId = await getRealResourcesV2();
+  console.log(resourceId);
   console.log("\ngetRealCpuUsageV2 복귀\n");
   console.log(token);
-  const url = `${baseUrl}/resources/${resourceId}/stats?begin=${preTime}&end=${currentTime}&statKey=cpu|usage_average`;
+  const url = `${baseUrl}/resources/${resourceId}/stats?statKey=cpu|usage_average`;
   const options = getOptions(token);
   const realCpuStats = await httpsGet(url, options);
   console.log(realCpuStats);
