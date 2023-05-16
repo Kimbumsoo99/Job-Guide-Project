@@ -1,6 +1,7 @@
 import { getSessionId } from "./headerGet";
 import User from "../models/User";
 
+//let sessionId;
 const https = require("https");
 
 let hostIP = "192.168.0.102";
@@ -177,6 +178,9 @@ export const getHardMemory = async (sessionId) => {
 export const patchMemory = async (request, response) => {
   try {
     const sessionId = await getSessionId();
+    // sessionId = sessionId
+    //   ? sessionId
+    //   : await getSessionId(username, password, hostIp);
     const vmId = await getVMName(sessionId);
 
     const options = {
@@ -223,6 +227,9 @@ export const patchMemory = async (request, response) => {
 export const stopPower = async (request, response) => {
   try {
     const sessionId = await getSessionId();
+    // sessionId = sessionId
+    //   ? sessionId
+    //   : await getSessionId(username, password, hostIp);
     const vm = await getVMName(sessionId);
     const data = JSON.stringify({});
 
@@ -263,6 +270,9 @@ export const stopPower = async (request, response) => {
 export const startPower = async (request, response) => {
   try {
     const sessionId = await getSessionId();
+    // sessionId = sessionId
+    //   ? sessionId
+    //   : await getSessionId(username, password, hostIp);
     const vm = await getVMName(sessionId);
     const data = JSON.stringify({});
 
@@ -365,4 +375,56 @@ export const hostVMPageRender = async (req, res) => {
     }
   }
   return res.render("vmPage", { hosts: hosts, vmList: vmList });
+};
+
+/**
+ *
+ * @returns
+ */
+export const getTask = async (req, res) => {
+  console.log("\ngetTask 호출\n");
+  const username = "administrator@vsphere.local";
+  const password = "123Qwer!";
+  const hostIp = "192.168.0.102";
+
+  try {
+    const sessionId = await getSessionId(username, password, hostIp);
+    // sessionId = sessionId
+    //   ? sessionId
+    //   : await getSessionId(username, password, hostIp);
+    const options = getOptions(sessionId);
+    const task = await httpsGet(`https://${hostIp}/rest/cis/tasks`, options);
+    console.log(task);
+    const taskdetail = await httpsGet(
+      `https://${hostIp}/rest/cis/tasks/${task}`,
+      options
+    );
+    console.log(taskdetail);
+    const taskinfo = { task, taskdetail };
+
+    return res.send(taskinfo);
+  } catch (error) {
+    console.error(error);
+    throw new Error("Get Error");
+  }
+};
+
+export const getMetrics = async (req, res) => {
+  try {
+    console.log("\ngetMetrics 호출\n");
+    const username = "administrator@vsphere.local";
+    const password = "123Qwer!";
+    const hostIp = "192.168.0.102";
+    const sessionId = await getSessionId(username, password, hostIp);
+    const options = getOptions(sessionId);
+    const metrics = await httpsGet(
+      `https://${hostIp}/api/stats/metrics`,
+      options
+    );
+    console.log(metrics);
+    return res.send(metrics);
+  } catch (error) {
+    console.error(error);
+    throw new Error("Get Error");
+  }
 };
