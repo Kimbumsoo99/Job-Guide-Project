@@ -79,7 +79,7 @@ export const getRealResourcesV2 = async () => {
 };
 
 export const getRealCpuUsageV2 = async (req, res) => {
-  const currentTime = Data.now();
+  const currentTime = Date.now();
   const preTime = currentTime - 1000 * 60 * 60;
   console.log("\ngetRealCpuUsageV2 호출\n");
   const resourceId = await getRealResourcesV2();
