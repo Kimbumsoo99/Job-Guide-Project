@@ -12,6 +12,7 @@ import {
   testGetHost,
   testGetVMList,
   testHostInfo,
+  testInterval,
   testVMInfo,
   testVMPage,
   testgetCloudVM,
@@ -33,5 +34,7 @@ rootRouter.route("/test").all(protectorMiddleware).get(testGetHost);
 rootRouter.route("/test/page").get(testHostInfo);
 rootRouter.get("/host/vm", testVMPage);
 rootRouter.get("/test/page/vm", testVMInfo);
+
+rootRouter.get("/test/time", testInterval);
 
 export default rootRouter;

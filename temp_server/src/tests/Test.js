@@ -479,3 +479,14 @@ export const testVMInfo = async (req, res) => {
   //return res.redirect("/");
   return res.render("vmPage", { hosts: hosts, vmList: hostVMArray });
 };
+
+let i = 0;
+
+const handleConsole = () => {
+  console.log(i++);
+};
+
+export const testInterval = (req, res) => {
+  setInterval(handleConsole, 500);
+  return res.redirect("/");
+};
