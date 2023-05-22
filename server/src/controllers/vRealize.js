@@ -93,3 +93,30 @@ export const getRealCpuUsageV2 = async (req, res) => {
   console.log(realCpuStats);
   return res.send(realCpuStats);
 };
+
+export const getRealMemUsage = async (req, res) => {
+  console.log("\ngetRealMemUsageV2 호출\n");
+  const resourceId = await getRealResourcesV2();
+  const url = `${baseUrl}/resources/${resourceId}/stats?statKey=mem|usage_average`;
+  const options = getOptions(token);
+  const realMemStats = await httpsGet(url, options);
+  return res.send(realMemStats);
+};
+
+export const getRealdiskUsage = async (req, res) => {
+  console.log("\ngetRealdiskUsageV2 호출\n");
+  const resourceId = await getRealResourcesV2();
+  const url = `${baseUrl}/resources/${resourceId}/stats?statKey=diskspace|used`;
+  const options = getOptions(token);
+  const realdiskStats = await httpsGet(url, options);
+  return res.send(realdiskStats);
+};
+
+export const getRealResources0523 = async (req, res) => {
+  console.log("\ngetRealResources0523 호출\n");
+  const resourceId = await getRealResourcesV2();
+  const url = `${baseUrl}/resources/${resourceId}/stats?statKey=diskspace|used,cpu|usage_average,mem|usage_average`;
+  const options = getOptions(token);
+  const realStats = await httpsGet(url, options);
+  return res.send(realStats);
+};

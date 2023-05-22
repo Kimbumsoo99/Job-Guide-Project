@@ -16,7 +16,11 @@ import {
 import { getCloudVM } from "../controllers/cloudData";
 import { getCPUUsagefucn } from "../controllers/vRealization";
 import { getRealResources, getVCenterId } from "../controllers/headerGet";
-import { getRealCpuUsageV2 } from "../controllers/vRealize";
+import {
+  getRealCpuUsageV2,
+  getRealMemUsage,
+  getRealdiskUsage,
+} from "../controllers/vRealize";
 
 const rootRouter = express.Router();
 
@@ -37,4 +41,9 @@ rootRouter.get("/real/res", getRealResources);
 rootRouter.get("/test/real/v2", getRealCpuUsageV2); //테스트 성공(0515)
 rootRouter.get("/test/task", getTask);
 rootRouter.get("/test/metrics", getMetrics);
+
+//테스트 코드 0523
+rootRouter.get("/test/real/v2/cpu", getRealCpuUsageV2);
+rootRouter.get("/test/real/v2/mem", getRealMemUsage);
+rootRouter.get("/test/real/v2/disk", getRealdiskUsage);
 export default rootRouter;

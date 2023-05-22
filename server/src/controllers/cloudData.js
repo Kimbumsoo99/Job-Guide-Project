@@ -1,6 +1,6 @@
 import User from "../models/User";
 import { getSessionId } from "./headerGet";
-import { getHost, getVMList } from "./vmController";
+import { getHost, getVMList, getVMInfo } from "./vmController";
 
 export const getCloudHost = async (req, res) => {
   console.log("getCloudHost 호출");
@@ -44,6 +44,9 @@ export const getCloudHost = async (req, res) => {
           { new: true } // 최근 업데이트 된 데이터로 변경
         );
         req.session.user = updatedUser;
+        req.session.sessionId = sessionId;
+        console.log("sessionId Session에 등록");
+        console.log(sessionId);
         return res.redirect("/hosts");
       }
     } catch (err) {
@@ -57,13 +60,17 @@ export const getCloudHost = async (req, res) => {
 };
 
 export const getCloudVMList = async (
+  sessionId,
   vsphereId,
   vspherePw,
   vcenterIp,
   hosts
 ) => {
   console.log("\ngetCloudVMList 호출\n");
-  const sessionId = await getSessionId(vsphereId, vspherePw, vcenterIp);
+  console.log(sessionId);
+  const sessionId = sessionId
+    ? sessionId
+    : await getSessionId(vsphereId, vspherePw, vcenterIp);
   const vmList = await getVMList(sessionId, vcenterIp, hosts);
   console.log("return온 vmList 확인");
   console.log(vmList);
@@ -84,6 +91,7 @@ export const getCloudVM = async (req, res) => {
   const {
     session: {
       user: { _id },
+      sessionId,
     },
   } = req;
   if (!_id) {
@@ -101,6 +109,13 @@ export const getCloudVM = async (req, res) => {
       console.log("\n다시 getCloudVM부터 시작\n");
       console.log("vmList 부터");
       console.log(vmList);
+
+      /*
+      vmList.value.forEach((vm) => {
+        vm.info = getVMInfo(vm.vm, sessionId)
+      });
+      이곳에 vmInfo 가져오는 로직 추가하기
+      */
 
       const updatedUser = await User.findByIdAndUpdate(
         {
