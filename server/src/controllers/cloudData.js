@@ -101,7 +101,7 @@ export const getCloudVM = async (req, res) => {
   }
   sessionId = session.sessionId
     ? session.sessionId
-    : getSessionId(vs_id, vs_pw, vs_ip);
+    : await getSessionId(vs_id, vs_pw, vs_ip);
 
   console.log("sessionId 값 출력");
   console.log(sessionId);
