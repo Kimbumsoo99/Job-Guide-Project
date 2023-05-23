@@ -89,9 +89,10 @@ export const httpsGet = (url, options) => {
   });
 };
 
-export const getVMInfo = async (sessionId) => {
+export const getVMInfo = async (name, sessionId) => {
+  console.log(name, sessionId);
   try {
-    const vmId = await getVMName(sessionId);
+    const vmId = name ? name : await getVMName(sessionId);
     const options = getOptions(sessionId);
     const vmInfo = await httpsGet(
       `https://${hostIP}/rest/vcenter/vm/${vmId}`,

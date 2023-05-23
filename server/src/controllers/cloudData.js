@@ -125,8 +125,11 @@ export const getCloudVM = async (req, res) => {
       console.log(vmList);
 
       vmList.value.forEach(async (vm) => {
+        console.log("확인");
         console.log(vm);
-        vm.info = await getVMInfo(vm.vm, sessionId);
+        const name = vm.vm;
+        console.log(name);
+        vm.info = await getVMInfo(name, sessionId);
       });
       /* 이곳에 vmInfo 가져오는 로직 추가하기
        */
