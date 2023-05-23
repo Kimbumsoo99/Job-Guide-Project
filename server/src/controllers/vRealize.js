@@ -65,7 +65,7 @@ export const getRealResourcesV2 = async () => {
   token = token ? token : await getVRealTokenJson();
   console.log("Token: ", token);
 
-  const url = `${baseUrl}/resources?adapterKind=VMWARE&resourceKind=VirtualMachine&name=VM02&resourceHealth=GREEN`;
+  const url = `${baseUrl}/resources?adapterKind=VMWARE&resourceKind=VirtualMachine&name=VM02`;
   const options = getOptions(token);
 
   console.log(url);
@@ -73,6 +73,7 @@ export const getRealResourcesV2 = async () => {
 
   const realResources = await httpsGet(url, options);
   console.log(realResources);
+  console.log(realResources.resourceList[0]);
   console.log(realResources.resourceList[0].identifier);
   const resourceId = realResources.resourceList[0].identifier;
   return resourceId;

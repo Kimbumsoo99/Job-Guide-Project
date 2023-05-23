@@ -341,6 +341,7 @@ export const hostVMPageRender = async (req, res) => {
   const {
     session: {
       user: { _id },
+      sessionId,
     },
   } = req;
   const { hosts, vs_id, vs_ip } = req.query ? req.query : null;

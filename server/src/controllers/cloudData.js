@@ -99,6 +99,8 @@ export const getCloudVM = async (req, res) => {
     return res.redirect("/").statusCode(400);
   }
 
+  console.log("sessionId 값 출력");
+  console.log(sessionId);
   const { hosts, vs_id, vs_pw, vs_ip } = req.query ? req.query : null;
   if (vs_id && vs_pw && vs_ip && hosts) {
     try {
