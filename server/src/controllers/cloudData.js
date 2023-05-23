@@ -124,7 +124,7 @@ export const getCloudVM = async (req, res) => {
       console.log("vmList 부터");
       console.log(vmList);
 
-      vmList.value.forEach(async (vm, index) => {
+      await vmList.value.forEach(async (vm, index) => {
         console.log("확인");
         console.log(vm);
         const name = vm.vm;
