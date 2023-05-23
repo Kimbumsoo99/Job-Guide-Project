@@ -88,16 +88,20 @@ export const getCloudVMList = async (
 export const getCloudVM = async (req, res) => {
   console.log("\ngetCloudVM 호출\n");
   console.log(req.query);
+  let sessionId;
+
   const {
     session: {
       user: { _id },
-      sessionId,
     },
   } = req;
   if (!_id) {
     console.log("_id 세션 만료");
     return res.redirect("/").statusCode(400);
   }
+  sessionId = session.sessionId
+    ? session.sessionId
+    : getSessionId(vs_id, vs_pw, vs_ip);
 
   console.log("sessionId 값 출력");
   console.log(sessionId);
@@ -107,17 +111,22 @@ export const getCloudVM = async (req, res) => {
       console.log(req.session.user.vsphere[0]);
       console.log(req.session.user.vsphere[0].info.hostInfo.value);
       //console.log(req.session.user.vsphere[0].info.hostInfo.value[0]);
-      const vmList = await getCloudVMList(vs_id, vs_pw, vs_ip, hosts);
+      const vmList = await getCloudVMList(
+        sessionId,
+        vs_id,
+        vs_pw,
+        vs_ip,
+        hosts
+      );
       console.log("\n다시 getCloudVM부터 시작\n");
       console.log("vmList 부터");
       console.log(vmList);
 
-      /*
       vmList.value.forEach((vm) => {
-        vm.info = getVMInfo(vm.vm, sessionId)
+        vm.info = getVMInfo(vm.vm, sessionId);
       });
-      이곳에 vmInfo 가져오는 로직 추가하기
-      */
+      /* 이곳에 vmInfo 가져오는 로직 추가하기
+       */
 
       const updatedUser = await User.findByIdAndUpdate(
         {
