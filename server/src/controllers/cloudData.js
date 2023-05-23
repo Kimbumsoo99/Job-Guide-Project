@@ -124,7 +124,7 @@ export const getCloudVM = async (req, res) => {
       console.log("vmList 부터");
       console.log(vmList);
 
-      await vmList.value.forEach(async (vm, index) => {
+      for (const [index, vm] of vmList.value.entries()) {
         console.log("확인");
         console.log(vm);
         const name = vm.vm;
@@ -132,7 +132,7 @@ export const getCloudVM = async (req, res) => {
         vmList.value[index].info = await getVMInfo(name, sessionId);
         console.log(vmList.value[index]);
         console.log("지나가고 있다.\n\n");
-      });
+      }
       console.log("반복 끝");
       console.log(vmList.value[0]);
       /* 이곳에 vmInfo 가져오는 로직 추가하기
