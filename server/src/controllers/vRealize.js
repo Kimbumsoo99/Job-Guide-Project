@@ -65,7 +65,7 @@ export const getRealResourcesV2 = async () => {
   token = token ? token : await getVRealTokenJson();
   console.log("Token: ", token);
 
-  const url = `${baseUrl}/resources?adapterKind=VMWARE&resourceKind=VirtualMachine&name=VM02`;
+  const url = `${baseUrl}/resources?adapterKind=VMWARE&resourceKind=VirtualMachine&name=VM03`;
   const options = getOptions(token);
 
   console.log(url);
@@ -77,6 +77,22 @@ export const getRealResourcesV2 = async () => {
   console.log(realResources.resourceList[0].identifier);
   const resourceId = realResources.resourceList[0].identifier;
   return resourceId;
+};
+
+export const getRealResourcesJSON = async (req, res) => {
+  console.log("\ngetREalResourcesV2 호출\n");
+  token = token ? token : await getVRealTokenJson();
+  console.log("Token: ", token);
+
+  const url = `${baseUrl}/resources?adapterKind=VMWARE&resourceKind=VirtualMachine&name=VM03`;
+  const options = getOptions(token);
+
+  console.log(url);
+  console.log(options);
+
+  const realResources = await httpsGet(url, options);
+  console.log(realResources);
+  return res.send(realResources);
 };
 
 export const getRealCpuUsageV2 = async (req, res) => {
