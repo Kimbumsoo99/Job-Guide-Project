@@ -60,16 +60,16 @@ export const getCloudHost = async (req, res) => {
 };
 
 export const getCloudVMList = async (
-  sessionId,
+  tokenID,
   vsphereId,
   vspherePw,
   vcenterIp,
   hosts
 ) => {
   console.log("\ngetCloudVMList 호출\n");
-  console.log(sessionId);
-  const sessionId = sessionId
-    ? sessionId
+  console.log(tokenID);
+  const sessionId = tokenID
+    ? tokenID
     : await getSessionId(vsphereId, vspherePw, vcenterIp);
   const vmList = await getVMList(sessionId, vcenterIp, hosts);
   console.log("return온 vmList 확인");
