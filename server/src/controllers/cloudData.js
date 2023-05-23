@@ -99,8 +99,8 @@ export const getCloudVM = async (req, res) => {
     console.log("_id 세션 만료");
     return res.redirect("/").statusCode(400);
   }
-  sessionId = session.sessionId
-    ? session.sessionId
+  sessionId = req.session.sessionId
+    ? req.session.sessionId
     : await getSessionId(vs_id, vs_pw, vs_ip);
 
   console.log("sessionId 값 출력");
