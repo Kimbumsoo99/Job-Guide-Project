@@ -99,13 +99,15 @@ export const getCloudVM = async (req, res) => {
     console.log("_id 세션 만료");
     return res.redirect("/").statusCode(400);
   }
+  const { hosts, vs_id, vs_pw, vs_ip } = req.query ? req.query : null;
+
   sessionId = req.session.sessionId
     ? req.session.sessionId
     : await getSessionId(vs_id, vs_pw, vs_ip);
 
   console.log("sessionId 값 출력");
   console.log(sessionId);
-  const { hosts, vs_id, vs_pw, vs_ip } = req.query ? req.query : null;
+
   if (vs_id && vs_pw && vs_ip && hosts) {
     try {
       console.log(req.session.user.vsphere[0]);
