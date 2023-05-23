@@ -124,18 +124,17 @@ export const getCloudVM = async (req, res) => {
       console.log("vmList 부터");
       console.log(vmList);
 
-      vmList.value.forEach(async (vm) => {
+      vmList.value.forEach(async (vm, index) => {
         console.log("확인");
         console.log(vm);
         const name = vm.vm;
         console.log(name);
-        vm.info = await getVMInfo(name, sessionId);
-        console.log(vm);
+        vmList.value[index].info = await getVMInfo(name, sessionId);
       });
+      console.log("반복 끝");
       console.log(vmList.value[0]);
       /* 이곳에 vmInfo 가져오는 로직 추가하기
        */
-      console.log(vmList.value[0].info);
 
       const updatedUser = await User.findByIdAndUpdate(
         {
