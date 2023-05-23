@@ -84,7 +84,7 @@ export const getRealResourcesJSON = async (req, res) => {
   token = token ? token : await getVRealTokenJson();
   console.log("Token: ", token);
 
-  const url = `${baseUrl}/resources?adapterKind=VMWARE&resourceKind=VirtualMachine&name=VM03`;
+  const url = `${baseUrl}/resources?adapterKind=VMWARE&resourceKind=VirtualMachine&name=VM02`;
   const options = getOptions(token);
 
   console.log(url);
