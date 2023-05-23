@@ -130,6 +130,8 @@ export const getCloudVM = async (req, res) => {
         const name = vm.vm;
         console.log(name);
         vmList.value[index].info = await getVMInfo(name, sessionId);
+        console.log(vmList.value[index]);
+        console.log("\n\n");
       });
       console.log("반복 끝");
       console.log(vmList.value[0]);
