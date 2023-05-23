@@ -14,6 +14,7 @@ async function parseXmlResponse(xml) {
 
 export const getSessionId = async (username, password, hostIP) => {
   console.log("\ngetSessionId 호출\n");
+  console.log(username, password, hostIP);
   const data = JSON.stringify({});
   let sessionIdJson;
 
