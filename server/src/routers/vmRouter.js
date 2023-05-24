@@ -16,6 +16,7 @@ import {
 
 const vmRouter = express.Router();
 
+//실제 서비스 부분이라 지우면 안됨
 vmRouter
   .route("/")
   .all(protectorMiddleware)
@@ -23,9 +24,7 @@ vmRouter
   .post(postAddBasicInfo);
 
 vmRouter.get("/data", getCloudHost);
-
-//
-//
+//실제 서비스 부분이라 지우면 안됨
 
 vmRouter.get("/patch/memory", patchMemory);
 vmRouter.get("/stop/power", stopPower);

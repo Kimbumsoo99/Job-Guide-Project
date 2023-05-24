@@ -58,3 +58,27 @@ VM 정보 표시
 1. 실시간 사용 분석
 2. 향후 위험 요소 분석
 3. 알림 기능 구현
+
+
+@@@ 붙은 경우 변경해야 하는 녀석임
+(예시)
+@@@
+/change/path
+
+링크 경로
+rootRouter
+/ -> Root 경로 메인 페이지 GET
+/login -> get(login페이지) post(로그인 처리 후 메인)
+/join -> get(join페이지) post(회원가입 처리 후 login)
+/logout -> logout하고 다시 Main으로 GET
+
+vmRouter(경로는 /부터 다 씀)
+/vm -> get(vSphere 기초 정보 입력 페이지, DB에 값 있으면 /vm/data로 이동), post(입력한 정보를 토대로 /vm/data로 이동)
+/vm/data -> 
+    1. query가 존재하면 vSphere API로 Host 등록해서 /hosts로 이동
+    2. query없으면 바로 /hosts 이동
+
+
+@@@
+/hosts -> 호스트 페이지 Render(Session에 User를 기반으로 저장된 Host 정보 보여줌)
+/hosts/get-vm -> query에{hosts, id, pw, ip}를 통해

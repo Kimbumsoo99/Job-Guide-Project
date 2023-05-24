@@ -101,9 +101,13 @@ export const getCloudVM = async (req, res) => {
   }
   const { hosts, vs_id, vs_pw, vs_ip } = req.query ? req.query : null;
 
+  console.log("sessionId 값 출력");
+  console.log(req.session.sessionId ? req.session.sessionId : "이거 안됨");
+
   sessionId = req.session.sessionId
     ? req.session.sessionId
     : await getSessionId(vs_id, vs_pw, vs_ip);
+  if (req.session.sessionId) req.session.sessionId = sessionId;
 
   console.log("sessionId 값 출력");
   console.log(sessionId);

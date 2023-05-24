@@ -26,10 +26,12 @@ import {
 
 const rootRouter = express.Router();
 
+// 실제 서비스 부분이라 지우면 안되는 부분
 rootRouter.get("/", home);
 rootRouter.route("/login").get(getLogin).post(postLogin);
 rootRouter.route("/join").get(getJoin).post(postJoin);
 rootRouter.get("/logout", getLogout);
+// 실제 서비스 부분이라 지우면 안되는 부분
 
 rootRouter.route("/hosts").get(hostPageRender);
 rootRouter.route("/hosts/get-vm").get(getCloudVM);
