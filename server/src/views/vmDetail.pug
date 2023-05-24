@@ -1,0 +1,24 @@
+doctype html
+html(lang='ko')
+    head
+        meta(charset='UTF-8')
+        title WatchDog
+    body
+        h2 CPU
+        table 
+            tr 
+                th 시간
+                th 모니터링
+            each val, index in realStats.cpu.timeStamp
+                tr 
+                    th=val
+                    th #{realStats.cpu.usage[index]}%
+        h2 Mem
+        table 
+            tr 
+                th 시간
+                th 모니터링
+            each val, index in realStats.mem.timeStamp
+                tr 
+                    th=val
+                    th #{realStats.mem.usage[index]}%

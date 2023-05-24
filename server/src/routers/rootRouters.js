@@ -19,6 +19,7 @@ import { getRealResources, getVCenterId } from "../controllers/headerGet";
 import {
   getRealCpuUsageV2,
   getRealMemUsage,
+  getRealResources0525,
   getRealResourcesJSON,
   getRealdiskUsage,
 } from "../controllers/vRealize";
@@ -47,6 +48,8 @@ rootRouter.get("/test/metrics", getMetrics);
 rootRouter.get("/test/real/v2/cpu", getRealCpuUsageV2);
 rootRouter.get("/test/real/v2/mem", getRealMemUsage);
 rootRouter.get("/test/real/v2/disk", getRealdiskUsage);
+
+rootRouter.get("/test/detail", getRealResources0525);
 
 rootRouter.get("/test/real/v2/res", getRealResourcesJSON);
 export default rootRouter;

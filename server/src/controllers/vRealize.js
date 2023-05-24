@@ -129,11 +129,30 @@ export const getRealdiskUsage = async (req, res) => {
   return res.send(realdiskStats);
 };
 
-export const getRealResources0523 = async (req, res) => {
+export const getRealResources0525 = async (req, res) => {
   console.log("\ngetRealResources0523 호출\n");
-  const resourceId = await getRealResourcesV2();
-  const url = `${baseUrl}/resources/${resourceId}/stats?statKey=diskspace|used,cpu|usage_average,mem|usage_average`;
-  const options = getOptions(token);
-  const realStats = await httpsGet(url, options);
-  return res.send(realStats);
+  // const resourceId = await getRealResourcesV2();
+  // const url = `${baseUrl}/resources/${resourceId}/stats?statKey=mem|usage_average|used&statKey=cpu|usage_average&intervalType=MINUTES&rollUpType=AVG&intervalQuantifier=5&currentOnly=TRUE`;
+  // const options = getOptions(token);
+  // const realStats = await httpsGet(url, options);
+
+  const realStats = {
+    cpu: {
+      timeStamp: [
+        1684960119999, 1684942119999, 1684924119999, 1684906119999,
+        1684888119999, 1684870119999, 1684852119999, 1684834119999,
+        1684816119999, 1684798119999, 1684780119999, 1684762119999,
+      ],
+      usage: [23, 50, 30, 20, 40, 50, 5, 89, 99, 100, 34, 20],
+    },
+    mem: {
+      timeStamp: [
+        1684960119999, 1684942119999, 1684924119999, 1684906119999,
+        1684888119999, 1684870119999, 1684852119999, 1684834119999,
+        1684816119999, 1684798119999, 1684780119999, 1684762119999,
+      ],
+      usage: [23, 50, 30, 20, 40, 50, 5, 89, 99, 100, 34, 20],
+    },
+  };
+  return res.render("vmDetail", { realStats });
 };
