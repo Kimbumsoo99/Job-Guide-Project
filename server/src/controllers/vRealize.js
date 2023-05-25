@@ -155,7 +155,7 @@ export const getRealResources0525 = async (req, res) => {
   //   },
   // };
   console.log(realStats);
-  console.log(realStats.value[0]);
-  console.log(realStats.value[0]["stat-list"]);
+  console.log(realStats.values[0]);
+  console.log(realStats.values[0]["stat-list"]);
   return res.render("vmDetail", { realStats });
 };
