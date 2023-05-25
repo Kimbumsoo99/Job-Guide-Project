@@ -154,42 +154,62 @@ export const getRealResources0525 = async (req, res) => {
   //     usage: [23, 50, 30, 20, 40, 50, 5, 89, 99, 100, 34, 20],
   //   },
   // };
-  console.log(realStats.values[0]["stat-list"].stat[0].timestamps);
+  console.log(realStats.values[0]["stat-list"].stat[0].data);
 
-  const dataLength = realStats.values[0]["stat-list"].stat[0].timestamps.length;
+  const dataLength = realStats.values[0]["stat-list"].stat[0].data.length;
   console.log("dataLength 부분");
   console.log(dataLength);
 
   if (dataLength < 12) {
     //data가 12개보다 적으면 0으로 채우기
     let count = 0;
-    const tempTimeStamp = [];
-    const tempDataUsage = [];
+    const tempMemTimeStamp = [];
+    const tempMemDataUsage = [];
+    const tempCpuTimeStamp = [];
+    const tempCpuDataUsage = [];
     for (let i = 0; i < 12 - dataLength; i++) {
-      tempTimeStamp.push(0);
-      tempDataUsage.push(0);
+      tempMemTimeStamp.push(0);
+      tempMemDataUsage.push(0);
+      tempCpuTimeStamp.push(0);
+      tempCpuDataUsage.push(0);
     }
     for (let i = 12 - dataLength; i < 12; i++) {
-      tempTimeStamp.push(
+      tempMemTimeStamp.push(
         realStats.values[0]["stat-list"].stat[0].timestamps[count]
       );
-      tempDataUsage.push(realStats.values[0]["stat-list"].stat[0].data[count]);
+      tempMemDataUsage.push(
+        realStats.values[0]["stat-list"].stat[0].data[count]
+      );
+      tempCpuTimeStamp.push(
+        realStats.values[0]["stat-list"].stat[0].timestamps[count]
+      );
+      tempCpuDataUsage.push(
+        realStats.values[0]["stat-list"].stat[0].data[count]
+      );
       count += 1;
     }
   } else {
     //12개 이상이면 12개만 짜르기
-    const tempTimeStamp = [];
-    const tempDataUsage = [];
+    const tempMemTimeStamp = [];
+    const tempMemDataUsage = [];
+    const tempCpuTimeStamp = [];
+    const tempCpuDataUsage = [];
     for (let i = dataLength - 12; i < dataLength; i++) {
       console.log(i);
-      tempTimeStamp.push(
+      tempMemTimeStamp.push(
         realStats.values[0]["stat-list"].stat[0].timestamps[i]
       );
-      tempDataUsage.push(realStats.values[0]["stat-list"].stat[0].data[i]);
+      tempMemDataUsage.push(realStats.values[0]["stat-list"].stat[0].data[i]);
+      tempCpuTimeStamp.push(
+        realStats.values[0]["stat-list"].stat[0].timestamps[i]
+      );
+      tempCpuDataUsage.push(realStats.values[0]["stat-list"].stat[0].data[i]);
     }
-    realStats.values[0]["stat-list"].stat[0].timestamps = tempTimeStamp;
-    realStats.values[0]["stat-list"].stat[0].data = tempDataUsage;
   }
+  realStats.values[0]["stat-list"].stat[0].timestamps = tempMemTimeStamp;
+  realStats.values[0]["stat-list"].stat[0].data = tempMemDataUsage;
+  realStats.values[0]["stat-list"].stat[0].timestamps = tempCpuTimeStamp;
+  realStats.values[0]["stat-list"].stat[0].data = tempCpuDataUsage;
 
   return res.render("vmDetail", { realStats });
 };
