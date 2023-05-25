@@ -4,7 +4,7 @@ html(lang='ko')
         meta(charset='UTF-8')
         title WatchDog
     body
-        h2 CPU
+        h2 Mem
         table 
             tr 
                 th 시간
@@ -13,7 +13,7 @@ html(lang='ko')
                 tr 
                     th=val
                     th #{realStats.values[0]["stat-list"].stat[0].data[index]}%
-        h2 Mem
+        h2 CPU
         table 
             tr 
                 th 시간
