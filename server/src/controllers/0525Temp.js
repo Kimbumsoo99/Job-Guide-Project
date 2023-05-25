@@ -118,7 +118,7 @@ export const getVRealTokenJson = async () => {
 };
 
 export const getRealResourcesV2 = async () => {
-  token = await getVRealTokenJson();
+  const token = await getVRealTokenJson();
 
   const url = `${baseUrl}/resources?adapterKind=VMWARE&resourceKind=VirtualMachine&name=VM02`;
   const options = getOptions525(token);
