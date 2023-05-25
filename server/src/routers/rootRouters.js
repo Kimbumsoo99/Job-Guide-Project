@@ -25,7 +25,6 @@ import {
 } from "../controllers/vRealize";
 import {
   get525Host,
-  get525RealResources,
   get525VMInfo,
   get525VMList,
 } from "../controllers/0525Temp";
@@ -65,5 +64,5 @@ rootRouter.get("/test/real/v2/res", getRealResourcesJSON);
 rootRouter.get("/json/host", get525Host);
 rootRouter.get("/json/vmlist", get525VMList);
 rootRouter.get("/json/vminfo", get525VMInfo);
-rootRouter.get("/json/real", get525RealResources);
+rootRouter.get("/json/real", getRealResources0525);
 export default rootRouter;

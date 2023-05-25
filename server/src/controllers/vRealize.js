@@ -136,6 +136,7 @@ export const getRealResources0525 = async (req, res) => {
   const options = getOptions(token);
   const realStats = await httpsGet(url, options);
 
+  return res.send(realStats);
   // const realStats = {
   //   cpu: {
   //     timeStamp: [
