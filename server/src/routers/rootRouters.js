@@ -23,6 +23,12 @@ import {
   getRealResourcesJSON,
   getRealdiskUsage,
 } from "../controllers/vRealize";
+import {
+  get525Host,
+  get525RealResources,
+  get525VMInfo,
+  get525VMList,
+} from "../controllers/0525Temp";
 
 const rootRouter = express.Router();
 
@@ -54,4 +60,10 @@ rootRouter.get("/test/real/v2/disk", getRealdiskUsage);
 rootRouter.get("/test/detail", getRealResources0525);
 
 rootRouter.get("/test/real/v2/res", getRealResourcesJSON);
+
+//테스트 코드 0525
+rootRouter.get("/json/host", get525Host);
+rootRouter.get("/json/vmlist", get525VMList);
+rootRouter.get("/json/vminfo", get525VMInfo);
+rootRouter.get("/json/real", get525RealResources);
 export default rootRouter;
