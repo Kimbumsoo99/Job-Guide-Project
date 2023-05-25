@@ -88,7 +88,7 @@ export const getVRealTokenJson = async () => {
 
     const authResponse = await fetch(`${baseUrl}/auth/token/acquire`, {
       method: "POST",
-      body: JSON.stringify({ realUsername, password }),
+      body: JSON.stringify({ username: realUsername, password }),
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
