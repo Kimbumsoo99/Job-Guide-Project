@@ -188,6 +188,10 @@ export const getRealResources0525 = async (req, res) => {
       );
       count += 1;
     }
+    realStats.values[0]["stat-list"].stat[0].timestamps = tempMemTimeStamp;
+    realStats.values[0]["stat-list"].stat[0].data = tempMemDataUsage;
+    realStats.values[0]["stat-list"].stat[0].timestamps = tempCpuTimeStamp;
+    realStats.values[0]["stat-list"].stat[0].data = tempCpuDataUsage;
   } else {
     //12개 이상이면 12개만 짜르기
     const tempMemTimeStamp = [];
@@ -205,11 +209,11 @@ export const getRealResources0525 = async (req, res) => {
       );
       tempCpuDataUsage.push(realStats.values[0]["stat-list"].stat[0].data[i]);
     }
+    realStats.values[0]["stat-list"].stat[0].timestamps = tempMemTimeStamp;
+    realStats.values[0]["stat-list"].stat[0].data = tempMemDataUsage;
+    realStats.values[0]["stat-list"].stat[0].timestamps = tempCpuTimeStamp;
+    realStats.values[0]["stat-list"].stat[0].data = tempCpuDataUsage;
   }
-  realStats.values[0]["stat-list"].stat[0].timestamps = tempMemTimeStamp;
-  realStats.values[0]["stat-list"].stat[0].data = tempMemDataUsage;
-  realStats.values[0]["stat-list"].stat[0].timestamps = tempCpuTimeStamp;
-  realStats.values[0]["stat-list"].stat[0].data = tempCpuDataUsage;
 
   return res.render("vmDetail", { realStats });
 };
