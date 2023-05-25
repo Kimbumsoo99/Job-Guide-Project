@@ -154,6 +154,8 @@ export const getRealResources0525 = async (req, res) => {
   //     usage: [23, 50, 30, 20, 40, 50, 5, 89, 99, 100, 34, 20],
   //   },
   // };
+  console.log(realStats);
+  console.log(realStats.value[0]);
   console.log(realStats.value[0]["stat-list"]);
   return res.render("vmDetail", { realStats });
 };
