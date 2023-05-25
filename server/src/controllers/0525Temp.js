@@ -37,12 +37,12 @@ export const get525VMList = async (req, res) => {
       options
     );*/
   const vmList = await httpsGet(
-    `https://${vCenterIP}/rest/vcenter/vm?filter.hosts=${hosts}`,
+    `https://${hostIP}/rest/vcenter/vm?filter.hosts=${hosts}`,
     options
   );
 
   console.log(
-    `https://${vCenterIP}/rest/vcenter/vm?filter.hosts=${hosts} : getVMList 요청 링크`
+    `https://${hostIP}/rest/vcenter/vm?filter.hosts=${hosts} : getVMList 요청 링크`
   );
   console.log(vmList);
   console.log("getVMList 종료");
