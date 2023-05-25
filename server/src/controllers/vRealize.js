@@ -178,13 +178,13 @@ export const getRealResources0525 = async (req, res) => {
         realStats.values[0]["stat-list"].stat[0].timestamps[count]
       );
       tempMemDataUsage.push(
-        realStats.values[0]["stat-list"].stat[0].data[count]
+        realStats.values[0]["stat-list"].stat[0].data[count].toFixed(2)
       );
       tempCpuTimeStamp.push(
         realStats.values[0]["stat-list"].stat[1].timestamps[count]
       );
       tempCpuDataUsage.push(
-        realStats.values[0]["stat-list"].stat[1].data[count]
+        realStats.values[0]["stat-list"].stat[1].data[count].toFixed(2)
       );
       count += 1;
     }
@@ -203,11 +203,15 @@ export const getRealResources0525 = async (req, res) => {
       tempMemTimeStamp.push(
         realStats.values[0]["stat-list"].stat[0].timestamps[i]
       );
-      tempMemDataUsage.push(realStats.values[0]["stat-list"].stat[0].data[i]);
+      tempMemDataUsage.push(
+        realStats.values[0]["stat-list"].stat[0].data[i].toFixed(2)
+      );
       tempCpuTimeStamp.push(
         realStats.values[0]["stat-list"].stat[1].timestamps[i]
       );
-      tempCpuDataUsage.push(realStats.values[0]["stat-list"].stat[1].data[i]);
+      tempCpuDataUsage.push(
+        realStats.values[0]["stat-list"].stat[1].data[i].toFixed(2)
+      );
     }
     realStats.values[0]["stat-list"].stat[0].timestamps = tempMemTimeStamp;
     realStats.values[0]["stat-list"].stat[0].data = tempMemDataUsage;
