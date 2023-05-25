@@ -180,7 +180,8 @@ export const getRealResources0525 = async (req, res) => {
     //12개 이상이면 12개만 짜르기
     const tempTimeStamp = [];
     const tempDataUsage = [];
-    for (let i = dataLength - 12; i > dataLength; i++) {
+    for (let i = dataLength - 12; i < dataLength; i++) {
+      console.log(i);
       tempTimeStamp.push(
         realStats.values[0]["stat-list"].stat[0].timestamps[i]
       );
