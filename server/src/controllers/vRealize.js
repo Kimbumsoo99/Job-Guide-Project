@@ -181,17 +181,17 @@ export const getRealResources0525 = async (req, res) => {
         realStats.values[0]["stat-list"].stat[0].data[count]
       );
       tempCpuTimeStamp.push(
-        realStats.values[0]["stat-list"].stat[0].timestamps[count]
+        realStats.values[0]["stat-list"].stat[1].timestamps[count]
       );
       tempCpuDataUsage.push(
-        realStats.values[0]["stat-list"].stat[0].data[count]
+        realStats.values[0]["stat-list"].stat[1].data[count]
       );
       count += 1;
     }
     realStats.values[0]["stat-list"].stat[0].timestamps = tempMemTimeStamp;
     realStats.values[0]["stat-list"].stat[0].data = tempMemDataUsage;
-    realStats.values[0]["stat-list"].stat[0].timestamps = tempCpuTimeStamp;
-    realStats.values[0]["stat-list"].stat[0].data = tempCpuDataUsage;
+    realStats.values[0]["stat-list"].stat[1].timestamps = tempCpuTimeStamp;
+    realStats.values[0]["stat-list"].stat[1].data = tempCpuDataUsage;
   } else {
     //12개 이상이면 12개만 짜르기
     const tempMemTimeStamp = [];
@@ -205,14 +205,14 @@ export const getRealResources0525 = async (req, res) => {
       );
       tempMemDataUsage.push(realStats.values[0]["stat-list"].stat[0].data[i]);
       tempCpuTimeStamp.push(
-        realStats.values[0]["stat-list"].stat[0].timestamps[i]
+        realStats.values[0]["stat-list"].stat[1].timestamps[i]
       );
-      tempCpuDataUsage.push(realStats.values[0]["stat-list"].stat[0].data[i]);
+      tempCpuDataUsage.push(realStats.values[0]["stat-list"].stat[1].data[i]);
     }
     realStats.values[0]["stat-list"].stat[0].timestamps = tempMemTimeStamp;
     realStats.values[0]["stat-list"].stat[0].data = tempMemDataUsage;
-    realStats.values[0]["stat-list"].stat[0].timestamps = tempCpuTimeStamp;
-    realStats.values[0]["stat-list"].stat[0].data = tempCpuDataUsage;
+    realStats.values[0]["stat-list"].stat[1].timestamps = tempCpuTimeStamp;
+    realStats.values[0]["stat-list"].stat[1].data = tempCpuDataUsage;
   }
 
   return res.render("vmDetail", { realStats });
