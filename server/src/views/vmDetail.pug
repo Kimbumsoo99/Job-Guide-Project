@@ -9,7 +9,7 @@ html(lang='ko')
             tr 
                 th 시간
                 th 모니터링
-            each val, index in realStats.values[0]["stat-list"].stat[0].timestaps
+            each val, index in realStats.values[0]["stat-list"].stat[0].timestamps
                 tr 
                     th=val
                     th #{realStats.values[0]["stat-list"].stat[0].data[index]}%
@@ -18,7 +18,7 @@ html(lang='ko')
             tr 
                 th 시간
                 th 모니터링
-            each val, index in realStats.values[0]["stat-list"].stat[1].timestaps
+            each val, index in realStats.values[0]["stat-list"].stat[1].timestamps
                 tr 
                     th=val
                     th #{realStats.values[0]["stat-list"].stat[1].data[index]}%
