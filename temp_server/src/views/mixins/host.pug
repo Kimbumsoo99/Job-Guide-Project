@@ -1,17 +1,13 @@
-mixin hostMixin(info)
-    // URL/test/page/host?hosts=${info.info.hostInfo.value.host}
-    
-    div.HostIP(style='font-size:2rem') #{info.vs_ip}
-    each hostInfo in info.info.hostInfo.value
-        div.do-inner
-            a(href=`/host/vm?hosts=${hostInfo.host}&vs_id=${info.vs_id}&vs_pw=${info.vs_pw}&vs_ip=${info.vs_ip}`)
-                div.icon
-                    if hostInfo.power_state=="POWERED_ON"
-                        i.fa-solid.fa-desktop(style='color: #f5cc62;float:left')
-                        p(style='color: #00aa00;width:auto;') POWERED_ON
-                    else 
-                        i.fa-solid.fa-desktop(style='color: #f5cc62;float:left')
-                        p(style='color: #d34242;width:auto') POWERED_OFF
-                div.content
-                    h3 #{hostInfo.host}
-                    p #{hostInfo.name}
+mixin hostMixin(host)
+    div.do-inner
+        a(href=`/vs/hosts/vms?hosts=${host.host}`)
+            div.icon
+                if host.power_state=="POWERED_ON"
+                    i.fa-solid.fa-desktop(style='color: #f5cc62;float:left')
+                    p(style='color: #00aa00;width:auto;') POWERED_ON
+                else 
+                    i.fa-solid.fa-desktop(style='color: #f5cc62;float:left')
+                    p(style='color: #d34242;width:auto') POWERED_OFF
+            div.content
+                h3 #{host.host}
+                p #{host.name}

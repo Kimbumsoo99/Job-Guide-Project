@@ -22,7 +22,7 @@ body
                     li
                         div.HostAddress HostAddress
                     li 
-                        div(style='cursor: pointer;' onclick="location.href='/vm?add=1';")
+                        div(style='cursor: pointer;' onclick="location.href='/vs?add=1';")
                             p 호스트 정보 추가
     // end header
     // main
@@ -32,8 +32,8 @@ body
                 div.title
                     h2 HOST
                 div.do-me
-                    - var vsphere = user.vsphere
-                    each info in vsphere
-                        +hostMixin(info)
+                    div.HostIP(style='font-size:2rem') #{user.vsphere[0].vc_ip}
+                    each host in hostList.value
+                        +hostMixin(host)
                     else
                         span.empty__message No host found

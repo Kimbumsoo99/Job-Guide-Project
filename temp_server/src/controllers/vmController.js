@@ -1,5 +1,6 @@
 import User from "../models/User";
 import { getHostList, getSessionId } from "./api/vCenterAPI";
+import TestHostList from "../jsons/0525host.json";
 
 const https = require("https");
 
@@ -60,8 +61,11 @@ export const postAddBasicInfo = async (req, res) => {
         { new: true }
     );
     req.session.user = updatedUser;
-    if (!sessionID) sessionID = await getSessionId(vs_id, vs_pw, vc_ip);
-    req.session.sessionID = sessionID;
+
+    // 집에서 실행
+    // if (!sessionID) sessionID = await getSessionId(vs_id, vs_pw, vc_ip);
+    // req.session.sessionID = sessionID;
+    // 집에서 실행
 
     return res.redirect(`/vs/hosts`);
     //return res.redirect(`/vm/data?vs_id=${vm_id}&vs_pw=${vm_pw}&vs_ip=${vm_ip}`);
@@ -74,47 +78,50 @@ export const postAddBasicInfo = async (req, res) => {
 export const hostsPageRender = async (req, res) => {
     const { user } = req.session;
     const { _id } = user;
-
     // session에 있는 vspherer는 Object
-    // DB에 있는 vsphere는 Array라는 문제점이 있음. 향후 생각해보기 (0527)
-    if (!user.vsphere.vs_id && !user.vsphere.vc_ip) {
-        //ID와 IP가 존재하지 않는다면, 등록부터 하기
+    if (!user.vsphere) {
+        //vsphere 정보가 존재하지 않는다면, 등록부터 하기
         return res.redirect("/vs");
     }
 
-    if (user.vsphere.info) {
-        //ID와 IP가 존재하고, host 정보도 user에 이미 존재
-        return res.render("hostPage", { info: user.vsphere.info });
+    // DB에 있는 vsphere는 Array라는 문제점이 있음. 향후 생각해보기 (0527)
+    if (user.vsphere[0].info) {
+        //vsphere 정보가 존재하고, host 정보도 user에 이미 존재
+        console.log("host 정보가 이미 존재");
+        return res.render("hostPage", { hostList: user.vsphere[0].info });
     }
 
     // ID, IP는 존재하지만, host 정보가 없는 경우 (첫 정상 접근)
     // Host 정보를 받아서, DB에 저장하고 render 시킨다.
-    if (!sessionID) {
-        sessionID = await getSessionId(
-            user.vsphere.vs_id,
-            user.vsphere.vs_pw,
-            user.vsphere.vc_ip
-        );
-        req.session.sessionID = sessionID;
-    }
+    // 집에서 실행
+    // if (!sessionID) {
+    //     sessionID = await getSessionId(
+    //         user.vsphere.vs_id,
+    //         user.vsphere.vs_pw,
+    //         user.vsphere.vc_ip
+    //     );
+    //     req.session.sessionID = sessionID;
+    // }
+    // 집에서 실행
 
-    const vCenterIP = user.vsphere.vc_ip;
-    const hostList = await getHostList(sessionID, vCenterIP);
-
+    const vCenterIP = user.vsphere[0].vc_ip;
+    // 집에서 실행
+    // const hostList = await getHostList(sessionID, vCenterIP);
+    const hostList = TestHostList;
+    // 집에서 실행
     const updatedUser = await User.findByIdAndUpdate(
         _id,
         {
-            $push: {
-                vsphere: {
-                    info: { hostList },
-                },
+            $set: {
+                "vsphere.$[seq].info": hostList,
             },
         },
-        { new: true }
+        { new: true, arrayFilters: [{ "seq.vc_ip": vCenterIP }] }
     );
     req.session.user = updatedUser;
 
-    return res.render(hostPage);
+    //hostList에 대한 데이터를 보내줘야함.
+    return res.render("hostPage", { hostList });
 };
 
 //0527 Refactoring 완료
