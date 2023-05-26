@@ -1,28 +1,30 @@
 import express from "express";
 import { home } from "../controllers/vmController";
 import {
-  getJoin,
-  getLogin,
-  getLogout,
-  postJoin,
-  postLogin,
+    getJoin,
+    getLogin,
+    getLogout,
+    postJoin,
+    postLogin,
 } from "../controllers/userController";
 import {
-  hostPetHotestGetHost,
-  testGetHost,
-  testGetVMList,
-  testHostInfo,
-  testInterval,
-  testVMInfo,
-  testVMPage,
-  testgetCloudVM,
+    testGetHost,
+    testHostInfo,
+    testInterval,
+    testVMInfo,
+    testVMPage,
 } from "../tests/Test";
 import { localsMiddleware, protectorMiddleware } from "../middlewares";
-import { testGetVM } from "../controllers/cloudData";
 
 const rootRouter = express.Router();
 
+//0527 이 사이만 최종 코드
+
 rootRouter.get("/", home);
+rootRouter.route("/login").get(getLogin).post(postLogin);
+
+//0527 이 사이만 최종 코드
+
 rootRouter.route("/login").get(getLogin).post(postLogin);
 rootRouter.route("/join").get(getJoin).post(postJoin);
 rootRouter.get("/logout", getLogout);

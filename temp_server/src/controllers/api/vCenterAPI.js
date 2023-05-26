@@ -1,38 +1,6 @@
-import { getBaseOptions, getSessionId } from "./header";
+import { getBaseOptions, requestAPI } from "./header";
 
 let sessionId;
-
-const requestAPI = (options, data) => {
-    if (!data) {
-        data = JSON.stringify({});
-    }
-
-    return new Promise((resolve, reject) => {
-        const req = https.request(options, (res) => {
-            console.log(`statusCode: ${res.statusCode}`);
-            let responseBody = "";
-
-            res.on("data", (chunk) => {
-                responseBody += chunk;
-            });
-
-            res.on("end", () => {
-                const jsonResponse = JSON.parse(responseBody);
-                // console.log("JSON 객체 값");
-                // console.log(jsonResponse);
-                resolve(jsonResponse);
-            });
-        });
-
-        req.on("error", (error) => {
-            console.error(error);
-            reject(error);
-        });
-
-        req.write(data);
-        req.end();
-    });
-};
 
 export const getSessionId = async (username, password, vCenterIP) => {
     const data = JSON.stringify({});
@@ -58,4 +26,32 @@ export const getHostList = async (vSphereID, vSpherePW, vCenterIP) => {
     options.method = "GET";
 
     const hostList = await requestAPI(options);
+
+    return hostList;
+};
+
+export const getVMList = async (hostName, vSphereID, vSpherePW, vCenterIP) => {
+    const sid = sessionId
+        ? sessionId
+        : await getSessionId(vSphereID, vSpherePW, vCenterIP);
+    const options = getBaseOptions(vCenterIP);
+    options.headers["vmware-api-session-id"] = sid;
+    options.path = `/rest/vcenter/vm?filter.hosts=${hostName}`;
+    options.method = "GET";
+
+    const vmList = await requestAPI(options);
+
+    return vmList;
+};
+
+export const getVMInfo = async (vmName, vCenterIP) => {
+    const sid = sessionId;
+    const options = getBaseOptions(vCenterIP);
+    options.headers["vmware-api-session-id"] = sid;
+    options.path = `/rest/vcenter/vm/${vmName}`;
+    options.method = "GET";
+
+    const vmInfo = await requestAPI(options);
+
+    return vmInfo;
 };
