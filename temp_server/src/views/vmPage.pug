@@ -23,7 +23,7 @@ body
                     h2 Host Name: 
                         span.HostIP #{hosts}
                 div.do-me
-                    each vm in vmList
+                    each vm in vmList.value
                         +vmListMixin(vm)
                     else
                         span.empty__message No host found

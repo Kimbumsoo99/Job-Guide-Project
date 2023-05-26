@@ -1,6 +1,7 @@
 import User from "../models/User";
-import { getHostList, getSessionId } from "./api/vCenterAPI";
+import { getHostList, getSessionId, getVMList } from "./api/vCenterAPI";
 import TestHostList from "../jsons/0525host.json";
+import TestVMList from "../jsons/0525vmlist.json";
 
 const https = require("https");
 
@@ -129,14 +130,38 @@ export const vmsPageRender = async (req, res) => {
 
     if (!hosts) res.redirect("/vs/hosts");
 
-    if (!sessionID) {
-        sessionID = await getSessionId(
-            user.vsphere.vs_id,
-            user.vsphere.vs_pw,
-            user.vsphere.vc_ip
-        );
-        req.session.sessionID = sessionID;
-    }
+    // 집에서 실행
+    // if (!sessionID) {
+    //     sessionID = await getSessionId(
+    //         user.vsphere.vs_id,
+    //         user.vsphere.vs_pw,
+    //         user.vsphere.vc_ip
+    //     );
+    //     req.session.sessionID = sessionID;
+    // }
+    // 집에서 실행
+
+    // 집에서 실행
+    // const vCenterIP = user.vsphere.vc_ip;
+    // const vmList = await getVMList(hosts, sessionID, vCenterIP);
+    const vmList = TestVMList;
+    // 집에서 실행
+
+    const updatedUser = await User.findByIdAndUpdate(
+        _id,
+        {
+            $set: {
+                "vsphere.info.value.$[inner].vmList": vmList,
+            },
+        },
+        {
+            new: true,
+            arrayFilters: [{ "inner.host": hosts }],
+        }
+    );
+    req.session.user = updatedUser;
+
+    return res.render("vmPage", { hosts, vmList });
 };
 //0527 Refactoring 완료
 //0527 Refactoring 완료

@@ -17,9 +17,8 @@ export const getSessionId = async (username, password, vCenterIP) => {
 };
 
 export const getHostList = async (sessionID, vCenterIP) => {
-    if (!sid) sid = sessionID;
     const options = getBaseOptions(vCenterIP);
-    options.headers["vmware-api-session-id"] = sid;
+    options.headers["vmware-api-session-id"] = sessionID;
     options.path = "/rest/vcenter/host";
     options.method = "GET";
 
@@ -28,10 +27,9 @@ export const getHostList = async (sessionID, vCenterIP) => {
     return hostList;
 };
 
-export const getVMList = async (hostName, vSphereID, vSpherePW, vCenterIP) => {
-    const sid = sid ? sid : await getSessionId(vSphereID, vSpherePW, vCenterIP);
+export const getVMList = async (hostName, sessionID, vCenterIP) => {
     const options = getBaseOptions(vCenterIP);
-    options.headers["vmware-api-session-id"] = sid;
+    options.headers["vmware-api-session-id"] = sessionID;
     options.path = `/rest/vcenter/vm?filter.hosts=${hostName}`;
     options.method = "GET";
 
