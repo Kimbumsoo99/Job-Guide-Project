@@ -1,10 +1,13 @@
 import User from "../models/User";
+import { getSessionId } from "./api/vCenterAPI";
 
 const https = require("https");
 
-const username = "administrator@vsphere.local";
-const password = "123Qwer!";
-const hostIP = "192.168.0.102";
+// const username = "administrator@vsphere.local";
+// const password = "123Qwer!";
+// const hostIP = "192.168.0.102";
+
+let sessionID;
 
 export const home = (req, res) => res.render("home");
 
@@ -18,20 +21,44 @@ function isEmptyArr(arr) {
 
 export const getAddBasicInfo = (req, res) => {
     const { user } = req.session;
-    console.log(user.vsphere);
     if (isEmptyArr(user.vsphere) || req.query.add == 1)
-        return res.render("cloudinput");
-    //return res.redirect("/vm/data");
-    return res.redirect("/vm/host");
+        return res.render("addVSphere");
+    //return res.redirect("/vs/data");
+    return res.redirect("/vs/hosts");
 };
 
 export const postAddBasicInfo = async (req, res) => {
-    const { vm_id, vm_pw, vm_ip } = req.body;
+    const { vs_id, vs_pw, vc_ip } = req.body;
 
-    //return res.redirect(`/vm/data?vs_id=${vm_id}&vs_pw=${vm_pw}&vs_ip=${vm_ip}`);
-    return res.redirect(
-        `/vm/host?vs_id=${vm_id}&vs_pw=${vm_pw}&vs_ip=${vm_ip}`
+    const { user } = req.session;
+    const { _id } = user;
+
+    const updatedUser = await User.findByIdAndUpdate(
+        _id,
+        {
+            $push: {
+                vsphere: {
+                    vs_id,
+                    vs_pw,
+                    vc_ip,
+                },
+            },
+        },
+        { new: true }
     );
+    req.session.user = updatedUser;
+    if (!req.session.sessionID) {
+        req.session.sessionID = sessionID
+            ? sessionID
+            : await getSessionId(vs_id, vs_pw, vc_ip);
+    }
+
+    return res.redirect(`/vs/hosts`);
+    //return res.redirect(`/vm/data?vs_id=${vm_id}&vs_pw=${vm_pw}&vs_ip=${vm_ip}`);
+
+    // return res.redirect(
+    //     `/vs/hosts?vs_id=${vs_id}&vs_pw=${vs_pw}&vs_ip=${vc_ip}`
+    // );
 };
 
 /**

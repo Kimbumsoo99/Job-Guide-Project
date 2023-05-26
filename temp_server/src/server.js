@@ -3,7 +3,7 @@ const { default: rootRouter } = require("./routers/rootRouters");
 import morgan from "morgan";
 import MongoStore from "connect-mongo";
 import session from "express-session";
-import vmRouter from "./routers/vmRouter";
+import vspherRouter from "./routers/vsphereRouter";
 import favicon from "serve-favicon";
 import { localsMiddleware } from "./middlewares";
 import path from "path";
@@ -11,15 +11,14 @@ import path from "path";
 const app = express();
 
 const logger = morgan("dev", {
-  skip: (req) => {
-    return (
-      req.originalUrl.includes("/assets/") ||
-      req.originalUrl.includes("/uploads/")
-    );
-  },
+    skip: (req) => {
+        return (
+            req.originalUrl.includes("/assets/") ||
+            req.originalUrl.includes("/uploads/")
+        );
+    },
 });
 app.use(favicon(path.join(__dirname, "..", "uploads", "favicon.ico")));
-console.log(path.join(__dirname, "..", "uploads", "favicon.ico"));
 app.set("view engine", "pug");
 app.set("views", process.cwd() + "/src/views");
 
@@ -29,21 +28,21 @@ app.use(express.urlencoded({ extended: true })); //express가 form의 value들�
 app.use(express.json());
 
 app.use(
-  session({
-    secret: process.env.SECRET || "secret_key",
-    resave: false,
-    saveUninitialized: false, //로그인한 사용자만 쿠키 정보 저장
-    /*cookie: {
+    session({
+        secret: process.env.SECRET || "secret_key",
+        resave: false,
+        saveUninitialized: false, //로그인한 사용자만 쿠키 정보 저장
+        /*cookie: {
       maxAge: 10000, //세션 정보 유지 시간
     },*/
-    store: MongoStore.create({
-      mongoUrl: "mongodb://localhost:27017/testlogin",
-      ttl: 3600, //초 단위
-      autoRemove: "interval",
-      autoRemoveInterval: 60, // In minutes. Default
-      touchAfter: 60, // time period in seconds
-    }),
-  })
+        store: MongoStore.create({
+            mongoUrl: "mongodb://localhost:27017/testlogin",
+            ttl: 3600, //초 단위
+            autoRemove: "interval",
+            autoRemoveInterval: 60, // In minutes. Default
+            touchAfter: 60, // time period in seconds
+        }),
+    })
 );
 
 app.use(localsMiddleware);
@@ -51,6 +50,6 @@ app.use(localsMiddleware);
 app.use("/uploads", express.static("uploads"));
 app.use("/assets", express.static("assets"));
 app.use("/", rootRouter);
-app.use("/vm", vmRouter);
+app.use("/vs", vspherRouter);
 
 export default app;
