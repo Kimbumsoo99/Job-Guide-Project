@@ -1,6 +1,6 @@
 import { getBaseOptions, requestAPI } from "./header";
 
-let sessionId;
+let sid;
 
 export const getSessionId = async (username, password, vCenterIP) => {
     const data = JSON.stringify({});
@@ -12,14 +12,12 @@ export const getSessionId = async (username, password, vCenterIP) => {
 
     sessionIdJson = await requestAPI(options, data);
     console.log(sessionIdJson.value);
-    sessionId = sessionIdJson.value;
-    return sessionId;
+    sid = sessionIdJson.value;
+    return sid;
 };
 
-export const getHostList = async (vSphereID, vSpherePW, vCenterIP) => {
-    const sid = sessionId
-        ? sessionId
-        : await getSessionId(vSphereID, vSpherePW, vCenterIP);
+export const getHostList = async (sessionID, vCenterIP) => {
+    if (!sid) sid = sessionID;
     const options = getBaseOptions(vCenterIP);
     options.headers["vmware-api-session-id"] = sid;
     options.path = "/rest/vcenter/host";
@@ -31,9 +29,7 @@ export const getHostList = async (vSphereID, vSpherePW, vCenterIP) => {
 };
 
 export const getVMList = async (hostName, vSphereID, vSpherePW, vCenterIP) => {
-    const sid = sessionId
-        ? sessionId
-        : await getSessionId(vSphereID, vSpherePW, vCenterIP);
+    const sid = sid ? sid : await getSessionId(vSphereID, vSpherePW, vCenterIP);
     const options = getBaseOptions(vCenterIP);
     options.headers["vmware-api-session-id"] = sid;
     options.path = `/rest/vcenter/vm?filter.hosts=${hostName}`;
@@ -45,7 +41,7 @@ export const getVMList = async (hostName, vSphereID, vSpherePW, vCenterIP) => {
 };
 
 export const getVMInfo = async (vmName, vCenterIP) => {
-    const sid = sessionId;
+    const sid = sid;
     const options = getBaseOptions(vCenterIP);
     options.headers["vmware-api-session-id"] = sid;
     options.path = `/rest/vcenter/vm/${vmName}`;

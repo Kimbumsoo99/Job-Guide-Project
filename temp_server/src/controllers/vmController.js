@@ -1,11 +1,15 @@
 import User from "../models/User";
-import { getSessionId } from "./api/vCenterAPI";
+import { getHostList, getSessionId } from "./api/vCenterAPI";
 
 const https = require("https");
 
 // const username = "administrator@vsphere.local";
 // const password = "123Qwer!";
 // const hostIP = "192.168.0.102";
+
+//0527 Refactoring 완료
+//0527 Refactoring 완료
+//0527 Refactoring 완료
 
 let sessionID;
 
@@ -29,9 +33,18 @@ export const getAddBasicInfo = (req, res) => {
 
 export const postAddBasicInfo = async (req, res) => {
     const { vs_id, vs_pw, vc_ip } = req.body;
-
     const { user } = req.session;
     const { _id } = user;
+
+    const isDuplicated = await User.exists({
+        _id,
+        "vsphere.vc_ip": vc_ip,
+    });
+    if (isDuplicated) {
+        return res.render("addVSphere", {
+            errorMessage: "Sorry, that IP is already registered.",
+        });
+    }
 
     const updatedUser = await User.findByIdAndUpdate(
         _id,
@@ -47,11 +60,8 @@ export const postAddBasicInfo = async (req, res) => {
         { new: true }
     );
     req.session.user = updatedUser;
-    if (!req.session.sessionID) {
-        req.session.sessionID = sessionID
-            ? sessionID
-            : await getSessionId(vs_id, vs_pw, vc_ip);
-    }
+    if (!sessionID) sessionID = await getSessionId(vs_id, vs_pw, vc_ip);
+    req.session.sessionID = sessionID;
 
     return res.redirect(`/vs/hosts`);
     //return res.redirect(`/vm/data?vs_id=${vm_id}&vs_pw=${vm_pw}&vs_ip=${vm_ip}`);
@@ -60,6 +70,56 @@ export const postAddBasicInfo = async (req, res) => {
     //     `/vs/hosts?vs_id=${vs_id}&vs_pw=${vs_pw}&vs_ip=${vc_ip}`
     // );
 };
+
+export const hostsPageRender = async (req, res) => {
+    const { user } = req.session;
+    const { _id } = user;
+
+    // session에 있는 vspherer는 Object
+    // DB에 있는 vsphere는 Array라는 문제점이 있음. 향후 생각해보기 (0527)
+    if (!user.vsphere.vs_id && !user.vsphere.vc_ip) {
+        //ID와 IP가 존재하지 않는다면, 등록부터 하기
+        return res.redirect("/vs");
+    }
+
+    if (user.vsphere.info) {
+        //ID와 IP가 존재하고, host 정보도 user에 이미 존재
+        return res.render("hostPage", { info: user.vsphere.info });
+    }
+
+    // ID, IP는 존재하지만, host 정보가 없는 경우 (첫 정상 접근)
+    // Host 정보를 받아서, DB에 저장하고 render 시킨다.
+    if (!sessionID) {
+        sessionID = await getSessionId(
+            user.vsphere.vs_id,
+            user.vsphere.vs_pw,
+            user.vsphere.vc_ip
+        );
+        req.session.sessionID = sessionID;
+    }
+
+    const vCenterIP = user.vsphere.vc_ip;
+    const hostList = await getHostList(sessionID, vCenterIP);
+
+    const updatedUser = await User.findByIdAndUpdate(
+        _id,
+        {
+            $push: {
+                vsphere: {
+                    info: { hostList },
+                },
+            },
+        },
+        { new: true }
+    );
+    req.session.user = updatedUser;
+
+    return res.render(hostPage);
+};
+
+//0527 Refactoring 완료
+//0527 Refactoring 완료
+//0527 Refactoring 완료
 
 /**
  * 공통으로 사용되는 옵션 객체 반환

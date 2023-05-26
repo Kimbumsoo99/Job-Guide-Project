@@ -1,5 +1,9 @@
 import express from "express";
-import { getAddBasicInfo, postAddBasicInfo } from "../controllers/vmController";
+import {
+    getAddBasicInfo,
+    hostsPageRender,
+    postAddBasicInfo,
+} from "../controllers/vmController";
 import { getCloudData } from "../controllers/cloudData";
 import { protectorMiddleware } from "../middlewares";
 import { patchMemory, startPower, stopPower } from "../controllers/vmChangeSet";
@@ -15,6 +19,7 @@ vsphereRouter
     .all(protectorMiddleware)
     .get(getAddBasicInfo)
     .post(postAddBasicInfo);
+vsphereRouter.route("/hosts").all(protectorMiddleware).get(hostsPageRender);
 
 //0527 이 사이만 최종 코드
 

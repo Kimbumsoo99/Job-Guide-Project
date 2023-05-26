@@ -244,6 +244,10 @@ label span {
     display: block;
     top: 31%;
 }
+#vsadd-msg {
+    display: block;
+    top: 27%;
+}
 .footer {
     position: relative;
     left: 0;
