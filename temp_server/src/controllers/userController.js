@@ -8,14 +8,18 @@ export const postLogin = async (req, res) => {
     const user = await User.findOne({ username });
     if (!user) {
         console.log("postLogin 유저 존재 X");
-        return res.status(400).render("login");
+        return res.status(400).render("login", {
+            errorMessage: "Please check your input again.",
+        });
     }
 
     // 비번 확인
     const ok = await bcrypt.compare(password, user.password);
     if (!ok) {
         console.log("postLogin 비밀번호 실패");
-        return res.status(400).render("login");
+        return res.status(400).render("login", {
+            errorMessage: "Please check your input again.",
+        });
     }
 
     req.session.loggedIn = true;
