@@ -22,6 +22,8 @@ const rootRouter = express.Router();
 
 rootRouter.get("/", home);
 rootRouter.route("/login").get(getLogin).post(postLogin);
+rootRouter.get("/logout", getLogout);
+rootRouter.route("/join").get(getJoin).post(postJoin);
 
 //0527 이 사이만 최종 코드
 

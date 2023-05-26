@@ -9,7 +9,7 @@ html(lang='ko')
             div.container
                 div.loginForm
                     if errorMessage
-                        span#msg.error=errorMessage
+                        span#login-msg.error=errorMessage
                     form.box(method="POST" name='form1' onsubmit='return checkStuff()')
                         div.logo(onclick="location.href='/';")
                             h4 WATCH

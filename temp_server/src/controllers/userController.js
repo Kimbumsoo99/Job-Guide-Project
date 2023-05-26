@@ -7,7 +7,6 @@ export const postLogin = async (req, res) => {
 
     const user = await User.findOne({ username });
     if (!user) {
-        console.log("postLogin 유저 존재 X");
         return res.status(400).render("login", {
             errorMessage: "Please check your input again.",
         });
@@ -16,7 +15,6 @@ export const postLogin = async (req, res) => {
     // 비번 확인
     const ok = await bcrypt.compare(password, user.password);
     if (!ok) {
-        console.log("postLogin 비밀번호 실패");
         return res.status(400).render("login", {
             errorMessage: "Please check your input again.",
         });
@@ -33,17 +31,16 @@ export const getJoin = (req, res) => res.render("join");
 export const postJoin = async (req, res) => {
     const { name, email, username, password, password2 } = req.body;
     if (password !== password2) {
-        console.log("비밀번호 오류");
-        return res.status(400).render("join");
+        return res.status(400).render("join", {
+            errorMessage: "The password is not the same.",
+        });
     }
     const user = await User.findOne({ $or: [{ username }, { email }] });
-    console.log("유저 확인");
-    console.log(user);
     if (user) {
-        console.log("postJoin 유저 중복");
-        return res.status(400).render("login");
+        return res.status(400).render("join", {
+            errorMessage: "This account is already exists.",
+        });
     }
-
     try {
         await User.create({
             name,
@@ -54,7 +51,9 @@ export const postJoin = async (req, res) => {
         return res.redirect("login");
     } catch (error) {
         console.log("postJoin 유저 생성 오류");
-        return res.status(400).render("join");
+        return res.status(400).render("join", {
+            errorMessage: "Error occurred. Please run it again later",
+        });
     }
 };
 
