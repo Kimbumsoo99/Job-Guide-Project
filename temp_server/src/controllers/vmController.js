@@ -8,14 +8,6 @@ const https = require("https");
 // const password = "123Qwer!";
 // const hostIP = "192.168.0.102";
 
-//0527 Refactoring 완료
-//0527 Refactoring 완료
-//0527 Refactoring 완료
-
-let sessionID;
-
-export const home = (req, res) => res.render("home");
-
 function isEmptyArr(arr) {
     if (Array.isArray(arr) && arr.length === 0) {
         return true;
@@ -24,10 +16,19 @@ function isEmptyArr(arr) {
     return false;
 }
 
+//0527 Refactoring 완료
+//0527 Refactoring 완료
+//0527 Refactoring 완료
+
+let sessionID;
+
+export const home = (req, res) => res.render("home");
+
 export const getAddBasicInfo = (req, res) => {
     const { user } = req.session;
-    if (isEmptyArr(user.vsphere) || req.query.add == 1)
+    if (!user.vsphere || req.query.change == 1) {
         return res.render("addVSphere");
+    }
     //return res.redirect("/vs/data");
     return res.redirect("/vs/hosts");
 };
@@ -50,12 +51,10 @@ export const postAddBasicInfo = async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(
         _id,
         {
-            $push: {
-                vsphere: {
-                    vs_id,
-                    vs_pw,
-                    vc_ip,
-                },
+            vsphere: {
+                vs_id,
+                vs_pw,
+                vc_ip,
             },
         },
         { new: true }
@@ -85,10 +84,9 @@ export const hostsPageRender = async (req, res) => {
     }
 
     // DB에 있는 vsphere는 Array라는 문제점이 있음. 향후 생각해보기 (0527)
-    if (user.vsphere[0].info) {
+    if (user.vsphere.info) {
         //vsphere 정보가 존재하고, host 정보도 user에 이미 존재
-        console.log("host 정보가 이미 존재");
-        return res.render("hostPage", { hostList: user.vsphere[0].info });
+        return res.render("hostPage", { hostList: user.vsphere.info });
     }
 
     // ID, IP는 존재하지만, host 정보가 없는 경우 (첫 정상 접근)
@@ -104,19 +102,18 @@ export const hostsPageRender = async (req, res) => {
     // }
     // 집에서 실행
 
-    const vCenterIP = user.vsphere[0].vc_ip;
     // 집에서 실행
+    // const vCenterIP = user.vsphere.vc_ip;
     // const hostList = await getHostList(sessionID, vCenterIP);
     const hostList = TestHostList;
     // 집에서 실행
+
     const updatedUser = await User.findByIdAndUpdate(
         _id,
         {
-            $set: {
-                "vsphere.$[seq].info": hostList,
-            },
+            "vsphere.info": hostList,
         },
-        { new: true, arrayFilters: [{ "seq.vc_ip": vCenterIP }] }
+        { new: true }
     );
     req.session.user = updatedUser;
 
@@ -124,6 +121,23 @@ export const hostsPageRender = async (req, res) => {
     return res.render("hostPage", { hostList });
 };
 
+export const vmsPageRender = async (req, res) => {
+    const { user } = req.session;
+    const { _id } = user;
+
+    const { hosts } = req.query;
+
+    if (!hosts) res.redirect("/vs/hosts");
+
+    if (!sessionID) {
+        sessionID = await getSessionId(
+            user.vsphere.vs_id,
+            user.vsphere.vs_pw,
+            user.vsphere.vc_ip
+        );
+        req.session.sessionID = sessionID;
+    }
+};
 //0527 Refactoring 완료
 //0527 Refactoring 완료
 //0527 Refactoring 완료

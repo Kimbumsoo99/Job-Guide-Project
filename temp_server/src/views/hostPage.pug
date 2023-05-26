@@ -17,13 +17,14 @@ body
                     img(src='/uploads/logo.png' onclick="location.href='/';")
             nav
                 ul
-                    li
-                        div.HostIP HostIP
-                    li
-                        div.HostAddress HostAddress
+                    //
+                        li
+                            div.HostIP HostIP
+                        li
+                            div.HostAddress=user.vsphere.vc_ip
                     li 
-                        div(style='cursor: pointer;' onclick="location.href='/vs?add=1';")
-                            p 호스트 정보 추가
+                        div(style='cursor: pointer;' onclick="location.href='/vs?change=1';")
+                            p 호스트 정보 변경
     // end header
     // main
     main#main
@@ -32,7 +33,7 @@ body
                 div.title
                     h2 HOST
                 div.do-me
-                    div.HostIP(style='font-size:2rem') #{user.vsphere[0].vc_ip}
+                    div.HostIP(style='font-size:2rem')=user.vsphere.vc_ip
                     each host in hostList.value
                         +hostMixin(host)
                     else
