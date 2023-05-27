@@ -182,9 +182,26 @@ export const vmDetailPageRender = async (req, res) => {
     const { user } = req.session;
     const { _id } = user;
 
-    const { vm } = req.query;
+    const vmName = req.query.vm;
+    const hostName = req.query.hosts;
+    const hostList = user.vsphere.info.value;
 
-    return res.render("vmInfo");
+    let vmList;
+    for (const [index, host] of hostList.entries()) {
+        if (hostName == host.host) {
+            vmList = host.vmList;
+        }
+    }
+
+    let vmInfo;
+    for (const [index, vm] of vmList.value.entries()) {
+        if (vmName == vm.vm) {
+            vmInfo = vm;
+        }
+    }
+
+    console.log(vmInfo);
+    return res.render("vmInfo", { vmInfo, vmName, hostName });
 };
 //0527 Refactoring 완료
 //0527 Refactoring 완료

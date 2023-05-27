@@ -1,6 +1,6 @@
 mixin vmListMixin(vm)
     if !vm.name.includes("vCLS")
-        a(href=`/vs/hosts/vms/detail?vm=${vm.name}`)  
+        a(href=`/vs/hosts/vms/detail?vm=${vm.vm}&hosts=${hosts}`)  
             div.do-inner
                 div.icon
                     if vm.power_state=="POWERED_ON"

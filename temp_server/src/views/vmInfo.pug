@@ -43,12 +43,32 @@ head
         #layoutSidenav_content{
             margin-top: 140px;
         }
+        .container{
+            margin: 0;
+        }
+        #li-1:hover,
+        #li-2:hover{
+            background-color: #222222;
+        }
 body
     header
         div.container
             h1
                 button#img_btn.btm_image(type='button')
                     img(src='/uploads/logo.png' onclick="location.href='/';")
+            nav
+                ul
+                    //
+                        li
+                            div.HostIP HostIP
+                        li
+                            div.HostAddress=user.vsphere.vc_ip
+                    li#li-1
+                        div(style='cursor: pointer;' onclick=`location.href="edit?vm=${vmName}&host=${hostName}";`)
+                            p 가상머신 수정
+                    li#li-2
+                        div(style='cursor: pointer;' onclick=`location.href='real?vm=${vmName}';`)
+                            p 실시간 사용률
     div#layoutSidenav_content
         main
             div.container-fluid.px-4
@@ -72,19 +92,19 @@ body
                             tbody
                                 tr(height="200")
                                     td CPU 코어 개수
-                                    td 2 CORE
+                                    td #{vmInfo.cpu_count} CORE
                                     td
                                 tr(height="200")
                                     td Memory 크기
-                                    td 4096 Mib
+                                    td #{vmInfo.memory_size_MiB} Mib
                                     td
                                 tr(height="200")
                                     td disk.vmdk_file
-                                    td [share2] VM02/VM02.vmdk
+                                    td #{vmInfo.info.value.disks[0].value.backing.vmdk_file}
                                     td
                                 tr(height="200")
-                                    td Disk 용량
-                                    td 25 GB
+                                    td 남은 Disk 용량
+                                    td #{(vmInfo.info.value.disks[0].value.capacity / 1000000000).toFixed(2)} GB
                                     td
                                 tr(height="200")
                                     td Network Name
