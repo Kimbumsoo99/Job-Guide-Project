@@ -1,1 +1,120 @@
-{"value":{"instant_clone_frozen":false,"cdroms":[{"value":{"start_connected":false,"backing":{"device_access_type":"PASSTHRU","type":"CLIENT_DEVICE"},"allow_guest_control":true,"label":"CD/DVD drive 1","state":"NOT_CONNECTED","type":"SATA","sata":{"bus":0,"unit":0}},"key":"16000"}],"memory":{"hot_add_increment_size_MiB":0,"size_MiB":4096,"hot_add_enabled":false,"hot_add_limit_MiB":4096},"disks":[{"value":{"scsi":{"bus":0,"unit":0},"backing":{"vmdk_file":"[share2] VM02/VM02.vmdk","type":"VMDK_FILE"},"label":"Hard disk 1","type":"SCSI","capacity":25769803776},"key":"2000"}],"parallel_ports":[],"sata_adapters":[{"value":{"bus":0,"pci_slot_number":32,"label":"SATA controller 0","type":"AHCI"},"key":"15000"}],"cpu":{"hot_remove_enabled":false,"count":2,"hot_add_enabled":false,"cores_per_socket":2},"scsi_adapters":[{"value":{"pci_slot_number":160,"scsi":{"bus":0,"unit":7},"label":"SCSI controller 0","sharing":"NONE","type":"LSILOGICSAS"},"key":"1000"}],"power_state":"POWERED_ON","floppies":[],"identity":{"name":"VM02","instance_uuid":"5022e806-ca9a-e790-a15f-3acb90f2a3fb","bios_uuid":"42227668-f0a8-ddd5-69b2-f83c90eb7159"},"nvme_adapters":[],"name":"VM02","nics":[{"value":{"start_connected":true,"pci_slot_number":192,"backing":{"network_name":"VM Network","type":"STANDARD_PORTGROUP","network":"network-35019"},"mac_address":"00:50:56:a2:94:eb","mac_type":"ASSIGNED","allow_guest_control":true,"wake_on_lan_enabled":true,"label":"Network adapter 1","state":"CONNECTED","type":"E1000E"},"key":"4000"}],"boot":{"delay":0,"efi_legacy_boot":false,"retry_delay":10000,"enter_setup_mode":false,"network_protocol":"IPV4","type":"EFI","retry":false},"serial_ports":[],"boot_devices":[],"guest_OS":"WINDOWS_9_64","hardware":{"upgrade_policy":"NEVER","upgrade_status":"NONE","version":"VMX_17"}}}
+{
+    "value": {
+        "instant_clone_frozen": false,
+        "cdroms": [
+            {
+                "value": {
+                    "start_connected": false,
+                    "backing": {
+                        "device_access_type": "PASSTHRU",
+                        "type": "CLIENT_DEVICE"
+                    },
+                    "allow_guest_control": true,
+                    "label": "CD/DVD drive 1",
+                    "state": "NOT_CONNECTED",
+                    "type": "SATA",
+                    "sata": { "bus": 0, "unit": 0 }
+                },
+                "key": "16000"
+            }
+        ],
+        "memory": {
+            "hot_add_increment_size_MiB": 0,
+            "size_MiB": 4096,
+            "hot_add_enabled": false,
+            "hot_add_limit_MiB": 4096
+        },
+        "disks": [
+            {
+                "value": {
+                    "scsi": { "bus": 0, "unit": 0 },
+                    "backing": {
+                        "vmdk_file": "[share2] VM02/VM02.vmdk",
+                        "type": "VMDK_FILE"
+                    },
+                    "label": "Hard disk 1",
+                    "type": "SCSI",
+                    "capacity": 25769803776
+                },
+                "key": "2000"
+            }
+        ],
+        "parallel_ports": [],
+        "sata_adapters": [
+            {
+                "value": {
+                    "bus": 0,
+                    "pci_slot_number": 32,
+                    "label": "SATA controller 0",
+                    "type": "AHCI"
+                },
+                "key": "15000"
+            }
+        ],
+        "cpu": {
+            "hot_remove_enabled": false,
+            "count": 2,
+            "hot_add_enabled": false,
+            "cores_per_socket": 2
+        },
+        "scsi_adapters": [
+            {
+                "value": {
+                    "pci_slot_number": 160,
+                    "scsi": { "bus": 0, "unit": 7 },
+                    "label": "SCSI controller 0",
+                    "sharing": "NONE",
+                    "type": "LSILOGICSAS"
+                },
+                "key": "1000"
+            }
+        ],
+        "power_state": "POWERED_ON",
+        "floppies": [],
+        "identity": {
+            "name": "VM02",
+            "instance_uuid": "5022e806-ca9a-e790-a15f-3acb90f2a3fb",
+            "bios_uuid": "42227668-f0a8-ddd5-69b2-f83c90eb7159"
+        },
+        "nvme_adapters": [],
+        "name": "VM02",
+        "nics": [
+            {
+                "value": {
+                    "start_connected": true,
+                    "pci_slot_number": 192,
+                    "backing": {
+                        "network_name": "VM Network",
+                        "type": "STANDARD_PORTGROUP",
+                        "network": "network-35019"
+                    },
+                    "mac_address": "00:50:56:a2:94:eb",
+                    "mac_type": "ASSIGNED",
+                    "allow_guest_control": true,
+                    "wake_on_lan_enabled": true,
+                    "label": "Network adapter 1",
+                    "state": "CONNECTED",
+                    "type": "E1000E"
+                },
+                "key": "4000"
+            }
+        ],
+        "boot": {
+            "delay": 0,
+            "efi_legacy_boot": false,
+            "retry_delay": 10000,
+            "enter_setup_mode": false,
+            "network_protocol": "IPV4",
+            "type": "EFI",
+            "retry": false
+        },
+        "serial_ports": [],
+        "boot_devices": [],
+        "guest_OS": "WINDOWS_9_64",
+        "hardware": {
+            "upgrade_policy": "NEVER",
+            "upgrade_status": "NONE",
+            "version": "VMX_17"
+        }
+    }
+}

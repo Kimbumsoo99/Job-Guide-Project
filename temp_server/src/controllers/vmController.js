@@ -1,7 +1,13 @@
 import User from "../models/User";
-import { getHostList, getSessionId, getVMList } from "./api/vCenterAPI";
+import {
+    getHostList,
+    getSessionId,
+    getVMInfo,
+    getVMList,
+} from "./api/vCenterAPI";
 import TestHostList from "../jsons/0525host.json";
 import TestVMList from "../jsons/0525vmlist.json";
+import TestVMInfo from "../jsons/0525vminfo.json";
 
 const https = require("https");
 
@@ -145,6 +151,14 @@ export const vmsPageRender = async (req, res) => {
     // const vCenterIP = user.vsphere.vc_ip;
     // const vmList = await getVMList(hosts, sessionID, vCenterIP);
     const vmList = TestVMList;
+
+    for (const [index, vm] of vmList.value.entries()) {
+        const name = vm.vm;
+        // 집에서 실행
+        // vmList.value[index].info = await getVMInfo(name, sessionId);
+        vmList.value[index].info = TestVMInfo;
+        // 집에서 실행
+    }
     // 집에서 실행
 
     const updatedUser = await User.findByIdAndUpdate(
@@ -229,20 +243,20 @@ const httpsGet = (url, options) => {
     });
 };
 
-export const getVMInfo = async (sessionId) => {
-    try {
-        const vmId = await getVMName(sessionId);
-        const options = getOptions(sessionId);
-        const vmInfo = await httpsGet(
-            `https://${hostIP}/rest/vcenter/vm/${vmId}`,
-            options
-        );
-        return vmInfo;
-    } catch (error) {
-        console.error(error);
-        throw new Error("Get VM Info Error");
-    }
-};
+// export const getVMInfo = async (sessionId) => {
+//     try {
+//         const vmId = await getVMName(sessionId);
+//         const options = getOptions(sessionId);
+//         const vmInfo = await httpsGet(
+//             `https://${hostIP}/rest/vcenter/vm/${vmId}`,
+//             options
+//         );
+//         return vmInfo;
+//     } catch (error) {
+//         console.error(error);
+//         throw new Error("Get VM Info Error");
+//     }
+// };
 
 export const getDataCenterList = async (sessionId) => {
     try {
