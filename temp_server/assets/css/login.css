@@ -68,6 +68,7 @@ html {
 }
 
 .box input[type="text"],
+.box input[type="number"],
 .box input[type="email"],
 .box input[type="password"] {
     display: block;

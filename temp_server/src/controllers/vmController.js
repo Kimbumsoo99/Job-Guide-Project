@@ -301,6 +301,32 @@ export const vmRealPageRender = async (req, res) => {
 
     return res.render("vmReal", { realUsage });
 };
+
+export const getVmChangeSet = async (req, res) => {
+    const { vm, host } = req.query;
+    const { user } = req.session;
+
+    let findVmInfo;
+
+    for (const [index, hostInfo] of user.vsphere.info.value.entries()) {
+        if (host == hostInfo.host) {
+            for (const [index, vmInfo] of hostInfo.vmList.value.entries()) {
+                if (vm == vmInfo.vm) {
+                    findVmInfo = vmInfo;
+                    break;
+                }
+            }
+            break;
+        }
+    }
+
+    console.log(findVmInfo);
+    return res.render("vmEdit", { findVmInfo });
+};
+
+export const postVmChangeSet = (req, res) => {
+    const { user } = req.session;
+};
 //0527 Refactoring 완료
 //0527 Refactoring 완료
 //0527 Refactoring 완료

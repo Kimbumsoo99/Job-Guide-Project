@@ -2,9 +2,11 @@ import express from "express";
 import {
     getAddBasicInfo,
     getVRealBasicInfo,
+    getVmChangeSet,
     hostsPageRender,
     postAddBasicInfo,
     postVRealBasicInfo,
+    postVmChangeSet,
     vmDetailPageRender,
     vmRealPageRender,
     vmsPageRender,
@@ -43,7 +45,11 @@ vsphereRouter
     .all(checkVRealInfoMiddleware)
     .get(vmRealPageRender);
 
-vsphereRouter.route("/hosts/vms/edit").all(protectorMiddleware);
+vsphereRouter
+    .route("/hosts/vms/edit")
+    .all(protectorMiddleware)
+    .get(getVmChangeSet)
+    .post(postVmChangeSet);
 
 //0527 이 사이만 최종 코드
 

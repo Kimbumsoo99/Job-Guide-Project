@@ -1,0 +1,49 @@
+doctype html
+html(lang='ko')
+    head
+        meta(charset='UTF-8')
+        title WatchDog
+        link(rel='stylesheet' href='/assets/css/login.css')
+        style.
+            .container{
+                width: 800px;
+                top: 150px;
+            }
+            /* Chrome, Safari, Edge, Opera */
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+              -webkit-appearance: none;
+              margin: 0;
+            }
+
+            /* Firefox */
+            input[type=number] {
+              -moz-appearance: textfield;
+            }
+            .box input[type="number"]{
+                width: 80%;
+                text-decoration: none;
+            }
+            #btn1{
+                width: 38%;
+            }
+            #btn2{
+                width: 38%;
+            }
+    body
+        div.animated.bounceInDown
+            div.container
+                div.loginForm
+                    if errorMessage
+                        span#login-msg.error=errorMessage
+                    form.box(method="POST" name='form1')
+                        div.logo(onclick="location.href='/';")
+                            h4 WATCH
+                                span DOG
+                        h5 Sign in to your account.
+                        input(type='number' name='memory_size' value=`${findVmInfo.memory_size_MiB}` placeholder='Memory Size' autocomplete='off')
+                        i#eye.typcn.typcn-eye
+                        input#pwd(type='number' name='cpu_count' value=`${findVmInfo.cpu_count}` placeholder='CPU Count' autocomplete='off')
+                        input#btn1.btn1(type='submit' value='Change')
+                        input#btn2.btn1(type='button' value='Cancle' onclick="history.back()")
+        script(src="/assets/js/login.js") 
