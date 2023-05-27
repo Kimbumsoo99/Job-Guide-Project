@@ -3,6 +3,7 @@ import {
     getAddBasicInfo,
     hostsPageRender,
     postAddBasicInfo,
+    vmDetailPageRender,
     vmsPageRender,
 } from "../controllers/vmController";
 import { getCloudData } from "../controllers/cloudData";
@@ -22,6 +23,10 @@ vsphereRouter
     .post(postAddBasicInfo);
 vsphereRouter.route("/hosts").all(protectorMiddleware).get(hostsPageRender);
 vsphereRouter.route("/hosts/vms").all(protectorMiddleware).get(vmsPageRender);
+vsphereRouter
+    .route("/hosts/vms/detail")
+    .all(protectorMiddleware)
+    .get(vmDetailPageRender);
 
 //0527 이 사이만 최종 코드
 

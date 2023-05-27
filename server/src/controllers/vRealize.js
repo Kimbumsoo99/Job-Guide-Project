@@ -9,216 +9,216 @@ const baseUrl = `https://${vRealUrl}/suite-api/api`;
 let token;
 
 const getOptions = (token) => {
-  return {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `vRealizeOpsToken ${token}`,
-      //Authorization: token,
-      Accept: "application/json",
-    },
-    port: "443",
-    method: "GET",
-    rejectUnauthorized: false,
-  };
+    return {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `vRealizeOpsToken ${token}`,
+            //Authorization: token,
+            Accept: "application/json",
+        },
+        port: "443",
+        method: "GET",
+        rejectUnauthorized: false,
+    };
 };
 
 export const getVRealTokenJson = async () => {
-  console.log("\ngetVRealTokenJson 호출\n");
-  try {
-    console.log(`${baseUrl}/auth/token/acquire 로 요청`);
+    console.log("\ngetVRealTokenJson 호출\n");
+    try {
+        console.log(`${baseUrl}/auth/token/acquire 로 요청`);
 
-    const agent = new https.Agent({ rejectUnauthorized: false });
+        const agent = new https.Agent({ rejectUnauthorized: false });
 
-    const authResponse = await fetch(`${baseUrl}/auth/token/acquire`, {
-      method: "POST",
-      body: JSON.stringify({ username, password }),
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      agent,
-    });
+        const authResponse = await fetch(`${baseUrl}/auth/token/acquire`, {
+            method: "POST",
+            body: JSON.stringify({ username, password }),
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+            },
+            agent,
+        });
 
-    if (!authResponse.ok) {
-      console.log("오류 났음");
-      throw new Error("Failed to authenticate with vRealize Operations.");
+        if (!authResponse.ok) {
+            console.log("오류 났음");
+            throw new Error("Failed to authenticate with vRealize Operations.");
+        }
+
+        console.log(authResponse);
+
+        const authData = await authResponse.json();
+        console.log("\nauthData\n");
+        console.log(authData);
+
+        const token = authData.token;
+
+        return token;
+    } catch (err) {
+        console.log("Error 발생");
+        console.log(err);
+        throw err;
     }
-
-    console.log(authResponse);
-
-    const authData = await authResponse.json();
-    console.log("\nauthData\n");
-    console.log(authData);
-
-    const token = authData.token;
-
-    return token;
-  } catch (err) {
-    console.log("Error 발생");
-    console.log(err);
-    throw err;
-  }
 };
 
 export const getRealResourcesV2 = async () => {
-  console.log("\ngetREalResourcesV2 호출\n");
-  token = token ? token : await getVRealTokenJson();
-  console.log("Token: ", token);
+    console.log("\ngetREalResourcesV2 호출\n");
+    token = token ? token : await getVRealTokenJson();
+    console.log("Token: ", token);
 
-  const url = `${baseUrl}/resources?adapterKind=VMWARE&resourceKind=VirtualMachine&name=VM02`;
-  const options = getOptions(token);
+    const url = `${baseUrl}/resources?adapterKind=VMWARE&resourceKind=VirtualMachine&name=VM02`;
+    const options = getOptions(token);
 
-  console.log(url);
-  console.log(options);
+    console.log(url);
+    console.log(options);
 
-  const realResources = await httpsGet(url, options);
-  console.log(realResources);
-  console.log(realResources.resourceList[0]);
-  console.log(realResources.resourceList[0].identifier);
-  const resourceId = realResources.resourceList[0].identifier;
-  return resourceId;
+    const realResources = await httpsGet(url, options);
+    console.log(realResources);
+    console.log(realResources.resourceList[0]);
+    console.log(realResources.resourceList[0].identifier);
+    const resourceId = realResources.resourceList[0].identifier;
+    return resourceId;
 };
 
 export const getRealResourcesJSON = async (req, res) => {
-  console.log("\ngetREalResourcesV2 호출\n");
-  token = token ? token : await getVRealTokenJson();
-  console.log("Token: ", token);
+    console.log("\ngetREalResourcesV2 호출\n");
+    token = token ? token : await getVRealTokenJson();
+    console.log("Token: ", token);
 
-  const url = `${baseUrl}/resources?adapterKind=VMWARE&resourceKind=VirtualMachine&name=VM02`;
-  const options = getOptions(token);
+    const url = `${baseUrl}/resources?adapterKind=VMWARE&resourceKind=VirtualMachine&name=VM02`;
+    const options = getOptions(token);
 
-  console.log(url);
-  console.log(options);
+    console.log(url);
+    console.log(options);
 
-  const realResources = await httpsGet(url, options);
-  console.log(realResources);
-  return res.send(realResources);
+    const realResources = await httpsGet(url, options);
+    console.log(realResources);
+    return res.send(realResources);
 };
 
 export const getRealCpuUsageV2 = async (req, res) => {
-  const currentTime = Date.now();
-  const preTime = currentTime - 1000 * 60 * 60;
-  console.log(currentTime, preTime);
-  console.log("\ngetRealCpuUsageV2 호출\n");
-  const resourceId = await getRealResourcesV2();
-  console.log(resourceId);
-  console.log("\ngetRealCpuUsageV2 복귀\n");
-  console.log(token);
-  const url = `${baseUrl}/resources/${resourceId}/stats?statKey=cpu|usage_average&begin=${preTime}&end=${currentTime}`;
-  const options = getOptions(token);
-  const realCpuStats = await httpsGet(url, options);
-  console.log(realCpuStats);
-  return res.send(realCpuStats);
+    const currentTime = Date.now();
+    const preTime = currentTime - 1000 * 60 * 60;
+    console.log(currentTime, preTime);
+    console.log("\ngetRealCpuUsageV2 호출\n");
+    const resourceId = await getRealResourcesV2();
+    console.log(resourceId);
+    console.log("\ngetRealCpuUsageV2 복귀\n");
+    console.log(token);
+    const url = `${baseUrl}/resources/${resourceId}/stats?statKey=cpu|usage_average&begin=${preTime}&end=${currentTime}`;
+    const options = getOptions(token);
+    const realCpuStats = await httpsGet(url, options);
+    console.log(realCpuStats);
+    return res.send(realCpuStats);
 };
 
 export const getRealMemUsage = async (req, res) => {
-  console.log("\ngetRealMemUsageV2 호출\n");
-  const resourceId = await getRealResourcesV2();
-  const url = `${baseUrl}/resources/${resourceId}/stats?statKey=mem|usage_average`;
-  const options = getOptions(token);
-  const realMemStats = await httpsGet(url, options);
-  return res.send(realMemStats);
+    console.log("\ngetRealMemUsageV2 호출\n");
+    const resourceId = await getRealResourcesV2();
+    const url = `${baseUrl}/resources/${resourceId}/stats?statKey=mem|usage_average`;
+    const options = getOptions(token);
+    const realMemStats = await httpsGet(url, options);
+    return res.send(realMemStats);
 };
 
 export const getRealdiskUsage = async (req, res) => {
-  console.log("\ngetRealdiskUsageV2 호출\n");
-  const resourceId = await getRealResourcesV2();
-  const url = `${baseUrl}/resources/${resourceId}/stats?statKey=diskspace|used`;
-  const options = getOptions(token);
-  const realdiskStats = await httpsGet(url, options);
-  return res.send(realdiskStats);
+    console.log("\ngetRealdiskUsageV2 호출\n");
+    const resourceId = await getRealResourcesV2();
+    const url = `${baseUrl}/resources/${resourceId}/stats?statKey=diskspace|used`;
+    const options = getOptions(token);
+    const realdiskStats = await httpsGet(url, options);
+    return res.send(realdiskStats);
 };
 
 export const getRealResources0525 = async (req, res) => {
-  console.log("\ngetRealResources0523 호출\n");
-  const resourceId = await getRealResourcesV2();
-  const url = `${baseUrl}/resources/${resourceId}/stats?statKey=mem|usage_average&statKey=cpu|usage_average&intervalType=MINUTES&rollUpType=AVG&intervalQuantifier=5&currentOnly=TRUE`;
-  const options = getOptions(token);
-  const realStats = await httpsGet(url, options);
+    console.log("\ngetRealResources0523 호출\n");
+    const resourceId = await getRealResourcesV2();
+    const url = `${baseUrl}/resources/${resourceId}/stats?statKey=mem|usage_average&statKey=cpu|usage_average&intervalType=MINUTES&rollUpType=AVG&intervalQuantifier=5&currentOnly=TRUE`;
+    const options = getOptions(token);
+    const realStats = await httpsGet(url, options);
 
-  return res.send(realStats);
-  // const realStats = {
-  //   cpu: {
-  //     timeStamp: [
-  //       1684960119999, 1684942119999, 1684924119999, 1684906119999,
-  //       1684888119999, 1684870119999, 1684852119999, 1684834119999,
-  //       1684816119999, 1684798119999, 1684780119999, 1684762119999,
-  //     ],
-  //     usage: [23, 50, 30, 20, 40, 50, 5, 89, 99, 100, 34, 20],
-  //   },
-  //   mem: {
-  //     timeStamp: [
-  //       1684960119999, 1684942119999, 1684924119999, 1684906119999,
-  //       1684888119999, 1684870119999, 1684852119999, 1684834119999,
-  //       1684816119999, 1684798119999, 1684780119999, 1684762119999,
-  //     ],
-  //     usage: [23, 50, 30, 20, 40, 50, 5, 89, 99, 100, 34, 20],
-  //   },
-  // };
-  console.log(realStats.values[0]["stat-list"].stat[0].data);
+    // return res.send(realStats);
+    // const realStats = {
+    //   cpu: {
+    //     timeStamp: [
+    //       1684960119999, 1684942119999, 1684924119999, 1684906119999,
+    //       1684888119999, 1684870119999, 1684852119999, 1684834119999,
+    //       1684816119999, 1684798119999, 1684780119999, 1684762119999,
+    //     ],
+    //     usage: [23, 50, 30, 20, 40, 50, 5, 89, 99, 100, 34, 20],
+    //   },
+    //   mem: {
+    //     timeStamp: [
+    //       1684960119999, 1684942119999, 1684924119999, 1684906119999,
+    //       1684888119999, 1684870119999, 1684852119999, 1684834119999,
+    //       1684816119999, 1684798119999, 1684780119999, 1684762119999,
+    //     ],
+    //     usage: [23, 50, 30, 20, 40, 50, 5, 89, 99, 100, 34, 20],
+    //   },
+    // };
+    console.log(realStats.values[0]["stat-list"].stat[0].data);
 
-  const dataLength = realStats.values[0]["stat-list"].stat[0].data.length;
-  console.log("dataLength 부분");
-  console.log(dataLength);
+    const dataLength = realStats.values[0]["stat-list"].stat[0].data.length;
+    console.log("dataLength 부분");
+    console.log(dataLength);
 
-  if (dataLength < 12) {
-    //data가 12개보다 적으면 0으로 채우기
-    let count = 0;
-    const tempMemTimeStamp = [];
-    const tempMemDataUsage = [];
-    const tempCpuTimeStamp = [];
-    const tempCpuDataUsage = [];
-    for (let i = 0; i < 12 - dataLength; i++) {
-      tempMemTimeStamp.push(0);
-      tempMemDataUsage.push(0);
-      tempCpuTimeStamp.push(0);
-      tempCpuDataUsage.push(0);
+    if (dataLength < 12) {
+        //data가 12개보다 적으면 0으로 채우기
+        let count = 0;
+        const tempMemTimeStamp = [];
+        const tempMemDataUsage = [];
+        const tempCpuTimeStamp = [];
+        const tempCpuDataUsage = [];
+        for (let i = 0; i < 12 - dataLength; i++) {
+            tempMemTimeStamp.push(0);
+            tempMemDataUsage.push(0);
+            tempCpuTimeStamp.push(0);
+            tempCpuDataUsage.push(0);
+        }
+        for (let i = 12 - dataLength; i < 12; i++) {
+            tempMemTimeStamp.push(
+                realStats.values[0]["stat-list"].stat[0].timestamps[count]
+            );
+            tempMemDataUsage.push(
+                realStats.values[0]["stat-list"].stat[0].data[count].toFixed(2)
+            );
+            tempCpuTimeStamp.push(
+                realStats.values[0]["stat-list"].stat[1].timestamps[count]
+            );
+            tempCpuDataUsage.push(
+                realStats.values[0]["stat-list"].stat[1].data[count].toFixed(2)
+            );
+            count += 1;
+        }
+        realStats.values[0]["stat-list"].stat[0].timestamps = tempMemTimeStamp;
+        realStats.values[0]["stat-list"].stat[0].data = tempMemDataUsage;
+        realStats.values[0]["stat-list"].stat[1].timestamps = tempCpuTimeStamp;
+        realStats.values[0]["stat-list"].stat[1].data = tempCpuDataUsage;
+    } else {
+        //12개 이상이면 12개만 짜르기
+        const tempMemTimeStamp = [];
+        const tempMemDataUsage = [];
+        const tempCpuTimeStamp = [];
+        const tempCpuDataUsage = [];
+        for (let i = dataLength - 12; i < dataLength; i++) {
+            console.log(i);
+            tempMemTimeStamp.push(
+                realStats.values[0]["stat-list"].stat[0].timestamps[i]
+            );
+            tempMemDataUsage.push(
+                realStats.values[0]["stat-list"].stat[0].data[i].toFixed(2)
+            );
+            tempCpuTimeStamp.push(
+                realStats.values[0]["stat-list"].stat[1].timestamps[i]
+            );
+            tempCpuDataUsage.push(
+                realStats.values[0]["stat-list"].stat[1].data[i].toFixed(2)
+            );
+        }
+        realStats.values[0]["stat-list"].stat[0].timestamps = tempMemTimeStamp;
+        realStats.values[0]["stat-list"].stat[0].data = tempMemDataUsage;
+        realStats.values[0]["stat-list"].stat[1].timestamps = tempCpuTimeStamp;
+        realStats.values[0]["stat-list"].stat[1].data = tempCpuDataUsage;
     }
-    for (let i = 12 - dataLength; i < 12; i++) {
-      tempMemTimeStamp.push(
-        realStats.values[0]["stat-list"].stat[0].timestamps[count]
-      );
-      tempMemDataUsage.push(
-        realStats.values[0]["stat-list"].stat[0].data[count].toFixed(2)
-      );
-      tempCpuTimeStamp.push(
-        realStats.values[0]["stat-list"].stat[1].timestamps[count]
-      );
-      tempCpuDataUsage.push(
-        realStats.values[0]["stat-list"].stat[1].data[count].toFixed(2)
-      );
-      count += 1;
-    }
-    realStats.values[0]["stat-list"].stat[0].timestamps = tempMemTimeStamp;
-    realStats.values[0]["stat-list"].stat[0].data = tempMemDataUsage;
-    realStats.values[0]["stat-list"].stat[1].timestamps = tempCpuTimeStamp;
-    realStats.values[0]["stat-list"].stat[1].data = tempCpuDataUsage;
-  } else {
-    //12개 이상이면 12개만 짜르기
-    const tempMemTimeStamp = [];
-    const tempMemDataUsage = [];
-    const tempCpuTimeStamp = [];
-    const tempCpuDataUsage = [];
-    for (let i = dataLength - 12; i < dataLength; i++) {
-      console.log(i);
-      tempMemTimeStamp.push(
-        realStats.values[0]["stat-list"].stat[0].timestamps[i]
-      );
-      tempMemDataUsage.push(
-        realStats.values[0]["stat-list"].stat[0].data[i].toFixed(2)
-      );
-      tempCpuTimeStamp.push(
-        realStats.values[0]["stat-list"].stat[1].timestamps[i]
-      );
-      tempCpuDataUsage.push(
-        realStats.values[0]["stat-list"].stat[1].data[i].toFixed(2)
-      );
-    }
-    realStats.values[0]["stat-list"].stat[0].timestamps = tempMemTimeStamp;
-    realStats.values[0]["stat-list"].stat[0].data = tempMemDataUsage;
-    realStats.values[0]["stat-list"].stat[1].timestamps = tempCpuTimeStamp;
-    realStats.values[0]["stat-list"].stat[1].data = tempCpuDataUsage;
-  }
 
-  return res.render("vmDetail", { realStats });
+    return res.render("vmDetail", { realStats });
 };

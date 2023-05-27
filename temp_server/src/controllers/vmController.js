@@ -153,8 +153,8 @@ export const vmsPageRender = async (req, res) => {
     const vmList = TestVMList;
 
     for (const [index, vm] of vmList.value.entries()) {
-        const name = vm.vm;
         // 집에서 실행
+        // const name = vm.vm;
         // vmList.value[index].info = await getVMInfo(name, sessionId);
         vmList.value[index].info = TestVMInfo;
         // 집에서 실행
@@ -176,6 +176,15 @@ export const vmsPageRender = async (req, res) => {
     req.session.user = updatedUser;
 
     return res.render("vmPage", { hosts, vmList });
+};
+
+export const vmDetailPageRender = async (req, res) => {
+    const { user } = req.session;
+    const { _id } = user;
+
+    const { vm } = req.query;
+
+    return res.render("vmInfo");
 };
 //0527 Refactoring 완료
 //0527 Refactoring 완료

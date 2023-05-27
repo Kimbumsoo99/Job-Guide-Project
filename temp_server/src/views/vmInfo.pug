@@ -1,0 +1,100 @@
+doctype html
+head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    title WatchDog
+    link(href='https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css' rel='stylesheet')
+    link(href='/assets/css/detail.css' rel='stylesheet')
+    link(rel='icon' href='/uploads/favicon.ico')
+    script(src='https://use.fontawesome.com/releases/v6.3.0/js/all.js' crossorigin='anonymous')
+    style.
+        body {
+            background-color: #333333;
+            height: auto;
+        }
+        .container-fluid {
+            padding: auto 60px;
+        }
+        .datatable-top {
+            display: none;
+        }
+        .datatable-bottom {
+            display: none;
+        }
+        .datatable-sorter::after {
+            display: none;
+        }
+        .datatable-sorter::before {
+            display: none;
+        }
+        .mt-4 {
+            color: #f5cc62;
+            text-align: center;
+        }
+        thead {
+            background-color: #111111;
+        }
+        tr{
+            border: 0.2px solid #a08031;
+        }
+        .card-header {
+            background-color: #111111;
+        }
+        #layoutSidenav_content{
+            margin-top: 140px;
+        }
+body
+    header
+        div.container
+            h1
+                button#img_btn.btm_image(type='button')
+                    img(src='/uploads/logo.png' onclick="location.href='/';")
+    div#layoutSidenav_content
+        main
+            div.container-fluid.px-4
+                h1.mt-4 VM Detail
+                div.card.mb-4
+                    div.card-header
+                        i.fas.fa-table.me-1
+                        span VM02 정적 정보
+                    div.card-body
+                        table#datatablesSimple
+                            thead
+                                tr(height="200")
+                                    th 이름;
+                                    th Spec
+                                    th 기타;
+                            tfoot
+                                tr(height="200")
+                                    th 이름;
+                                    th Spec
+                                    th 기타;
+                            tbody
+                                tr(height="200")
+                                    td CPU 코어 개수
+                                    td 2 CORE
+                                    td
+                                tr(height="200")
+                                    td Memory 크기
+                                    td 4096 Mib
+                                    td
+                                tr(height="200")
+                                    td disk.vmdk_file
+                                    td [share2] VM02/VM02.vmdk
+                                    td
+                                tr(height="200")
+                                    td Disk 용량
+                                    td 25 GB
+                                    td
+                                tr(height="200")
+                                    td Network Name
+                                    td VM Network
+                                    td NOT_CONNECTED
+                                tr(height="200")
+                                    td GuestOS
+                                    td WINDOWS_9_64
+                                    td
+        script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js' crossorigin='anonymous')
+        // <script src="js/scripts.js"></script>
+        script(src='https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js' crossorigin='anonymous')
+        script(src='/assets/js/datatables-simple-demo.js')
