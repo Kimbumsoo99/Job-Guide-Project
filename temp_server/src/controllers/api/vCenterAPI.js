@@ -50,3 +50,34 @@ export const getVMInfo = async (vmName, sessionID, vCenterIP) => {
 
     return vmInfo;
 };
+
+export const patchMemory = async (vmName, sessionID, vCenterIP, memory) => {
+    const options = getBaseOptions(vCenterIP);
+    options.headers["vmware-api-session-id"] = sessionID;
+    options.path = `/rest/vcenter/vm/${vmName}/hardware/memory`;
+    options.method = "PATCH";
+    const postData = JSON.stringify({
+        spec: {
+            hot_add_enabled: true,
+            size_MiB: memory,
+        },
+    });
+
+    const status = await requestAPI(options, postData);
+    console.log(status);
+
+    return;
+};
+
+export const patchCPU = async (vmName, sessionID, vCenterIP, count) => {
+    const options = getBaseOptions(vCenterIP);
+    options.headers["vmware-api-session-id"] = sessionID;
+    options.path = ``;
+    options.method = "PATCH";
+    const postData = JSON.stringify({});
+
+    const status = await requestAPI(options, postData);
+    console.log(status);
+
+    return;
+};

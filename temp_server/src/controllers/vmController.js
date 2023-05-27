@@ -4,6 +4,8 @@ import {
     getSessionId,
     getVMInfo,
     getVMList,
+    patchCPU,
+    patchMemory,
 } from "./api/vCenterAPI";
 import TestHostList from "../jsons/0525host.json";
 import TestVMList from "../jsons/0525vmlist.json";
@@ -320,12 +322,63 @@ export const getVmChangeSet = async (req, res) => {
         }
     }
 
-    console.log(findVmInfo);
     return res.render("vmEdit", { findVmInfo });
 };
 
-export const postVmChangeSet = (req, res) => {
+export const postVmChangeSet = async (req, res) => {
     const { user } = req.session;
+    const { vm, host } = req.query;
+    const { memory_size, cpu_count } = req.body;
+    const vCenterIP = user.vsphere.vc_ip;
+
+    let findVMInfo;
+    for (const [index, hostInfo] of user.vsphere.info.value.entries()) {
+        if (host == hostInfo.host) {
+            for (const [index, vmInfo] of hostInfo.vmList.value.entries()) {
+                if (vm == vmInfo.vm) {
+                    findVMInfo = vmInfo;
+                    break;
+                }
+            }
+            break;
+        }
+    }
+    //집에서 하는중
+    if (findVMInfo.memory_size_MiB != memory_size) {
+        // await patchMemory(vm, sessionID, vCenterIP, memory_size);
+        for (const [out_index, hostInfo] of user.vsphere.info.value.entries()) {
+            if (host == hostInfo.host) {
+                for (const [index, vmInfo] of hostInfo.vmList.value.entries()) {
+                    if (vm == vmInfo.vm) {
+                        user.vsphere.info.value[out_index].vmList.value[
+                            index
+                        ].memory_size_MiB = memory_size;
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+    if (findVMInfo.cpu_count != cpu_count) {
+        // await patchCPU(vm, sessionID, vCenterIP, cpu_count);
+        for (const [out_index, hostInfo] of user.vsphere.info.value.entries()) {
+            if (host == hostInfo.host) {
+                for (const [index, vmInfo] of hostInfo.vmList.value.entries()) {
+                    if (vm == vmInfo.vm) {
+                        user.vsphere.info.value[out_index].vmList.value[
+                            index
+                        ].cpu_count = cpu_count;
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+    //집에서 하는중
+
+    return res.redirect(`/vs/hosts/vms/detail?vm=${vm}&hosts=${host}`);
 };
 //0527 Refactoring 완료
 //0527 Refactoring 완료
