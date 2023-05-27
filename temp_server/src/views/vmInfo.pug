@@ -12,6 +12,9 @@ head
             background-color: #333333;
             height: auto;
         }
+        a{
+            text-decoration-line: none;
+        }
         .container-fluid {
             padding: auto 60px;
         }
@@ -47,7 +50,9 @@ head
             margin: 0;
         }
         #li-1:hover,
-        #li-2:hover{
+        #li-2:hover,
+        #li-3:hover,
+        #li-4:hover{
             background-color: #222222;
         }
 body
@@ -64,32 +69,43 @@ body
                         li
                             div.HostAddress=user.vsphere.vc_ip
                     li#li-1
-                        div(style='cursor: pointer;' onclick=`location.href="edit?vm=${vmName}&host=${hostName}";`)
-                            p 가상머신 수정
+                        div(style='cursor: pointer;' onclick=`location.href="/vs/hosts";`)
+                            p Host List
                     li#li-2
-                        div(style='cursor: pointer;' onclick=`location.href='real?vm=${vmName}';`)
+                        div(style='cursor: pointer;' onclick=`location.href='/vs/hosts/vms?hosts=${hostName}';`)
+                            p VM List
+                    li#li-3
+                        div(style='cursor: pointer;' onclick=`location.href="edit?vm=${vmId}&host=${hostName}";`)
+                            p 가상머신 수정
+                    li#li-4
+                        div(style='cursor: pointer;' onclick=`location.href='real?vm=${vmInfo.name}';`)
                             p 실시간 사용률
     div#layoutSidenav_content
         main
             div.container-fluid.px-4
-                h1.mt-4 VM Detail
+                h1.mt-4 #{vmInfo.name} Detail
                 div.card.mb-4
                     div.card-header
                         i.fas.fa-table.me-1
-                        span VM02 정적 정보
+                        span #{vmId} 정적 정보
                     div.card-body
                         table#datatablesSimple
                             thead
                                 tr(height="200")
-                                    th 이름;
+                                    th 이름
                                     th Spec
-                                    th 기타;
+                                    th 기타
                             tfoot
                                 tr(height="200")
-                                    th 이름;
+                                    th 이름
                                     th Spec
-                                    th 기타;
+                                    th 기타
                             tbody
+                                tr(height="200")
+                                    td Host 정보
+                                    td 
+                                        a(href=`/vs/hosts/vms?hosts=${hostName}`) #{hostName}
+                                    td
                                 tr(height="200")
                                     td CPU 코어 개수
                                     td #{vmInfo.cpu_count} CORE
@@ -108,11 +124,11 @@ body
                                     td
                                 tr(height="200")
                                     td Network Name
-                                    td VM Network
-                                    td NOT_CONNECTED
+                                    td #{vmInfo.info.value.nics[0].value.backing.network_name}
+                                    td #{vmInfo.info.value.nics[0].value.state}
                                 tr(height="200")
                                     td GuestOS
-                                    td WINDOWS_9_64
+                                    td #{vmInfo.info.value.guest_OS}
                                     td
         script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js' crossorigin='anonymous')
         // <script src="js/scripts.js"></script>

@@ -1,7 +1,5 @@
 import { getBaseOptions, requestAPI } from "./header";
 
-let token;
-
 const vRealUrl = "192.168.0.109";
 const username = "admin";
 const password = "123Qwer!";
@@ -15,14 +13,12 @@ export const getToken = async (username, password, vRealizeIP) => {
     options.path = "/suite-api/api/auth/token/acquire";
 
     const tokenJson = await requestAPI(options, requestJson);
-    token = tokenJson.token;
+    const token = tokenJson.token;
 
     return token;
 };
 
-export const getResourceId = async (vmName, vRealizeIP) => {
-    if (!token) token = await getToken();
-
+export const getResourceId = async (vmName, vRealizeIP, token) => {
     const options = getBaseOptions(vRealizeIP);
     options.method = "GET";
     options.path = `/suite-api/api/resources?adapterKind=VMWARE&resourceKind=VirtualMachine&name=${vmName}`;
@@ -35,9 +31,8 @@ export const getResourceId = async (vmName, vRealizeIP) => {
     return resourceId;
 };
 
-export const getResourceUsage = async (vmName, vRealizeIP) => {
-    if (!token) token = await getToken();
-    const resourceId = await getResourceId(vmName, vRealizeIP);
+export const getResourceUsage = async (vmName, vRealizeIP, token) => {
+    const resourceId = await getResourceId(vmName, vRealizeIP, token);
 
     const options = getBaseOptions(vRealizeIP);
     options.method = "GET";

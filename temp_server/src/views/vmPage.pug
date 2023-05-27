@@ -8,12 +8,25 @@ head
     link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css' integrity='sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==' crossorigin='anonymous' referrerpolicy='no-referrer')
     script(src='https://kit.fontawesome.com/def66b134a.js' crossorigin='anonymous')
     link(rel='stylesheet' href='/assets/css/host.css')
+    style.
+        #li-1:hover,
+        #li-2:hover{
+            background-color: #222222;
+        }
 body
     header
         div.container
             h1
                 button#img_btn.btm_image(type='button')
                     img(src='/uploads/logo.png' onclick="location.href='/';")
+            nav
+                ul
+                    li#li-1
+                        div(style='cursor: pointer;' onclick=`location.href="/vs/hosts";`)
+                            p Host List
+                    li#li-2
+                        div(style='cursor: pointer;' onclick=`location.href='/vs/hosts/create?hosts=${hostName}';`)
+                            p VM 생성
     // end header
     // main
     main#main

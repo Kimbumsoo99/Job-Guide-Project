@@ -11,6 +11,7 @@ const UserSchema = new mongoose.Schema({
         vs_pw: { type: String },
         vc_ip: { type: String },
         info: { type: Object },
+        v_real: { type: Object },
     },
 });
 

@@ -8,6 +8,7 @@ import {
 import TestHostList from "../jsons/0525host.json";
 import TestVMList from "../jsons/0525vmlist.json";
 import TestVMInfo from "../jsons/0525vminfo.json";
+import { getResourceUsage, getToken } from "./api/vRealizeAPI";
 
 const https = require("https");
 
@@ -180,9 +181,8 @@ export const vmsPageRender = async (req, res) => {
 
 export const vmDetailPageRender = async (req, res) => {
     const { user } = req.session;
-    const { _id } = user;
 
-    const vmName = req.query.vm;
+    const vmId = req.query.vm;
     const hostName = req.query.hosts;
     const hostList = user.vsphere.info.value;
 
@@ -195,13 +195,29 @@ export const vmDetailPageRender = async (req, res) => {
 
     let vmInfo;
     for (const [index, vm] of vmList.value.entries()) {
-        if (vmName == vm.vm) {
+        if (vmId == vm.vm) {
             vmInfo = vm;
         }
     }
 
     console.log(vmInfo);
-    return res.render("vmInfo", { vmInfo, vmName, hostName });
+    //vm.vm 말고 << 정적 정보 수정
+    // vm.name 도 필요함 << 실시간 정보
+    return res.render("vmInfo", { vmInfo, vmId, hostName });
+};
+
+export const vmRealPageRender = async (req, res) => {
+    const { user } = req.session;
+
+    const username = user.vsphere.v_real.vr_id;
+    const password = user.vsphere.v_real.vr_pw;
+    const vRealizeIP = user.vsphere.v_real.vr_ip;
+    const token = await getToken(username, password, vRealizeIP);
+    req.session.token = token;
+
+    const { vm } = req.query;
+
+    const realUsage = await getResourceUsage(vm, vRealizeIP, token);
 };
 //0527 Refactoring 완료
 //0527 Refactoring 완료
