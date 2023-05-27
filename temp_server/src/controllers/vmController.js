@@ -8,6 +8,7 @@ import {
 import TestHostList from "../jsons/0525host.json";
 import TestVMList from "../jsons/0525vmlist.json";
 import TestVMInfo from "../jsons/0525vminfo.json";
+import TestRealUsage from "../jsons/0525real.json";
 import { getResourceUsage, getToken } from "./api/vRealizeAPI";
 
 const https = require("https");
@@ -199,11 +200,28 @@ export const vmDetailPageRender = async (req, res) => {
             vmInfo = vm;
         }
     }
-
-    console.log(vmInfo);
     //vm.vm 말고 << 정적 정보 수정
     // vm.name 도 필요함 << 실시간 정보
     return res.render("vmInfo", { vmInfo, vmId, hostName });
+};
+
+export const getVRealBasicInfo = (req, res) => res.render("addVRealize");
+
+export const postVRealBasicInfo = async (req, res) => {
+    const { vr_id, vr_pw, vr_ip } = req.body;
+    const { user } = req.session;
+    const { _id } = user;
+
+    const updatedUser = await User.findByIdAndUpdate(
+        _id,
+        {
+            "vsphere.v_real": { vr_id, vr_pw, vr_ip },
+        },
+        { new: true }
+    );
+    req.session.user = updatedUser;
+
+    return res.redirect("/vs/hosts");
 };
 
 export const vmRealPageRender = async (req, res) => {
@@ -212,12 +230,76 @@ export const vmRealPageRender = async (req, res) => {
     const username = user.vsphere.v_real.vr_id;
     const password = user.vsphere.v_real.vr_pw;
     const vRealizeIP = user.vsphere.v_real.vr_ip;
-    const token = await getToken(username, password, vRealizeIP);
-    req.session.token = token;
 
-    const { vm } = req.query;
+    //집에서 하기
+    // const token = await getToken(username, password, vRealizeIP);
+    // req.session.token = token;
+    // const { vm } = req.query;
+    // const realUsage = await getResourceUsage(vm, vRealizeIP, token);
+    const realUsage = TestRealUsage;
+    //집에서 하기
 
-    const realUsage = await getResourceUsage(vm, vRealizeIP, token);
+    const dataLength = realUsage.values[0]["stat-list"].stat[0].data.length;
+
+    if (dataLength < 12) {
+        //data가 12개보다 적으면 0으로 채우기
+        let count = 0;
+        const tempMemTimeStamp = [];
+        const tempMemDataUsage = [];
+        const tempCpuTimeStamp = [];
+        const tempCpuDataUsage = [];
+        for (let i = 0; i < 12 - dataLength; i++) {
+            tempMemTimeStamp.push(0);
+            tempMemDataUsage.push(0);
+            tempCpuTimeStamp.push(0);
+            tempCpuDataUsage.push(0);
+        }
+        for (let i = 12 - dataLength; i < 12; i++) {
+            tempMemTimeStamp.push(
+                realUsage.values[0]["stat-list"].stat[0].timestamps[count]
+            );
+            tempMemDataUsage.push(
+                realUsage.values[0]["stat-list"].stat[0].data[count].toFixed(2)
+            );
+            tempCpuTimeStamp.push(
+                realUsage.values[0]["stat-list"].stat[1].timestamps[count]
+            );
+            tempCpuDataUsage.push(
+                realUsage.values[0]["stat-list"].stat[1].data[count].toFixed(2)
+            );
+            count += 1;
+        }
+        realUsage.values[0]["stat-list"].stat[0].timestamps = tempMemTimeStamp;
+        realUsage.values[0]["stat-list"].stat[0].data = tempMemDataUsage;
+        realUsage.values[0]["stat-list"].stat[1].timestamps = tempCpuTimeStamp;
+        realUsage.values[0]["stat-list"].stat[1].data = tempCpuDataUsage;
+    } else {
+        //12개 이상이면 12개만 짜르기
+        const tempMemTimeStamp = [];
+        const tempMemDataUsage = [];
+        const tempCpuTimeStamp = [];
+        const tempCpuDataUsage = [];
+        for (let i = dataLength - 12; i < dataLength; i++) {
+            tempMemTimeStamp.push(
+                realUsage.values[0]["stat-list"].stat[0].timestamps[i]
+            );
+            tempMemDataUsage.push(
+                realUsage.values[0]["stat-list"].stat[0].data[i].toFixed(2)
+            );
+            tempCpuTimeStamp.push(
+                realUsage.values[0]["stat-list"].stat[1].timestamps[i]
+            );
+            tempCpuDataUsage.push(
+                realUsage.values[0]["stat-list"].stat[1].data[i].toFixed(2)
+            );
+        }
+        realUsage.values[0]["stat-list"].stat[0].timestamps = tempMemTimeStamp;
+        realUsage.values[0]["stat-list"].stat[0].data = tempMemDataUsage;
+        realUsage.values[0]["stat-list"].stat[1].timestamps = tempCpuTimeStamp;
+        realUsage.values[0]["stat-list"].stat[1].data = tempCpuDataUsage;
+    }
+
+    return res.render("vmReal", { realUsage });
 };
 //0527 Refactoring 완료
 //0527 Refactoring 완료

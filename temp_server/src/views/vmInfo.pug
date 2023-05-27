@@ -79,7 +79,10 @@ body
                             p 가상머신 수정
                     li#li-4
                         div(style='cursor: pointer;' onclick=`location.href='real?vm=${vmInfo.name}';`)
-                            p 실시간 사용률
+                            if user.vsphere.v_real
+                                p 실시간 사용률 확인
+                            else 
+                                p vRealize 정보등록
     div#layoutSidenav_content
         main
             div.container-fluid.px-4

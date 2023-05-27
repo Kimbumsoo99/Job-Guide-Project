@@ -1,0 +1,25 @@
+doctype html
+html(lang='ko')
+    head
+        meta(charset='UTF-8')
+        title WatchDog
+        link(rel='stylesheet' href='/assets/css/login.css')
+        link(rel="icon" href="/uploads/favicon.ico")
+    body
+        div.animated.bounceInDown
+            div.container
+                div.cloudAddForm
+                    if errorMessage
+                        span#vsadd-msg.error=errorMessage
+                    form.box(method="POST" name='form1' onsubmit='return checkStuff()')
+                        div.logo(onclick="location.href='/';")
+                            h4 WATCH
+                                span DOG
+                        h5 vRealize Operation accesee Info
+                        input(type='text' name='vr_id' required placeholder='vRealize ID' autocomplete='off')
+                        input#pwd(type='password' name='vr_pw' required placeholder='vRealize Password' autocomplete='off')
+                        input(type='text' name='vr_ip' required placeholder='vRealize IP Address' autocomplete='off')
+                        input#btn1.btn1(type='submit' value='Submit')
+                        a(href="/")
+                            input#btn2.btn1(type='button' value='Main')
+        script(src="assets/js/login.js") 

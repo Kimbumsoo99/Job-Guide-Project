@@ -1,13 +1,16 @@
 import express from "express";
 import {
     getAddBasicInfo,
+    getVRealBasicInfo,
     hostsPageRender,
     postAddBasicInfo,
+    postVRealBasicInfo,
     vmDetailPageRender,
+    vmRealPageRender,
     vmsPageRender,
 } from "../controllers/vmController";
 import { getCloudData } from "../controllers/cloudData";
-import { protectorMiddleware } from "../middlewares";
+import { checkVRealInfoMiddleware, protectorMiddleware } from "../middlewares";
 import { patchMemory, startPower, stopPower } from "../controllers/vmChangeSet";
 import { testGetHost } from "../tests/Test";
 
@@ -27,6 +30,20 @@ vsphereRouter
     .route("/hosts/vms/detail")
     .all(protectorMiddleware)
     .get(vmDetailPageRender);
+
+vsphereRouter
+    .route("/add/real")
+    .all(protectorMiddleware)
+    .get(getVRealBasicInfo)
+    .post(postVRealBasicInfo);
+
+vsphereRouter
+    .route("/hosts/vms/real")
+    .all(protectorMiddleware)
+    .all(checkVRealInfoMiddleware)
+    .get(vmRealPageRender);
+
+vsphereRouter.route("/hosts/vms/edit").all(protectorMiddleware);
 
 //0527 이 사이만 최종 코드
 
