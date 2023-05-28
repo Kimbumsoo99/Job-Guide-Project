@@ -72,9 +72,15 @@ export const patchMemory = async (vmName, sessionID, vCenterIP, memory) => {
 export const patchCPU = async (vmName, sessionID, vCenterIP, count) => {
     const options = getBaseOptions(vCenterIP);
     options.headers["vmware-api-session-id"] = sessionID;
-    options.path = ``;
+    options.path = `/rest/vcenter/vm/${vmName}/hardware/cpu`;
     options.method = "PATCH";
-    const postData = JSON.stringify({});
+    const postData = JSON.stringify({
+        spec: {
+            cores_per_socket: 0,
+            count: count,
+            hot_add_enabled: true,
+        },
+    });
 
     const status = await requestAPI(options, postData);
     console.log(status);

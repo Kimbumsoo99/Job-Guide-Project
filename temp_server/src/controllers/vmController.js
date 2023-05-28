@@ -6,12 +6,12 @@ import {
     getVMList,
     patchCPU,
     patchMemory,
-} from "./api/vCenterAPI";
+} from "../apis/vCenterAPI";
 import TestHostList from "../jsons/0525host.json";
 import TestVMList from "../jsons/0525vmlist.json";
 import TestVMInfo from "../jsons/0525vminfo.json";
 import TestRealUsage from "../jsons/0525real.json";
-import { getResourceUsage, getToken } from "./api/vRealizeAPI";
+import { getResourceUsage, getToken } from "../apis/vRealizeAPI";
 
 const https = require("https");
 
