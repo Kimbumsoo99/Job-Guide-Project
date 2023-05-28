@@ -87,3 +87,41 @@ export const patchCPU = async (vmName, sessionID, vCenterIP, count) => {
 
     return;
 };
+
+export const createVM = async (sessionID, vCenterIP, param) => {
+    const options = getBaseOptions(vCenterIP);
+    options.headers["vmware-api-session-id"] = sessionID;
+    options.path = `/rest/vcenter/vm`;
+    options.method = "POST";
+    const postData = JSON.stringify({
+        spec: {
+            guest_OS: "UBUNTU_64",
+            placement: {
+                //여기는 파라미터
+                datastore: "string",
+                folder: "string",
+                host: "string",
+            },
+            cpu: {
+                count: "int",
+            },
+            memory: {
+                size_MiB: "int",
+            },
+        },
+    });
+    const create = await requestAPI(options, postData);
+    console.log("create success");
+
+    return;
+};
+export const deleteVM = async (vmName, sessionID, vCenterIP) => {
+    const options = getBaseOptions(vCenterIP);
+    options.headers["vmware-api-session-id"] = sessionID;
+    options.path = `/rest/vcenter/vm/${vmName}`;
+    options.method = "DELETE";
+    const deletevm = await requestAPI(options);
+    console.log("delete VM");
+
+    return;
+};
