@@ -11,6 +11,7 @@ export const getSessionId = async (username, password, vCenterIP) => {
         "Basic " + Buffer.from(username + ":" + password).toString("base64");
 
     console.log(options);
+    console.log(await requestAPI(options, data));
     sessionIdJson = await requestAPI(options, data);
     console.log(sessionIdJson.value);
     sid = sessionIdJson.value;
