@@ -46,6 +46,7 @@ export const getVMInfo = async (vmName, sessionID, vCenterIP) => {
     options.headers["vmware-api-session-id"] = sessionID;
     options.path = `/rest/vcenter/vm/${vmName}`;
     options.method = "GET";
+    console.log(options);
 
     const vmInfo = await requestAPI(options);
 
