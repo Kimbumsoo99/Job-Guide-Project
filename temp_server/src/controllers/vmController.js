@@ -1,5 +1,6 @@
 import User from "../models/User";
 import {
+    createVM,
     deleteVM,
     getHostList,
     getSessionId,
@@ -420,6 +421,36 @@ export const getDeleteVM = async (req, res) => {
 
 export const getCreateVM = async (req, res) =>
     res.render("vmCreate", { hosts: req.query.hosts });
+
+export const postCreateVM = async (req, res) => {
+    const { user } = req.session;
+    const vCenterIP = user.vsphere.vc_ip;
+
+    const { host_name, vm_name, os_name, memory_size, cpu_count } = req.body;
+    let datastore;
+    if (host_name == "host-37003") datastore = "datastore-48017";
+    else if (host_name == "host-36006") datastore = "datastore-48020";
+    else if (host_name == "host-40004") datastore = "datastore-48021";
+    else {
+        console.log("문제 있음");
+        return res.redirect("/");
+    }
+    const param = {
+        guest_OS: os_name,
+        name: vm_name,
+        placement: {
+            datastore,
+            folder: "group-v35012",
+            host: host_name,
+        },
+        cpu: cpu_count,
+        memory: memory_size,
+    };
+
+    await createVM(sessionID, vCenterIP, param);
+
+    return res.redirect(`/vs/hosts/vms?hosts=${host_name}`);
+};
 //0527 Refactoring 완료
 //0527 Refactoring 완료
 //0527 Refactoring 완료

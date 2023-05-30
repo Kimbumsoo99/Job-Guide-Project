@@ -96,23 +96,25 @@ export const createVM = async (sessionID, vCenterIP, param) => {
     options.method = "POST";
     const postData = JSON.stringify({
         spec: {
-            guest_OS: "UBUNTU_64",
+            guest_OS: param.guest_OS,
+            name: param.name,
             placement: {
                 //여기는 파라미터
-                datastore: "datastoretest",
-                folder: "STZDC",
-                host: "esxi03.stz.local",
+                datastore: param.datastore,
+                folder: param.folder,
+                host: param.host,
             },
             cpu: {
-                count: 2,
+                count: param.cpu,
             },
             memory: {
-                size_MiB: 6144,
+                size_MiB: param.memory,
             },
         },
     });
-    const create = await requestAPI(options, postData);
+    const createVMName = await requestAPI(options, postData);
     console.log("create success");
+    console.log(createVMName);
 
     return;
 };
