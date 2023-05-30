@@ -380,6 +380,21 @@ export const postVmChangeSet = async (req, res) => {
     }
     //집에서 하는중
 
+    const updatedUser = await User.findByIdAndUpdate(
+        _id,
+        {
+            $set: {
+                "vsphere.info.value.$[inner].vmList.value.${outer}.info":
+                    vmList,
+            },
+        },
+        {
+            new: true,
+            arrayFilters: [{ "inner.host": host, "outer.vm": vm }],
+        }
+    );
+    req.session.user = updatedUser;
+
     return res.redirect(`/vs/hosts/vms/detail?vm=${vm}&hosts=${host}`);
 };
 
