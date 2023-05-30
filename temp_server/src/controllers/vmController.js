@@ -347,7 +347,7 @@ export const postVmChangeSet = async (req, res) => {
         }
     }
     //집에서 하는중
-    if (findVMInfo.info.memory.size_MiB != memory_size) {
+    if (findVMInfo.info.value.memory.size_MiB != memory_size) {
         await patchMemory(vm, sessionID, vCenterIP, memory_size);
         // for (const [out_index, hostInfo] of user.vsphere.info.value.entries()) {
         //     if (host == hostInfo.host) {
@@ -363,7 +363,7 @@ export const postVmChangeSet = async (req, res) => {
         //     }
         // }
     }
-    if (findVMInfo.cpu_count != cpu_count) {
+    if (findVMInfo.info.value.cpu.count != cpu_count) {
         await patchCPU(vm, sessionID, vCenterIP, cpu_count);
         // for (const [out_index, hostInfo] of user.vsphere.info.value.entries()) {
         //     if (host == hostInfo.host) {
@@ -387,6 +387,10 @@ export const postVmChangeSet = async (req, res) => {
         _id,
         {
             $set: {
+                "vsphere.info.value.$[inner].vmList.value.$[outer].memory_size_MiB":
+                    memory_size,
+                "vsphere.info.value.$[inner].vmList.value.$[outer].cpu_count":
+                    cpu_count,
                 "vsphere.info.value.$[inner].vmList.value.$[outer].info":
                     changeVMInfo,
             },
