@@ -105,10 +105,10 @@ export const createVM = async (sessionID, vCenterIP, param) => {
                 host: param.host,
             },
             cpu: {
-                count: param.cpu,
+                count: parseInt(param.cpu),
             },
             memory: {
-                size_MiB: param.memory,
+                size_MiB: parseInt(param.memory),
             },
         },
     });
@@ -116,7 +116,7 @@ export const createVM = async (sessionID, vCenterIP, param) => {
     console.log("create success");
     console.log(createVMName);
 
-    return;
+    return createVMName;
 };
 
 export const deleteVM = async (vmName, sessionID, vCenterIP) => {
