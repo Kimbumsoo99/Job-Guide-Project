@@ -1,5 +1,6 @@
 import User from "../models/User";
 import {
+    deleteVM,
     getHostList,
     getSessionId,
     getVMInfo,
@@ -380,6 +381,18 @@ export const postVmChangeSet = async (req, res) => {
     //집에서 하는중
 
     return res.redirect(`/vs/hosts/vms/detail?vm=${vm}&hosts=${host}`);
+};
+
+export const getDeleteVM = async (req, res) => {
+    const { user } = req.session;
+    const { vm, host } = req.query;
+
+    const vmName = vm;
+    const vCenterIP = user.vsphere.vc_ip;
+
+    await deleteVM(vmName, sessionID, vCenterIP);
+
+    return res.redirect(`/vs/hosts/vms?hosts=${host}`);
 };
 //0527 Refactoring 완료
 //0527 Refactoring 완료

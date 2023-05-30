@@ -78,8 +78,7 @@ export const patchCPU = async (vmName, sessionID, vCenterIP, count) => {
     options.method = "PATCH";
     const postData = JSON.stringify({
         spec: {
-            cores_per_socket: 0,
-            count: count,
+            count: parseInt(count),
             hot_add_enabled: true,
         },
     });
@@ -123,7 +122,7 @@ export const deleteVM = async (vmName, sessionID, vCenterIP) => {
     options.headers["vmware-api-session-id"] = sessionID;
     options.path = `/rest/vcenter/vm/${vmName}`;
     options.method = "DELETE";
-    const deletevm = await requestAPI(options);
+    await requestAPI(options);
     console.log("delete VM");
 
     return;
