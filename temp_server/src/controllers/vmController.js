@@ -23,6 +23,15 @@ const https = require("https");
 // const password = "123Qwer!";
 // const hostIP = "192.168.0.102";
 
+function calculateAverage(numbers) {
+    console.log(numbers);
+    const sum = numbers.reduce(function (total, current) {
+        return parseFloat(total) + parseFloat(current);
+    }, 0);
+
+    return sum / numbers.length;
+}
+
 function isEmptyArr(arr) {
     if (Array.isArray(arr) && arr.length === 0) {
         return true;
@@ -338,7 +347,8 @@ export const getVRealData = (req, res) => {
     //🟥집에서 하기
 
     const dataLength = realUsage.values[0]["stat-list"].stat[0].data.length;
-    console.log("테스트");
+    let cpuAvg; //Circle 차트
+    let memoryAvg;
     if (dataLength < 12) {
         //data가 12개보다 적으면 0으로 채우기
         let count = 0;
@@ -413,6 +423,19 @@ export const getVRealData = (req, res) => {
         realUsage.values[0]["stat-list"].stat[1].timestamps = tempCpuTimeStamp;
         realUsage.values[0]["stat-list"].stat[1].data = tempCpuDataUsage;
     }
+
+    cpuAvg = parseFloat(
+        calculateAverage(realUsage.values[0]["stat-list"].stat[1].data)
+    ).toFixed(2);
+    memoryAvg = parseFloat(
+        calculateAverage(realUsage.values[0]["stat-list"].stat[0].data)
+    ).toFixed(2);
+    console.log(cpuAvg, memoryAvg);
+
+    realUsage.cpuAvg = cpuAvg;
+    realUsage.memoryAvg = memoryAvg;
+
+    console.log(realUsage);
 
     return res.json(realUsage);
 };
