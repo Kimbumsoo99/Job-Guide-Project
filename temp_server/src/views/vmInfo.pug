@@ -131,18 +131,20 @@ body
                                     td Memory 크기
                                     td #{vmInfo.memory_size_MiB} Mib
                                     td
-                                tr(height="200")
-                                    td disk.vmdk_file
-                                    td #{vmInfo.info.value.disks[0].value.backing.vmdk_file}
-                                    td
-                                tr(height="200")
-                                    td 남은 Disk 용량
-                                    td #{(vmInfo.info.value.disks[0].value.capacity / 1000000000).toFixed(2)} GB
-                                    td
-                                tr(height="200")
-                                    td Network Name
-                                    td #{vmInfo.info.value.nics[0].value.backing.network_name}
-                                    td #{vmInfo.info.value.nics[0].value.state}
+                                if vmInfo.info.value.disks[0]
+                                    tr(height="200")
+                                        td disk.vmdk_file
+                                        td #{vmInfo.info.value.disks[0].value.backing.vmdk_file}
+                                        td
+                                    tr(height="200")
+                                        td 남은 Disk 용량
+                                        td #{(vmInfo.info.value.disks[0].value.capacity / 1000000000).toFixed(2)} GB
+                                        td
+                                if vmInfo.info.value.nics[0]
+                                    tr(height="200")
+                                        td Network Name
+                                        td #{vmInfo.info.value.nics[0].value.backing.network_name}
+                                        td #{vmInfo.info.value.nics[0].value.state}
                                 tr(height="200")
                                     td GuestOS
                                     td #{vmInfo.info.value.guest_OS}
