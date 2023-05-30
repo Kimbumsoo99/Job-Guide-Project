@@ -13,6 +13,7 @@ import TestHostList from "../jsons/0525host.json";
 import TestVMList from "../jsons/0525vmlist.json";
 import TestVMInfo from "../jsons/0525vminfo.json";
 import TestRealUsage from "../jsons/0525real.json";
+import Test2RealUsage from "../jsons/0525real2.json";
 import { getResourceUsage, getToken } from "../apis/vRealizeAPI";
 import { serialize } from "v8";
 
@@ -43,7 +44,7 @@ export const getAddBasicInfo = (req, res) => {
     if (!user.vsphere || req.query.change == 1) {
         return res.render("addVSphere");
     }
-    //return res.redirect("/vs/data");
+
     return res.redirect("/vs/hosts");
 };
 
@@ -75,17 +76,12 @@ export const postAddBasicInfo = async (req, res) => {
     );
     req.session.user = updatedUser;
 
-    // 집에서 실행
-    if (!sessionID) sessionID = await getSessionId(vs_id, vs_pw, vc_ip);
-    req.session.sessionID = sessionID;
-    // 집에서 실행
+    // 🟦실습환경에서 실행
+    // if (!sessionID) sessionID = await getSessionId(vs_id, vs_pw, vc_ip);
+    // req.session.sessionID = sessionID;
+    // 🟦실습환경에서 실행
 
     return res.redirect(`/vs/hosts`);
-    //return res.redirect(`/vm/data?vs_id=${vm_id}&vs_pw=${vm_pw}&vs_ip=${vm_ip}`);
-
-    // return res.redirect(
-    //     `/vs/hosts?vs_id=${vs_id}&vs_pw=${vs_pw}&vs_ip=${vc_ip}`
-    // );
 };
 
 export const hostsPageRender = async (req, res) => {
@@ -105,22 +101,22 @@ export const hostsPageRender = async (req, res) => {
 
     // ID, IP는 존재하지만, host 정보가 없는 경우 (첫 정상 접근)
     // Host 정보를 받아서, DB에 저장하고 render 시킨다.
-    // 집에서 실행
-    if (!sessionID) {
-        sessionID = await getSessionId(
-            user.vsphere.vs_id,
-            user.vsphere.vs_pw,
-            user.vsphere.vc_ip
-        );
-        req.session.sessionID = sessionID;
-    }
-    // 집에서 실행
-
-    // 집에서 실행
+    // 🟦실습환경에서 실행
+    // if (!sessionID) {
+    //     sessionID = await getSessionId(
+    //         user.vsphere.vs_id,
+    //         user.vsphere.vs_pw,
+    //         user.vsphere.vc_ip
+    //     );
+    //     req.session.sessionID = sessionID;
+    // }
     // const vCenterIP = user.vsphere.vc_ip;
     // const hostList = await getHostList(sessionID, vCenterIP);
+    // 🟦실습환경에서 실행
+
+    // 🟥집에서 실행
     const hostList = TestHostList;
-    // 집에서 실행
+    // 🟥집에서 실행
 
     const updatedUser = await User.findByIdAndUpdate(
         _id,
@@ -143,31 +139,31 @@ export const vmsPageRender = async (req, res) => {
 
     if (!hosts) res.redirect("/vs/hosts");
 
-    // 집에서 실행
-    if (!sessionID) {
-        sessionID = await getSessionId(
-            user.vsphere.vs_id,
-            user.vsphere.vs_pw,
-            user.vsphere.vc_ip
-        );
-        req.session.sessionID = sessionID;
-    }
-    // 집에서 실행
+    // 🟦실습환경에서 실행
+    // if (!sessionID) {
+    //     sessionID = await getSessionId(
+    //         user.vsphere.vs_id,
+    //         user.vsphere.vs_pw,
+    //         user.vsphere.vc_ip
+    //     );
+    //     req.session.sessionID = sessionID;
+    // }
+    // const vCenterIP = user.vsphere.vc_ip;
+    // const vmList = await getVMList(hosts, sessionID, vCenterIP);
 
-    // 집에서 실행
-    const vCenterIP = user.vsphere.vc_ip;
-    const vmList = await getVMList(hosts, sessionID, vCenterIP);
-    // const vmList = TestVMList;
+    // for (const [index, vm] of vmList.value.entries()) {
+    //     const name = vm.vm;
+    //     console.log(name, sessionID);
+    //     vmList.value[index].info = await getVMInfo(name, sessionID, vCenterIP);
+    // }
+    // 🟦실습환경에서 실행
 
+    // 🟥집에서 실행
+    const vmList = TestVMList;
     for (const [index, vm] of vmList.value.entries()) {
-        // 집에서 실행
-        const name = vm.vm;
-        console.log(name, sessionID);
-        vmList.value[index].info = await getVMInfo(name, sessionID, vCenterIP);
-        // vmList.value[index].info = TestVMInfo;
-        // 집에서 실행
+        vmList.value[index].info = TestVMInfo;
     }
-    // 집에서 실행
+    // 🟥집에서 실행
 
     const updatedUser = await User.findByIdAndUpdate(
         _id,
@@ -206,6 +202,7 @@ export const vmDetailPageRender = async (req, res) => {
             vmInfo = vm;
         }
     }
+
     //vm.vm 말고 << 정적 정보 수정
     // vm.name 도 필요함 << 실시간 정보
     return res.render("vmInfo", { vmInfo, vmId, hostName });
@@ -231,22 +228,117 @@ export const postVRealBasicInfo = async (req, res) => {
 };
 
 export const vmRealPageRender = async (req, res) => {
+    // const { user } = req.session;
+
+    // const username = user.vsphere.v_real.vr_id;
+    // const password = user.vsphere.v_real.vr_pw;
+    // const vRealizeIP = user.vsphere.v_real.vr_ip;
+    // console.log(username, password, vRealizeIP);
+
+    // //🟦실습환경에서 하기
+    // // const token = await getToken(username, password, vRealizeIP);
+    // // req.session.token = token;
+    // // const { vm } = req.query;
+    // // const realUsage = await getResourceUsage(vm, vRealizeIP, token);
+    // //🟦실습환경에서 하기
+
+    // //🟥집에서 하기
+    // const realUsage = TestRealUsage;
+    // //🟥집에서 하기
+
+    // const dataLength = realUsage.values[0]["stat-list"].stat[0].data.length;
+    // console.log("테스트");
+    // if (dataLength < 12) {
+    //     //data가 12개보다 적으면 0으로 채우기
+    //     let count = 0;
+    //     const tempMemTimeStamp = [];
+    //     const tempMemDataUsage = [];
+    //     const tempCpuTimeStamp = [];
+    //     const tempCpuDataUsage = [];
+    //     for (let i = 0; i < 12 - dataLength; i++) {
+    //         tempMemTimeStamp.push(0);
+    //         tempMemDataUsage.push(0);
+    //         tempCpuTimeStamp.push(0);
+    //         tempCpuDataUsage.push(0);
+    //     }
+    //     for (let i = 12 - dataLength; i < 12; i++) {
+    //         tempMemTimeStamp.push(
+    //             realUsage.values[0]["stat-list"].stat[0].timestamps[count]
+    //         );
+    //         tempMemDataUsage.push(
+    //             realUsage.values[0]["stat-list"].stat[0].data[count].toFixed(2)
+    //         );
+    //         tempCpuTimeStamp.push(
+    //             realUsage.values[0]["stat-list"].stat[1].timestamps[count]
+    //         );
+    //         tempCpuDataUsage.push(
+    //             realUsage.values[0]["stat-list"].stat[1].data[count].toFixed(2)
+    //         );
+    //         count += 1;
+    //     }
+    //     realUsage.values[0]["stat-list"].stat[0].timestamps = tempMemTimeStamp;
+    //     realUsage.values[0]["stat-list"].stat[0].data = tempMemDataUsage;
+    //     realUsage.values[0]["stat-list"].stat[1].timestamps = tempCpuTimeStamp;
+    //     realUsage.values[0]["stat-list"].stat[1].data = tempCpuDataUsage;
+    // } else {
+    //     console.log("테스트");
+
+    //     //12개 이상이면 12개만 짜르기
+    //     const tempMemTimeStamp = [];
+    //     const tempMemDataUsage = [];
+    //     const tempCpuTimeStamp = [];
+    //     const tempCpuDataUsage = [];
+    //     console.log(
+    //         realUsage.values[0]["stat-list"].stat[0].data[3].toFixed(2)
+    //     );
+
+    //     for (let i = dataLength - 12; i < dataLength; i++) {
+    //         tempMemTimeStamp.push(
+    //             realUsage.values[0]["stat-list"].stat[0].timestamps[i]
+    //         );
+    //         tempMemDataUsage.push(
+    //             realUsage.values[0]["stat-list"].stat[0].data[i].toFixed(2)
+    //         );
+    //         tempCpuTimeStamp.push(
+    //             realUsage.values[0]["stat-list"].stat[1].timestamps[i]
+    //         );
+    //         tempCpuDataUsage.push(
+    //             realUsage.values[0]["stat-list"].stat[1].data[i].toFixed(2)
+    //         );
+    //     }
+    //     console.log("테스트");
+    //     realUsage.values[0]["stat-list"].stat[0].timestamps = tempMemTimeStamp;
+    //     realUsage.values[0]["stat-list"].stat[0].data = tempMemDataUsage;
+    //     realUsage.values[0]["stat-list"].stat[1].timestamps = tempCpuTimeStamp;
+    //     realUsage.values[0]["stat-list"].stat[1].data = tempCpuDataUsage;
+    // }
+    // console.log("테스트");
+
+    return res.render("vmReal");
+};
+
+export const getVRealData = (req, res) => {
     const { user } = req.session;
 
     const username = user.vsphere.v_real.vr_id;
     const password = user.vsphere.v_real.vr_pw;
     const vRealizeIP = user.vsphere.v_real.vr_ip;
+    console.log(username, password, vRealizeIP);
 
-    //집에서 하기
-    const token = await getToken(username, password, vRealizeIP);
-    req.session.token = token;
-    const { vm } = req.query;
-    const realUsage = await getResourceUsage(vm, vRealizeIP, token);
+    //🟦실습환경에서 하기
+    // const token = await getToken(username, password, vRealizeIP);
+    // req.session.token = token;
+    // const { vm } = req.query;
+    // const realUsage = await getResourceUsage(vm, vRealizeIP, token);
+    //🟦실습환경에서 하기
+
+    //🟥집에서 하기
     // const realUsage = TestRealUsage;
-    //집에서 하기
+    const realUsage = Test2RealUsage;
+    //🟥집에서 하기
 
     const dataLength = realUsage.values[0]["stat-list"].stat[0].data.length;
-
+    console.log("테스트");
     if (dataLength < 12) {
         //data가 12개보다 적으면 0으로 채우기
         let count = 0;
@@ -265,13 +357,17 @@ export const vmRealPageRender = async (req, res) => {
                 realUsage.values[0]["stat-list"].stat[0].timestamps[count]
             );
             tempMemDataUsage.push(
-                realUsage.values[0]["stat-list"].stat[0].data[count].toFixed(2)
+                parseFloat(
+                    realUsage.values[0]["stat-list"].stat[0].data[count]
+                ).toFixed(2)
             );
             tempCpuTimeStamp.push(
                 realUsage.values[0]["stat-list"].stat[1].timestamps[count]
             );
             tempCpuDataUsage.push(
-                realUsage.values[0]["stat-list"].stat[1].data[count].toFixed(2)
+                parseFloat(
+                    realUsage.values[0]["stat-list"].stat[1].data[count]
+                ).toFixed(2)
             );
             count += 1;
         }
@@ -280,32 +376,45 @@ export const vmRealPageRender = async (req, res) => {
         realUsage.values[0]["stat-list"].stat[1].timestamps = tempCpuTimeStamp;
         realUsage.values[0]["stat-list"].stat[1].data = tempCpuDataUsage;
     } else {
+        console.log("테스트");
+
         //12개 이상이면 12개만 짜르기
         const tempMemTimeStamp = [];
         const tempMemDataUsage = [];
         const tempCpuTimeStamp = [];
         const tempCpuDataUsage = [];
+        console.log(
+            parseFloat(
+                realUsage.values[0]["stat-list"].stat[0].data[3]
+            ).toFixed(2)
+        );
+
         for (let i = dataLength - 12; i < dataLength; i++) {
             tempMemTimeStamp.push(
                 realUsage.values[0]["stat-list"].stat[0].timestamps[i]
             );
             tempMemDataUsage.push(
-                realUsage.values[0]["stat-list"].stat[0].data[i].toFixed(2)
+                parseFloat(
+                    realUsage.values[0]["stat-list"].stat[0].data[i]
+                ).toFixed(2)
             );
             tempCpuTimeStamp.push(
                 realUsage.values[0]["stat-list"].stat[1].timestamps[i]
             );
             tempCpuDataUsage.push(
-                realUsage.values[0]["stat-list"].stat[1].data[i].toFixed(2)
+                parseFloat(
+                    realUsage.values[0]["stat-list"].stat[1].data[i]
+                ).toFixed(2)
             );
         }
+        console.log("테스트");
         realUsage.values[0]["stat-list"].stat[0].timestamps = tempMemTimeStamp;
         realUsage.values[0]["stat-list"].stat[0].data = tempMemDataUsage;
         realUsage.values[0]["stat-list"].stat[1].timestamps = tempCpuTimeStamp;
         realUsage.values[0]["stat-list"].stat[1].data = tempCpuDataUsage;
     }
 
-    return res.render("vmReal", { realUsage });
+    return res.json(realUsage);
 };
 
 export const getVmChangeSet = async (req, res) => {

@@ -1,112 +1,38 @@
 <!DOCTYPE html>
 <html lang="zxx">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Final Project</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <script
-      src="https://kit.fontawesome.com/def66b134a.js"
-      crossorigin="anonymous"
-    ></script>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <header>
-      <div class="container">
-        <!-- HTML 구조의 핵심인 container 클래스가 포함된 div 태그 -->
-        <h1>
-          <button type="button" class="btm_image" id="img_btn">
-            <img src="temp_server/uploads/logo.png" />
-          </button>
-        </h1>
-        <nav>
-          <ul>
-            <!-- 구조 동일, button 태그의 텍스트(Features, Portfolio, Contact)만 변경 -->
-            <li>
-              <div class="HostIP">HostIP</div>
-            </li>
-            <li>
-              <div class="HostAddress">HostAddress</div>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </header>
-    <!-- end header -->
-    <!-- main -->
-    <main id="main">
-      <section id="features" class="do">
-        <div class="container">
-          <div class="title">
-            <h2>HOST</h2>
-          </div>
-          <div class="do-me">
-            <div class="do-inner">
-              <div class="icon">
-                <!-- class="fa-brands fa-css3-alt", class="fa-brands fa-bootstrap" -->
-                <i class="fa-solid fa-desktop" style="color: #f5cc62"></i>
-              </div>
-              <div class="content">
-                <!-- CSS3, BootStrap v5.0 -->
-                <h3>HOST1</h3>
-                <p>CPU : 2vCPUs</p>
-                <p>MEM : 300GB</p>
-                <p>MEM : 300GB</p>
-              </div>
-            </div>
-            <div class="do-inner">
-              <div class="icon">
-                <!-- class="fa-brands fa-css3-alt", class="fa-brands fa-bootstrap" -->
-                <i class="fa-solid fa-desktop" style="color: #f5cc62"></i>
-              </div>
-              <div class="content">
-                <!-- CSS3, BootStrap v5.0 -->
-                <h3>HOST2</h3>
-                <p>CPU : 2vCPUs</p>
-                <p>MEM : 300GB</p>
-                <p>MEM : 300GB</p>
-              </div>
-            </div>
-            <div class="do-inner">
-              <div class="icon">
-                <!-- class="fa-brands fa-css3-alt", class="fa-brands fa-bootstrap" -->
-                <i class="fa-solid fa-desktop"></i>
-              </div>
-              <div class="content">
-                <!-- CSS3, BootStrap v5.0 -->
-                <h3>HOST3</h3>
-                <p>CPU : 2vCPUs</p>
-                <p>MEM : 300GB</p>
-                <p>MEM : 300GB</p>
-              </div>
-            </div>
-            <div class="do-inner">
-              <div class="icon">
-                <!-- class="fa-brands fa-css3-alt", class="fa-brands fa-bootstrap" -->
-                <i class="fa-solid fa-desktop"></i>
-              </div>
-              <div class="content">
-                <!-- CSS3, BootStrap v5.0 -->
-                <h3>HOST4</h3>
-                <p>CPU : 2vCPUs</p>
-                <p>MEM : 300GB</p>
-                <p>MEM : 300GB</p>
-              </div>
-            </div>
-          </div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Final Project</title>
+        <style>
+            .card-body {
+                width: 600px;
+                height: 270px;
+                margin: 0px;
+                background-color: aliceblue;
+            }
+            .chartjs-render-monitor {
+                animation: chartjs-render-animation 1ms;
+            }
+            .chartjs-render-monitor {
+                padding-top: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>CPU 사용률</h1>
+        <div class="card-body">
+            <canvas id="myCpuChart" width="600px" height="250px"></canvas>
         </div>
-      </section>
-    </main>
-    <!-- end main -->
-
-    <!-- <div class="bg"></div> -->
-  </body>
+        <h1>Memory 사용률</h1>
+        <div class="card-body">
+            <canvas id="myMemoryChart" width="600px" height="250px"></canvas>
+        </div>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"
+            crossorigin="anonymous"
+        ></script>
+        <script src="chart-area-demo.js"></script>
+    </body>
 </html>

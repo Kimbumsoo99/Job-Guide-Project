@@ -1,24 +1,134 @@
 doctype html
-html(lang='ko')
-    head
-        meta(charset='UTF-8')
-        title WatchDog
-    body
-        h2 Mem
-        table 
-            tr 
-                th 시간
-                th 모니터링
-            each val, index in realUsage.values[0]["stat-list"].stat[0].timestamps
-                tr 
-                    th=val
-                    th #{realUsage.values[0]["stat-list"].stat[0].data[index]}%
-        h2 CPU
-        table 
-            tr 
-                th 시간
-                th 모니터링
-            each val, index in realUsage.values[0]["stat-list"].stat[1].timestamps
-                tr 
-                    th=val
-                    th #{realUsage.values[0]["stat-list"].stat[1].data[index]}%
+head
+    meta(charset='UTF-8')
+    title WatchDog
+    style.
+        .card-body{
+            display: flex;
+        }
+        .card-graph {
+            width: 720px;
+            height: 290px;
+            margin: 0px;
+            background-color: aliceblue;
+            padding-top: 20px;
+
+        }
+        .card-circle{
+            width: 230px;
+            height: 230px;
+            border-radius: 50%;
+            margin: 30px;
+        }
+        .chartjs-render-monitor {
+            animation: chartjs-render-animation 1ms;
+        }
+        #myCpuChart,
+        #myMemoryChart{
+            width: 720px;
+            height: 270px;
+        }
+body
+    h1 CPU 사용률
+    div.card-body
+        div.card-circle
+            canvas#cpuCircle(width="1920" height="1080")
+        div.card-graph
+            canvas#myCpuChart(width="1920" height="720")
+    h1 Memory 사용률
+    div.card-body
+        div.card-circle
+            canvas#memoryCircle(width="1920" height="1080")
+        div.card-graph
+            canvas#myMemoryChart(width="1920" height="720")
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js' crossorigin='anonymous')
+    script(src="/assets/js/chart-area-demo.js") 
+    script(src="/assets/js/circle.js") 
+
+//
+    script.
+        var cpuUsage = `${[23, 50, 30, 20, 40, 50, 5, 89, 99, 100, 34, 20]}`;
+        var memoryUsage = `${[23, 50, 30, 20, 40, 50, 5, 89, 99, 100, 34, 20]}`;
+        
+        Chart.defaults.global.defaultFontFamily =
+            '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+        Chart.defaults.global.defaultFontColor = "#292b2c";
+
+        const memoryDataSet = memoryUsage;
+
+        const cpuDataSet = cpuUsage;
+        var ctx = document.getElementById("myCpuChart");
+        var ctx2 = document.getElementById("myMemoryChart");
+        
+        const makeChart = (canvas, dataset, color) => {
+            return new Chart(canvas, {
+                type: "line",
+                data: {
+                    labels: [
+                        "60m",
+                        "55m",
+                        "50m",
+                        "45m",
+                        "40m",
+                        "35m",
+                        "30m",
+                        "25m",
+                        "20m",
+                        "15m",
+                        "10m",
+                        "5m",
+                    ],
+                    datasets: [
+                {
+                    label: "Usage",
+                    lineTension: 0.3,
+                    backgroundColor: `${color}33`,
+                    borderColor: `${color}FF`,
+                    pointRadius: 5,
+                    pointBackgroundColor: `${color}FF`,
+                    pointBorderColor: "rgba(255,255,255,0.8)",
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: `${color}FF`,
+                    pointHitRadius: 50,
+                    pointBorderWidth: 2,
+                    data: dataset,
+                },
+                    ],
+                },
+                options: {
+                    scales: {
+                        xAxes: [
+                    {
+                        time: {
+                            unit: "date",
+                        },
+                        gridLines: {
+                            display: false,
+                        },
+                        ticks: {
+                            maxTicksLimit: 12,
+                        },
+                    },
+                        ],
+                        yAxes: [
+                            {
+                        ticks: {
+                            min: 0,
+                            max: 100,
+                            maxTicksLimit: 5,
+                        },
+                        gridLines: {
+                            color: "rgba(0, 0, 0, .125)",
+                        },
+                            },
+                        ],
+                    },
+                    legend: {
+                        display: false,
+                    },
+                },
+            });
+        };
+
+        const chart = makeChart(ctx, cpuDataSet, "#2756D6");
+        const chart2 = makeChart(ctx2, memoryDataSet, "#909469");

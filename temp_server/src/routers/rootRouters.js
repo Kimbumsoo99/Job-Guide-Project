@@ -1,5 +1,5 @@
 import express from "express";
-import { home } from "../controllers/vmController";
+import { getVRealData, home } from "../controllers/vmController";
 import {
     getJoin,
     getLogin,

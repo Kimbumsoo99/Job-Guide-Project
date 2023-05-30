@@ -4,6 +4,7 @@ import {
     getCreateVM,
     getDeleteVM,
     getVRealBasicInfo,
+    getVRealData,
     getVmChangeSet,
     hostsPageRender,
     postAddBasicInfo,
@@ -41,6 +42,8 @@ vsphereRouter
     .all(protectorMiddleware)
     .get(getVRealBasicInfo)
     .post(postVRealBasicInfo);
+
+vsphereRouter.get("/real/usage", getVRealData);
 
 vsphereRouter
     .route("/hosts/vms/real")
