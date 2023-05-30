@@ -18,6 +18,7 @@ import { localsMiddleware, protectorMiddleware } from "../middlewares";
 import {
     testCreateVM,
     testDatastoreVM,
+    testDeleteVM,
     testFolderVM,
 } from "../apis/vCenterAPI";
 
@@ -47,6 +48,7 @@ rootRouter.get("/test/page/vm", testVMInfo);
 rootRouter.get("/test/time", testInterval);
 
 rootRouter.get("/test/create/vm", testCreateVM);
+rootRouter.get("/test/delete/vm", testDeleteVM);
 rootRouter.get("/test/folder", testFolderVM);
 rootRouter.get("/test/store", testDatastoreVM);
 
