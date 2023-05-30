@@ -144,7 +144,7 @@ export const testCreateVM = async (req, res) => {
             placement: {
                 //여기는 파라미터
                 datastore: "datastoretest",
-                folder: "vmfolder",
+                folder: "group-h51031",
                 host: "esxi03.stz.local",
             },
             cpu: {
