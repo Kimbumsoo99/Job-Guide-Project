@@ -12,7 +12,7 @@ export const getBaseOptions = (hostIP) => {
     };
 };
 
-export const requestAPI = (options, data) => {
+export const requestAPI = async (options, data) => {
     if (!data) {
         data = JSON.stringify({});
     }
@@ -28,8 +28,8 @@ export const requestAPI = (options, data) => {
 
             res.on("end", () => {
                 const jsonResponse = JSON.parse(responseBody);
-                // console.log("JSON 객체 값");
-                // console.log(jsonResponse);
+                console.log("JSON 객체 값");
+                console.log(jsonResponse);
                 resolve(jsonResponse);
             });
         });
