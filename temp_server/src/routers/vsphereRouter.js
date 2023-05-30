@@ -1,6 +1,7 @@
 import express from "express";
 import {
     getAddBasicInfo,
+    getCreateVM,
     getDeleteVM,
     getVRealBasicInfo,
     getVmChangeSet,
@@ -56,6 +57,8 @@ vsphereRouter
     .route("/hosts/vms/delete")
     .all(protectorMiddleware)
     .get(getDeleteVM);
+
+vsphereRouter.route("/hosts/vms/create", getCreateVM);
 
 //0527 이 사이만 최종 코드
 

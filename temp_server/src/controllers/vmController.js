@@ -13,6 +13,7 @@ import TestVMList from "../jsons/0525vmlist.json";
 import TestVMInfo from "../jsons/0525vminfo.json";
 import TestRealUsage from "../jsons/0525real.json";
 import { getResourceUsage, getToken } from "../apis/vRealizeAPI";
+import { serialize } from "v8";
 
 const https = require("https");
 
@@ -416,6 +417,9 @@ export const getDeleteVM = async (req, res) => {
 
     return res.redirect(`/vs/hosts/vms?hosts=${host}`);
 };
+
+export const getCreateVM = async (req, res) =>
+    res.render("vmCreate", { hosts: req.query.hosts });
 //0527 Refactoring 완료
 //0527 Refactoring 완료
 //0527 Refactoring 완료
