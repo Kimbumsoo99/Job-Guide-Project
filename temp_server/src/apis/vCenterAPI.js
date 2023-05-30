@@ -140,11 +140,12 @@ export const testCreateVM = async (req, res) => {
     const postData = JSON.stringify({
         spec: {
             guest_OS: "UBUNTU_64",
+            // name: "TVM01",
             placement: {
                 //여기는 파라미터
                 datastore: "datastoretest",
-                folder: "STZDC",
-                host: "esxi03.stz.local",
+                folder: "vmfolder",
+                // host: "esxi03.stz.local",
             },
             cpu: {
                 count: 2,
@@ -158,4 +159,18 @@ export const testCreateVM = async (req, res) => {
     console.log("create success");
 
     return res.send(create);
+};
+
+export const testDeleteVM = async (req, res) => {
+    const vCenterIP = "192.168.0.102";
+    const options = getBaseOptions(vCenterIP);
+    const sessionID = req.session.sessionID;
+    options.headers["vmware-api-session-id"] = sessionID;
+    const vmName = "TVM01";
+    options.path = `/rest/vcenter/vm/${vmName}`;
+    options.method = "DELETE";
+    const deletevm = await requestAPI(options);
+    console.log("delete VM");
+
+    return res.send(deletevm);
 };
