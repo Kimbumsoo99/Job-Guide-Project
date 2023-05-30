@@ -380,13 +380,14 @@ export const postVmChangeSet = async (req, res) => {
         // }
     }
     //집에서 하는중
+    const changeVMInfo = await getVMInfo(vm, sessionID, vCenterIP);
 
     const updatedUser = await User.findByIdAndUpdate(
         _id,
         {
             $set: {
                 "vsphere.info.value.$[inner].vmList.value.${outer}.info":
-                    vmList,
+                    changeVMInfo,
             },
         },
         {
