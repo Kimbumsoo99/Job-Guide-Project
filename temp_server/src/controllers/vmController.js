@@ -386,7 +386,7 @@ export const postVmChangeSet = async (req, res) => {
         _id,
         {
             $set: {
-                "vsphere.info.value.$[inner].vmList.value.${outer}.info":
+                "vsphere.info.value.$[inner].vmList.value.$[outer].info":
                     changeVMInfo,
             },
         },
