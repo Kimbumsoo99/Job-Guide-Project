@@ -145,7 +145,7 @@ export const testCreateVM = async (req, res) => {
                 //여기는 파라미터
                 datastore: "datastoretest",
                 folder: "vmfolder",
-                // host: "esxi03.stz.local",
+                host: "esxi03.stz.local",
             },
             cpu: {
                 count: 2,
