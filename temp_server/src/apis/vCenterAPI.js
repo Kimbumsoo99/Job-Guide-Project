@@ -143,7 +143,7 @@ export const testCreateVM = async (req, res) => {
             // name: "TVM01",
             placement: {
                 //여기는 파라미터
-                datastore: "datastoretest",
+                datastore: "datastore-48021",
                 // folder: "group-h51031",
                 folder: "group-v38002",
                 // host: "esxi03.stz.local",
