@@ -329,6 +329,7 @@ export const getVmChangeSet = async (req, res) => {
 
 export const postVmChangeSet = async (req, res) => {
     const { user } = req.session;
+    const { _id } = user;
     const { vm, host } = req.query;
     const { memory_size, cpu_count } = req.body;
     const vCenterIP = user.vsphere.vc_ip;
