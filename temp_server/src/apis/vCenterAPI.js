@@ -146,7 +146,8 @@ export const testCreateVM = async (req, res) => {
                 datastore: "datastoretest",
                 // folder: "group-h51031",
                 folder: "group-v38002",
-                host: "esxi03.stz.local",
+                // host: "esxi03.stz.local",
+                host: "host-40004",
             },
             cpu: {
                 count: 2,
