@@ -100,9 +100,9 @@ export const createVM = async (sessionID, vCenterIP, param) => {
             name: param.name,
             placement: {
                 //여기는 파라미터
-                datastore: param.datastore,
-                folder: param.folder,
-                host: param.host,
+                datastore: param.placement.datastore,
+                folder: param.placement.folder,
+                host: param.placement.host,
             },
             cpu: {
                 count: parseInt(param.cpu),
