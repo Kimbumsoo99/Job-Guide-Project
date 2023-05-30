@@ -347,7 +347,7 @@ export const postVmChangeSet = async (req, res) => {
         }
     }
     //집에서 하는중
-    if (findVMInfo.memory_size_MiB != memory_size) {
+    if (findVMInfo.info.memory.size_MiB != memory_size) {
         await patchMemory(vm, sessionID, vCenterIP, memory_size);
         // for (const [out_index, hostInfo] of user.vsphere.info.value.entries()) {
         //     if (host == hostInfo.host) {
@@ -381,6 +381,7 @@ export const postVmChangeSet = async (req, res) => {
     }
     //집에서 하는중
     const changeVMInfo = await getVMInfo(vm, sessionID, vCenterIP);
+    console.log(changeVMInfo);
 
     const updatedUser = await User.findByIdAndUpdate(
         _id,
