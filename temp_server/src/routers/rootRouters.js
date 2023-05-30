@@ -15,7 +15,7 @@ import {
     testVMPage,
 } from "../tests/Test";
 import { localsMiddleware, protectorMiddleware } from "../middlewares";
-import { testCreateVM } from "../apis/vCenterAPI";
+import { testCreateVM, testFolderVM } from "../apis/vCenterAPI";
 
 const rootRouter = express.Router();
 
@@ -43,4 +43,5 @@ rootRouter.get("/test/page/vm", testVMInfo);
 rootRouter.get("/test/time", testInterval);
 
 rootRouter.get("/test/create/vm", testCreateVM);
+rootRouter.get("/test/folder", testFolderVM);
 export default rootRouter;

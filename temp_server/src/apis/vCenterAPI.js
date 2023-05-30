@@ -174,3 +174,17 @@ export const testDeleteVM = async (req, res) => {
 
     return res.send(deletevm);
 };
+
+export const testFolderVM = async (req, res) => {
+    const vCenterIP = "192.168.0.102";
+    const options = getBaseOptions(vCenterIP);
+    const sessionID = req.session.sessionID;
+    options.headers["vmware-api-session-id"] = sessionID;
+    // const vmName = "TVM01";
+    options.path = `/rest/vcenter/folder`;
+    options.method = "GET";
+    const deletevm = await requestAPI(options);
+    // console.log("delete VM");
+
+    return res.send(deletevm);
+};
