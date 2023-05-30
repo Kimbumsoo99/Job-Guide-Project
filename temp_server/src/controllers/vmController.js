@@ -160,7 +160,7 @@ export const vmsPageRender = async (req, res) => {
         // 집에서 실행
         const name = vm.vm;
         console.log(name, sessionID);
-        vmList.value[index].info = await getVMInfo(name, sessionID);
+        vmList.value[index].info = await getVMInfo(name, sessionID, vCenterIP);
         // vmList.value[index].info = TestVMInfo;
         // 집에서 실행
     }
