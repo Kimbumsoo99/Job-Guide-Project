@@ -190,3 +190,17 @@ export const testFolderVM = async (req, res) => {
 
     return res.send(deletevm);
 };
+
+export const testDatastoreVM = async (req, res) => {
+    const vCenterIP = "192.168.0.102";
+    const options = getBaseOptions(vCenterIP);
+    const sessionID = req.session.sessionID;
+    options.headers["vmware-api-session-id"] = sessionID;
+    // const vmName = "TVM01";
+    options.path = `/rest/vcenter/datastore`;
+    options.method = "GET";
+    const deletevm = await requestAPI(options);
+    // console.log("delete VM");
+
+    return res.send(deletevm);
+};
