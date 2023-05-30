@@ -140,15 +140,17 @@ export const testCreateVM = async (req, res) => {
     const postData = JSON.stringify({
         spec: {
             guest_OS: "UBUNTU_64",
-            // name: "TVM01",
+            name: "TVM01",
             placement: {
                 //여기는 파라미터
-                datastore: "datastore-48021",
+                // datastore: "datastore-48021", // 호스트 3 성공
+                datastore: "datastore-48017", //HOST 1
                 // folder: "group-h51031",
                 // folder: "group-v38002",
-                folder: "group-v35012",
+                folder: "group-v35012", //호스트 3 성공 HOST 1
                 // host: "esxi03.stz.local",
-                host: "host-40004",
+                // host: "host-40004", // 호스트 3
+                host: "host-37003", //HOST 1
             },
             cpu: {
                 count: 2,
