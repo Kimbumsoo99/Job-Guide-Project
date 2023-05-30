@@ -58,7 +58,7 @@ vsphereRouter
     .all(protectorMiddleware)
     .get(getDeleteVM);
 
-vsphereRouter.route("/hosts/vms/create", getCreateVM);
+vsphereRouter.route("/hosts/create", getCreateVM);
 
 //0527 이 사이만 최종 코드
 
