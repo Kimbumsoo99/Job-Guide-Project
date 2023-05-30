@@ -100,15 +100,15 @@ export const createVM = async (sessionID, vCenterIP, param) => {
             guest_OS: "UBUNTU_64",
             placement: {
                 //여기는 파라미터
-                datastore: "string",
-                folder: "string",
-                host: "string",
+                datastore: "datastoretest",
+                folder: "STZDC",
+                host: "esxi03.stz.local",
             },
             cpu: {
-                count: "int",
+                count: 2,
             },
             memory: {
-                size_MiB: "int",
+                size_MiB: 6144,
             },
         },
     });
@@ -117,6 +117,7 @@ export const createVM = async (sessionID, vCenterIP, param) => {
 
     return;
 };
+
 export const deleteVM = async (vmName, sessionID, vCenterIP) => {
     const options = getBaseOptions(vCenterIP);
     options.headers["vmware-api-session-id"] = sessionID;
@@ -126,4 +127,35 @@ export const deleteVM = async (vmName, sessionID, vCenterIP) => {
     console.log("delete VM");
 
     return;
+};
+
+export const testCreateVM = async (req, res) => {
+    const vCenterIP = "192.168.0.102";
+    const options = getBaseOptions(vCenterIP);
+    const sessionID = req.session.sessionID;
+    console.log(sessionID);
+    options.headers["vmware-api-session-id"] = sessionID;
+    options.path = `/rest/vcenter/vm`;
+    options.method = "POST";
+    const postData = JSON.stringify({
+        spec: {
+            guest_OS: "UBUNTU_64",
+            placement: {
+                //여기는 파라미터
+                datastore: "datastoretest",
+                folder: "STZDC",
+                host: "esxi03.stz.local",
+            },
+            cpu: {
+                count: 2,
+            },
+            memory: {
+                size_MiB: 6144,
+            },
+        },
+    });
+    const create = await requestAPI(options, postData);
+    console.log("create success");
+
+    return res.send("OK");
 };
