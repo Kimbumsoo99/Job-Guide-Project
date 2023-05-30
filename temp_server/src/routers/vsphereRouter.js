@@ -7,6 +7,7 @@ import {
     getVmChangeSet,
     hostsPageRender,
     postAddBasicInfo,
+    postCreateVM,
     postVRealBasicInfo,
     postVmChangeSet,
     vmDetailPageRender,
@@ -58,7 +59,11 @@ vsphereRouter
     .all(protectorMiddleware)
     .get(getDeleteVM);
 
-vsphereRouter.route("/hosts/create").all(protectorMiddleware).get(getCreateVM);
+vsphereRouter
+    .route("/hosts/create")
+    .all(protectorMiddleware)
+    .get(getCreateVM)
+    .post(postCreateVM);
 
 //0527 이 사이만 최종 코드
 
