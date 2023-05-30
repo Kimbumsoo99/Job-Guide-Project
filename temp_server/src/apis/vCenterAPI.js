@@ -142,21 +142,25 @@ export const testCreateVM = async (req, res) => {
             guest_OS: "UBUNTU_64",
             name: "TVM01",
             placement: {
-                //여기는 파라미터
+                // datastore는 공유스토리지 구성 잘 되면 하나로 고정 가능
+
                 // datastore: "datastore-48021", // 호스트 3 성공
                 datastore: "datastore-48017", //HOST 1
-                // folder: "group-h51031",
-                // folder: "group-v38002",
+
+                //folder는 아마도 고정
                 folder: "group-v35012", //호스트 3 성공 HOST 1
-                // host: "esxi03.stz.local",
+
+                // host: "esxi03.stz.local",   이렇게 작성하면 안됨 X
+
+                // host는 아래처럼 작성하기 (HOST 선택에 따라 다르게 변경)
                 // host: "host-40004", // 호스트 3
                 host: "host-37003", //HOST 1
             },
             cpu: {
-                count: 2,
+                count: 2, //param.cpu_count
             },
             memory: {
-                size_MiB: 6144,
+                size_MiB: 6144, //param.memory
             },
         },
     });
@@ -178,7 +182,7 @@ export const testDeleteVM = async (req, res) => {
     const deletevm = await requestAPI(options);
     console.log("delete VM");
 
-    return res.send(deletevm);
+    return res.redirect("/hosts");
 };
 
 export const testFolderVM = async (req, res) => {

@@ -27,10 +27,15 @@ export const requestAPI = async (options, data) => {
             });
 
             res.on("end", () => {
-                const jsonResponse = JSON.parse(responseBody);
-                console.log("JSON 객체 값");
-                console.log(jsonResponse);
-                resolve(jsonResponse);
+                if (responseBody) {
+                    const jsonResponse = JSON.parse(responseBody);
+                    console.log("JSON 객체 값");
+                    console.log(jsonResponse);
+                    resolve(jsonResponse);
+                } else {
+                    console.log("빈 응답");
+                    resolve();
+                }
             });
         });
 
