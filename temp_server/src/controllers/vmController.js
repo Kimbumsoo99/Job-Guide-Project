@@ -339,7 +339,6 @@ export const getVRealData = async (req, res) => {
     const { user } = req.session;
     const realUsage = req.session.real;
     // req.session.real = null;
-    console.log(realUsage);
 
     const username = user.vsphere.v_real.vr_id;
     const password = user.vsphere.v_real.vr_pw;
@@ -438,7 +437,6 @@ export const postVmChangeSet = async (req, res) => {
     }
     //집에서 하는중
     const changeVMInfo = await getVMInfo(vm, sessionID, vCenterIP);
-    console.log(changeVMInfo);
 
     const updatedUser = await User.findByIdAndUpdate(
         _id,
@@ -501,7 +499,6 @@ export const postCreateVM = async (req, res) => {
         cpu: cpu_count,
         memory: memory_size,
     };
-    console.log(param);
     const value = await createVM(sessionID, vCenterIP, param);
     return res.redirect(`/vs/hosts/vms?hosts=${host_name}`);
 };
