@@ -73,8 +73,8 @@ export const postAddBasicInfo = async (req, res) => {
     req.session.user = updatedUser;
 
     // 집에서 실행
-    // if (!sessionID) sessionID = await getSessionId(vs_id, vs_pw, vc_ip);
-    // req.session.sessionID = sessionID;
+    if (!sessionID) sessionID = await getSessionId(vs_id, vs_pw, vc_ip);
+    req.session.sessionID = sessionID;
     // 집에서 실행
 
     return res.redirect(`/vs/hosts`);
@@ -103,14 +103,14 @@ export const hostsPageRender = async (req, res) => {
     // ID, IP는 존재하지만, host 정보가 없는 경우 (첫 정상 접근)
     // Host 정보를 받아서, DB에 저장하고 render 시킨다.
     // 집에서 실행
-    // if (!sessionID) {
-    //     sessionID = await getSessionId(
-    //         user.vsphere.vs_id,
-    //         user.vsphere.vs_pw,
-    //         user.vsphere.vc_ip
-    //     );
-    //     req.session.sessionID = sessionID;
-    // }
+    if (!sessionID) {
+        sessionID = await getSessionId(
+            user.vsphere.vs_id,
+            user.vsphere.vs_pw,
+            user.vsphere.vc_ip
+        );
+        req.session.sessionID = sessionID;
+    }
     // 집에서 실행
 
     // 집에서 실행
@@ -141,26 +141,26 @@ export const vmsPageRender = async (req, res) => {
     if (!hosts) res.redirect("/vs/hosts");
 
     // 집에서 실행
-    // if (!sessionID) {
-    //     sessionID = await getSessionId(
-    //         user.vsphere.vs_id,
-    //         user.vsphere.vs_pw,
-    //         user.vsphere.vc_ip
-    //     );
-    //     req.session.sessionID = sessionID;
-    // }
+    if (!sessionID) {
+        sessionID = await getSessionId(
+            user.vsphere.vs_id,
+            user.vsphere.vs_pw,
+            user.vsphere.vc_ip
+        );
+        req.session.sessionID = sessionID;
+    }
     // 집에서 실행
 
     // 집에서 실행
-    // const vCenterIP = user.vsphere.vc_ip;
-    // const vmList = await getVMList(hosts, sessionID, vCenterIP);
-    const vmList = TestVMList;
+    const vCenterIP = user.vsphere.vc_ip;
+    const vmList = await getVMList(hosts, sessionID, vCenterIP);
+    // const vmList = TestVMList;
 
     for (const [index, vm] of vmList.value.entries()) {
         // 집에서 실행
-        // const name = vm.vm;
-        // vmList.value[index].info = await getVMInfo(name, sessionId);
-        vmList.value[index].info = TestVMInfo;
+        const name = vm.vm;
+        vmList.value[index].info = await getVMInfo(name, sessionId);
+        // vmList.value[index].info = TestVMInfo;
         // 집에서 실행
     }
     // 집에서 실행
@@ -234,11 +234,11 @@ export const vmRealPageRender = async (req, res) => {
     const vRealizeIP = user.vsphere.v_real.vr_ip;
 
     //집에서 하기
-    // const token = await getToken(username, password, vRealizeIP);
-    // req.session.token = token;
-    // const { vm } = req.query;
-    // const realUsage = await getResourceUsage(vm, vRealizeIP, token);
-    const realUsage = TestRealUsage;
+    const token = await getToken(username, password, vRealizeIP);
+    req.session.token = token;
+    const { vm } = req.query;
+    const realUsage = await getResourceUsage(vm, vRealizeIP, token);
+    // const realUsage = TestRealUsage;
     //집에서 하기
 
     const dataLength = realUsage.values[0]["stat-list"].stat[0].data.length;
@@ -345,36 +345,36 @@ export const postVmChangeSet = async (req, res) => {
     }
     //집에서 하는중
     if (findVMInfo.memory_size_MiB != memory_size) {
-        // await patchMemory(vm, sessionID, vCenterIP, memory_size);
-        for (const [out_index, hostInfo] of user.vsphere.info.value.entries()) {
-            if (host == hostInfo.host) {
-                for (const [index, vmInfo] of hostInfo.vmList.value.entries()) {
-                    if (vm == vmInfo.vm) {
-                        user.vsphere.info.value[out_index].vmList.value[
-                            index
-                        ].memory_size_MiB = memory_size;
-                        break;
-                    }
-                }
-                break;
-            }
-        }
+        await patchMemory(vm, sessionID, vCenterIP, memory_size);
+        // for (const [out_index, hostInfo] of user.vsphere.info.value.entries()) {
+        //     if (host == hostInfo.host) {
+        //         for (const [index, vmInfo] of hostInfo.vmList.value.entries()) {
+        //             if (vm == vmInfo.vm) {
+        //                 user.vsphere.info.value[out_index].vmList.value[
+        //                     index
+        //                 ].memory_size_MiB = memory_size;
+        //                 break;
+        //             }
+        //         }
+        //         break;
+        //     }
+        // }
     }
     if (findVMInfo.cpu_count != cpu_count) {
-        // await patchCPU(vm, sessionID, vCenterIP, cpu_count);
-        for (const [out_index, hostInfo] of user.vsphere.info.value.entries()) {
-            if (host == hostInfo.host) {
-                for (const [index, vmInfo] of hostInfo.vmList.value.entries()) {
-                    if (vm == vmInfo.vm) {
-                        user.vsphere.info.value[out_index].vmList.value[
-                            index
-                        ].cpu_count = cpu_count;
-                        break;
-                    }
-                }
-                break;
-            }
-        }
+        await patchCPU(vm, sessionID, vCenterIP, cpu_count);
+        // for (const [out_index, hostInfo] of user.vsphere.info.value.entries()) {
+        //     if (host == hostInfo.host) {
+        //         for (const [index, vmInfo] of hostInfo.vmList.value.entries()) {
+        //             if (vm == vmInfo.vm) {
+        //                 user.vsphere.info.value[out_index].vmList.value[
+        //                     index
+        //                 ].cpu_count = cpu_count;
+        //                 break;
+        //             }
+        //         }
+        //         break;
+        //     }
+        // }
     }
     //집에서 하는중
 
