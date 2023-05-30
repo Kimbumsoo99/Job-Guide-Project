@@ -237,6 +237,11 @@ export const postVRealBasicInfo = async (req, res) => {
 };
 
 export const vmRealPageRender = async (req, res) => {
+    const vm = req.query.vm;
+    const vmName = req.query.vmName;
+    const hostName = req.query.hosts;
+    console.log(vmName, hostName, vm);
+
     // const { user } = req.session;
 
     // const username = user.vsphere.v_real.vr_id;
@@ -244,101 +249,11 @@ export const vmRealPageRender = async (req, res) => {
     // const vRealizeIP = user.vsphere.v_real.vr_ip;
     // console.log(username, password, vRealizeIP);
 
-    // //🟦실습환경에서 하기
-    // // const token = await getToken(username, password, vRealizeIP);
-    // // req.session.token = token;
-    // // const { vm } = req.query;
-    // // const realUsage = await getResourceUsage(vm, vRealizeIP, token);
-    // //🟦실습환경에서 하기
-
-    // //🟥집에서 하기
-    // const realUsage = TestRealUsage;
-    // //🟥집에서 하기
-
-    // const dataLength = realUsage.values[0]["stat-list"].stat[0].data.length;
-    // console.log("테스트");
-    // if (dataLength < 12) {
-    //     //data가 12개보다 적으면 0으로 채우기
-    //     let count = 0;
-    //     const tempMemTimeStamp = [];
-    //     const tempMemDataUsage = [];
-    //     const tempCpuTimeStamp = [];
-    //     const tempCpuDataUsage = [];
-    //     for (let i = 0; i < 12 - dataLength; i++) {
-    //         tempMemTimeStamp.push(0);
-    //         tempMemDataUsage.push(0);
-    //         tempCpuTimeStamp.push(0);
-    //         tempCpuDataUsage.push(0);
-    //     }
-    //     for (let i = 12 - dataLength; i < 12; i++) {
-    //         tempMemTimeStamp.push(
-    //             realUsage.values[0]["stat-list"].stat[0].timestamps[count]
-    //         );
-    //         tempMemDataUsage.push(
-    //             realUsage.values[0]["stat-list"].stat[0].data[count].toFixed(2)
-    //         );
-    //         tempCpuTimeStamp.push(
-    //             realUsage.values[0]["stat-list"].stat[1].timestamps[count]
-    //         );
-    //         tempCpuDataUsage.push(
-    //             realUsage.values[0]["stat-list"].stat[1].data[count].toFixed(2)
-    //         );
-    //         count += 1;
-    //     }
-    //     realUsage.values[0]["stat-list"].stat[0].timestamps = tempMemTimeStamp;
-    //     realUsage.values[0]["stat-list"].stat[0].data = tempMemDataUsage;
-    //     realUsage.values[0]["stat-list"].stat[1].timestamps = tempCpuTimeStamp;
-    //     realUsage.values[0]["stat-list"].stat[1].data = tempCpuDataUsage;
-    // } else {
-    //     console.log("테스트");
-
-    //     //12개 이상이면 12개만 짜르기
-    //     const tempMemTimeStamp = [];
-    //     const tempMemDataUsage = [];
-    //     const tempCpuTimeStamp = [];
-    //     const tempCpuDataUsage = [];
-    //     console.log(
-    //         realUsage.values[0]["stat-list"].stat[0].data[3].toFixed(2)
-    //     );
-
-    //     for (let i = dataLength - 12; i < dataLength; i++) {
-    //         tempMemTimeStamp.push(
-    //             realUsage.values[0]["stat-list"].stat[0].timestamps[i]
-    //         );
-    //         tempMemDataUsage.push(
-    //             realUsage.values[0]["stat-list"].stat[0].data[i].toFixed(2)
-    //         );
-    //         tempCpuTimeStamp.push(
-    //             realUsage.values[0]["stat-list"].stat[1].timestamps[i]
-    //         );
-    //         tempCpuDataUsage.push(
-    //             realUsage.values[0]["stat-list"].stat[1].data[i].toFixed(2)
-    //         );
-    //     }
-    //     console.log("테스트");
-    //     realUsage.values[0]["stat-list"].stat[0].timestamps = tempMemTimeStamp;
-    //     realUsage.values[0]["stat-list"].stat[0].data = tempMemDataUsage;
-    //     realUsage.values[0]["stat-list"].stat[1].timestamps = tempCpuTimeStamp;
-    //     realUsage.values[0]["stat-list"].stat[1].data = tempCpuDataUsage;
-    // }
-    // console.log("테스트");
-
-    return res.render("vmReal");
-};
-
-export const getVRealData = (req, res) => {
-    const { user } = req.session;
-
-    const username = user.vsphere.v_real.vr_id;
-    const password = user.vsphere.v_real.vr_pw;
-    const vRealizeIP = user.vsphere.v_real.vr_ip;
-    console.log(username, password, vRealizeIP);
-
     //🟦실습환경에서 하기
     // const token = await getToken(username, password, vRealizeIP);
     // req.session.token = token;
     // const { vm } = req.query;
-    // const realUsage = await getResourceUsage(vm, vRealizeIP, token);
+    // const realUsage = await getResourceUsage(vmName, vRealizeIP, token);
     //🟦실습환경에서 하기
 
     //🟥집에서 하기
@@ -347,8 +262,7 @@ export const getVRealData = (req, res) => {
     //🟥집에서 하기
 
     const dataLength = realUsage.values[0]["stat-list"].stat[0].data.length;
-    let cpuAvg; //Circle 차트
-    let memoryAvg;
+    // console.log("테스트");
     if (dataLength < 12) {
         //data가 12개보다 적으면 0으로 채우기
         let count = 0;
@@ -386,18 +300,11 @@ export const getVRealData = (req, res) => {
         realUsage.values[0]["stat-list"].stat[1].timestamps = tempCpuTimeStamp;
         realUsage.values[0]["stat-list"].stat[1].data = tempCpuDataUsage;
     } else {
-        console.log("테스트");
-
         //12개 이상이면 12개만 짜르기
         const tempMemTimeStamp = [];
         const tempMemDataUsage = [];
         const tempCpuTimeStamp = [];
         const tempCpuDataUsage = [];
-        console.log(
-            parseFloat(
-                realUsage.values[0]["stat-list"].stat[0].data[3]
-            ).toFixed(2)
-        );
 
         for (let i = dataLength - 12; i < dataLength; i++) {
             tempMemTimeStamp.push(
@@ -417,12 +324,30 @@ export const getVRealData = (req, res) => {
                 ).toFixed(2)
             );
         }
-        console.log("테스트");
         realUsage.values[0]["stat-list"].stat[0].timestamps = tempMemTimeStamp;
         realUsage.values[0]["stat-list"].stat[0].data = tempMemDataUsage;
         realUsage.values[0]["stat-list"].stat[1].timestamps = tempCpuTimeStamp;
         realUsage.values[0]["stat-list"].stat[1].data = tempCpuDataUsage;
     }
+
+    req.session.real = realUsage;
+
+    return res.render("vmReal", { hostName, vmName });
+};
+
+export const getVRealData = async (req, res) => {
+    const { user } = req.session;
+    const realUsage = req.session.real;
+    // req.session.real = null;
+    console.log(realUsage);
+
+    const username = user.vsphere.v_real.vr_id;
+    const password = user.vsphere.v_real.vr_pw;
+    const vRealizeIP = user.vsphere.v_real.vr_ip;
+    console.log(username, password, vRealizeIP);
+
+    let cpuAvg; //Circle 차트
+    let memoryAvg;
 
     cpuAvg = parseFloat(
         calculateAverage(realUsage.values[0]["stat-list"].stat[1].data)
@@ -434,8 +359,6 @@ export const getVRealData = (req, res) => {
 
     realUsage.cpuAvg = cpuAvg;
     realUsage.memoryAvg = memoryAvg;
-
-    console.log(realUsage);
 
     return res.json(realUsage);
 };

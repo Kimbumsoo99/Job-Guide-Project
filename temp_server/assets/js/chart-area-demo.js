@@ -24,7 +24,7 @@ const makeChart = (canvas, dataset, color) => {
                     borderColor: `${color}FF`,
                     pointRadius: 5,
                     pointBackgroundColor: `${color}FF`,
-                    pointBorderColor: "rgba(255,255,255,0.8)",
+                    pointBorderColor: "#ffffff",
                     pointHoverRadius: 5,
                     pointHoverBackgroundColor: `${color}FF`,
                     pointHitRadius: 50,
@@ -46,6 +46,8 @@ const makeChart = (canvas, dataset, color) => {
                         },
                         ticks: {
                             maxTicksLimit: 12,
+                            fontColor: "#ffffff",
+                            fontSize: 14,
                         },
                     },
                 ],
@@ -55,9 +57,11 @@ const makeChart = (canvas, dataset, color) => {
                             min: 0,
                             max: 100,
                             maxTicksLimit: 5,
+                            fontColor: "#ffffff",
+                            fontSize: 18,
                         },
                         gridLines: {
-                            color: "rgba(0, 0, 0, .125)",
+                            color: "rgba(200, 200, 200, .125)",
                         },
                     },
                 ],
@@ -88,7 +92,7 @@ xhrChart.onload = function () {
         var ctx = document.getElementById("myCpuChart");
         var ctx2 = document.getElementById("myMemoryChart");
 
-        makeChart(ctx, cpuDataSet, "#2756D6");
+        makeChart(ctx, cpuDataSet, "#699ce3");
         makeChart(ctx2, memoryDataSet, "#909469");
     }
 };

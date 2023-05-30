@@ -92,7 +92,7 @@ body
                         div(style='cursor: pointer;' onclick=`location.href='/vs/hosts/vms?hosts=${hostName}';`)
                             p VM List
                     li#li-3
-                        div(style='cursor: pointer;' onclick=`location.href='real?vm=${vmInfo.name}';`)
+                        div(style='cursor: pointer;' onclick=`location.href='real?vmName=${vmInfo.name}&hosts=${hostName}&vm=${vmId}';`)
                             if user.vsphere.v_real
                                 p 실시간 사용률 확인 &rarr;
                             else 

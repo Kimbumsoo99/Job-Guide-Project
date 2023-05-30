@@ -4,9 +4,11 @@ const makeCircleChart = (canvas, data, color) => {
         data: {
             datasets: [
                 {
-                    label: "Africa / Population (millions)",
+                    label: "Usage",
                     percent: data,
-                    backgroundColor: [color],
+                    backgroundColor: [color, "#333333"],
+                    borderColor: [color, "#999999"], // border 색상 지정
+                    borderWidth: 1, // border 두께 설정
                 },
             ],
         },
@@ -26,7 +28,7 @@ const makeCircleChart = (canvas, data, color) => {
                     ctx.restore();
                     var fontSize = (height / 150).toFixed(2);
                     ctx.font = fontSize + "em sans-serif";
-                    ctx.fillStyle = "#9b9b9b";
+                    ctx.fillStyle = "#ffffff";
                     ctx.textBaseline = "middle";
                     var text = chart.data.datasets[0].percent + "%",
                         textX = Math.round(
@@ -39,6 +41,7 @@ const makeCircleChart = (canvas, data, color) => {
             },
         ],
         options: {
+            devicePixelRatio: 2,
             maintainAspectRatio: false,
             cutoutPercentage: 85,
             rotation: Math.PI / 2,
@@ -72,7 +75,7 @@ xhrCircle.onload = function () {
         var cpuCircle = document.getElementById("cpuCircle");
         var memoryCircle = document.getElementById("memoryCircle");
 
-        makeCircleChart(cpuCircle, cpuAvg, "#2756D6");
+        makeCircleChart(cpuCircle, cpuAvg, "#699ce3");
         makeCircleChart(memoryCircle, memoryAvg, "#909469");
     }
 };
