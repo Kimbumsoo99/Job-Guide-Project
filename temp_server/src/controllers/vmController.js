@@ -392,7 +392,7 @@ export const postVmChangeSet = async (req, res) => {
         },
         {
             new: true,
-            arrayFilters: [{ "inner.host": host, "outer.vm": vm }],
+            arrayFilters: [{ "inner.host": host }, { "outer.vm": vm }],
         }
     );
     req.session.user = updatedUser;
