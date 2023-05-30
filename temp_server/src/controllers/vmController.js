@@ -448,8 +448,7 @@ export const postCreateVM = async (req, res) => {
     };
     console.log(param);
     const value = await createVM(sessionID, vCenterIP, param);
-    return res.send(value);
-    // return res.redirect(`/vs/hosts/vms?hosts=${host_name}`);
+    return res.redirect(`/vs/hosts/vms?hosts=${host_name}`);
 };
 //0527 Refactoring 완료
 //0527 Refactoring 완료
