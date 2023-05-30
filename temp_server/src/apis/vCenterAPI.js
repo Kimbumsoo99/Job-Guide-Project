@@ -157,5 +157,5 @@ export const testCreateVM = async (req, res) => {
     const create = await requestAPI(options, postData);
     console.log("create success");
 
-    return res.send("OK");
+    return res.send(create);
 };
