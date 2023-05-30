@@ -112,6 +112,7 @@ export const createVM = async (sessionID, vCenterIP, param) => {
             },
         },
     });
+    console.log(postData);
     const createVMName = await requestAPI(options, postData);
     console.log("create success");
     console.log(createVMName);
@@ -165,6 +166,7 @@ export const testCreateVM = async (req, res) => {
             },
         },
     });
+    console.log(postData);
     const create = await requestAPI(options, postData);
     console.log("create success");
 

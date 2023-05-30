@@ -71,16 +71,16 @@ html(lang='ko')
                             input(type='text' name='host_name' value=hosts autocomplete='off' readonly)
                         div.nameInput
                             label(for="vm_name") VM Name
-                            input(type='text' name='vm_name' placeholder='VM Name' autocomplete='off' required)
+                            input(type='text' name='vm_name' value="TVM01" placeholder='VM Name' autocomplete='off' required)
                         div.osInput
                             label(for="os_name") Guest OS
-                            input(type='text' name='os_name' placeholder='Guest OS' autocomplete='off' required)
+                            input(type='text' name='os_name' value="UBUNTU_64" placeholder='Guest OS' autocomplete='off' required)
                         div.memoryInput
                             label(for="memory_size") Memory
-                            input(type='number' name='memory_size' max=8192 min=1024 required placeholder='Memory Size' autocomplete='off')
+                            input(type='number' name='memory_size' value=6144 max=8192 min=1024 required placeholder='Memory Size' autocomplete='off')
                         div.cpuInput
                             label(for="cpu_count") CPU 코어 
-                            input(type='number' name='cpu_count' max=8 placeholder='CPU Count' required autocomplete='off')
+                            input(type='number' name='cpu_count' value=2 max=8 placeholder='CPU Count' required autocomplete='off')
                         input#btn1.btn1(type='submit' value='Create')
                         input#btn2.btn1(type='button' value='Cancle' onclick="history.back()")
         script(src="/assets/js/login.js") 

@@ -446,7 +446,7 @@ export const postCreateVM = async (req, res) => {
         cpu: cpu_count,
         memory: memory_size,
     };
-
+    console.log(param);
     const value = await createVM(sessionID, vCenterIP, param);
     return res.send(value);
     // return res.redirect(`/vs/hosts/vms?hosts=${host_name}`);
