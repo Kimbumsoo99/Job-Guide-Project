@@ -54,11 +54,17 @@ const makeChart = (canvas, dataset, color) => {
                 yAxes: [
                     {
                         ticks: {
-                            min: 0,
+                            min: -1,
                             max: 100,
                             maxTicksLimit: 5,
                             fontColor: "#ffffff",
                             fontSize: 18,
+                            callback: function (value) {
+                                if (value === -1) return "";
+                                else {
+                                    return value;
+                                }
+                            },
                         },
                         gridLines: {
                             color: "rgba(200, 200, 200, .125)",
