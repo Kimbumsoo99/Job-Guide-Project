@@ -1,5 +1,5 @@
 import express from "express";
-import { getVRealData, home } from "../controllers/vmController";
+import { getVRealData, home, sendMail } from "../controllers/vmController";
 import {
     getJoin,
     getLogin,
@@ -30,6 +30,7 @@ rootRouter.get("/", home);
 rootRouter.route("/login").get(getLogin).post(postLogin);
 rootRouter.get("/logout", getLogout);
 rootRouter.route("/join").get(getJoin).post(postJoin);
+rootRouter.route("/send").get(sendMail);
 
 //0527 이 사이만 최종 코드
 

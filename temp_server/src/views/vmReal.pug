@@ -66,7 +66,10 @@ body
                     li#li-2
                         div(style='cursor: pointer;' onclick=`location.href='/vs/hosts/vms?hosts=${hostName}';`)
                             p VM List
-
+                    if realUsage.values[0]["stat-list"].stat[1].data[11]
+                        li#li-3
+                            div(style='cursor: pointer;' onclick=`location.href='/send?vm=${vmName}';`)
+                                p Mail 전송 &rarr;
     main
         div.main-body
             div.cpu-real

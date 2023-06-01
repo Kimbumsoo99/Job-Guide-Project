@@ -1,3 +1,4 @@
+require("dotenv").config();
 import User from "../models/User";
 import {
     createVM,
@@ -18,10 +19,7 @@ import { getResourceUsage, getToken } from "../apis/vRealizeAPI";
 import { serialize } from "v8";
 
 const https = require("https");
-
-// const username = "administrator@vsphere.local";
-// const password = "123Qwer!";
-// const hostIP = "192.168.0.102";
+var nodemailer = require("nodemailer");
 
 function calculateAverage(numbers) {
     console.log(numbers);
@@ -249,17 +247,22 @@ export const vmRealPageRender = async (req, res) => {
     const password = user.vsphere.v_real.vr_pw;
     const vRealizeIP = user.vsphere.v_real.vr_ip;
     console.log(username, password, vRealizeIP);
-
+    let realUsage;
     //🟦실습환경에서 하기
     const token = await getToken(username, password, vRealizeIP);
     req.session.token = token;
-    const realUsage = await getResourceUsage(vmName, vRealizeIP, token);
+    realUsage = await getResourceUsage(vmName, vRealizeIP, token);
     //🟦실습환경에서 하기
 
     //🟥집에서 하기
-    // const realUsage = TestRealUsage;
-    // const realUsage = Test2RealUsage;
+    // realUsage = TestRealUsage;
+    // realUsage = Test2RealUsage;
     //🟥집에서 하기
+
+    if (!realUsage || !realUsage.values) {
+        req.session.real = null;
+        return res.render("vmRealError", { vmName });
+    }
 
     const dataLength = realUsage.values[0]["stat-list"].stat[0].data.length;
     // console.log("테스트");
@@ -331,8 +334,10 @@ export const vmRealPageRender = async (req, res) => {
     }
 
     req.session.real = realUsage;
+    console.log(req.session.real.values[0]["stat-list"].stat[1].data[11]);
+    console.log(realUsage.values[0]["stat-list"].stat[1].data[11]);
 
-    return res.render("vmReal", { hostName, vmName });
+    return res.render("vmReal", { hostName, vmName, realUsage });
 };
 
 export const getVRealData = async (req, res) => {
@@ -466,6 +471,7 @@ export const getDeleteVM = async (req, res) => {
 
     const vmName = vm;
     const vCenterIP = user.vsphere.vc_ip;
+    console.log(vm, host, vCenterIP);
 
     await deleteVM(vmName, sessionID, vCenterIP);
 
@@ -501,6 +507,16 @@ export const postCreateVM = async (req, res) => {
     };
     const value = await createVM(sessionID, vCenterIP, param);
     return res.redirect(`/vs/hosts/vms?hosts=${host_name}`);
+};
+
+export const sendMail = (req, res) => {
+    const { user } = req.session;
+    const receiveEmail = user.email;
+    const { vm } = req.query;
+
+    console.log(receiveEmail, vm);
+
+    return res.send(`전송이 완료됐습니다.<a href="/">Main</a>`);
 };
 //0527 Refactoring 완료
 //0527 Refactoring 완료

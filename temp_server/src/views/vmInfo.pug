@@ -151,19 +151,18 @@ body
                                     td
                 div.btn-block
                     input.btn1(type="button", value="수정" onclick=`location.href="edit?vm=${vmId}&host=${hostName}";`)
-                    input.btn1#deleteBtn(type="button", value="삭제")
-        script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js' crossorigin='anonymous')
-        // <script src="js/scripts.js"></script>
-        script(src='https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js' crossorigin='anonymous')
-        script(src='/assets/js/datatables-simple-demo.js')
-        script.
-            function confirmDelete() {
-              if (confirm("정말로 삭제하시겠습니까?")) {
-                location.href = "delete?vm=${vmId}&host=${hostName}";
-              }
+                    input.btn1#deleteBtn(type="button", value="삭제" onclick=`confirmDelete("${vmId}", "${hostName}")`)
+      
+
+            //- const deleteBtn = document.getElementById("deleteBtn");
+            //- deleteBtn.addEventListener("click", confirmDelete);
+    script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js' crossorigin='anonymous')
+    // <script src="js/scripts.js"></script>
+    script(src='https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js' crossorigin='anonymous')
+    script(src='/assets/js/datatables-simple-demo.js')
+    script.
+        function confirmDelete(vmId,hostName) {
+            if (confirm("정말로 삭제하시겠습니까?")) {
+                location.href = `delete?vm=${vmId}&host=${hostName}`;
             }
-
-            const deleteBtn = document.getElementById("deleteBtn");
-            deleteBtn.addEventListener("click", confirmDelete);
-
-            
+        }
