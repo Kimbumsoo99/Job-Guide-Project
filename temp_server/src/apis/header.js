@@ -27,14 +27,23 @@ export const requestAPI = async (options, data) => {
             });
 
             res.on("end", () => {
-                if (responseBody) {
-                    const jsonResponse = JSON.parse(responseBody);
-                    console.log("JSON 객체 값");
-                    console.log(jsonResponse);
-                    resolve(jsonResponse);
+                if (res.statusCode >= 200 && res.statusCode < 300) {
+                    if (responseBody) {
+                        const jsonResponse = JSON.parse(responseBody);
+                        console.log("JSON 객체 값");
+                        // console.log(jsonResponse);
+                        resolve(jsonResponse);
+                    } else {
+                        console.log("빈 응답");
+                        resolve();
+                    }
                 } else {
-                    console.log("빈 응답");
-                    resolve();
+                    console.log("요청 실패");
+                    reject(
+                        new Error(
+                            `Request failed with status code ${res.statusCode}`
+                        )
+                    );
                 }
             });
         });

@@ -1,5 +1,5 @@
 import express from "express";
-import { getSendMail, getVRealData, home } from "../controllers/vmController";
+import { getSendMail, home } from "../controllers/vmController";
 import {
     getJoin,
     getLogin,
@@ -15,12 +15,7 @@ import {
     testVMPage,
 } from "../tests/Test";
 import { localsMiddleware, protectorMiddleware } from "../middlewares";
-import {
-    testCreateVM,
-    testDatastoreVM,
-    testDeleteVM,
-    testFolderVM,
-} from "../apis/vCenterAPI";
+import { getDatastoreVM, getFolderVM } from "../apis/vCenterAPI";
 
 const rootRouter = express.Router();
 
@@ -48,9 +43,7 @@ rootRouter.get("/test/page/vm", testVMInfo);
 
 rootRouter.get("/test/time", testInterval);
 
-rootRouter.get("/test/create/vm", testCreateVM);
-rootRouter.get("/test/delete/vm", testDeleteVM);
-rootRouter.get("/test/folder", testFolderVM);
-rootRouter.get("/test/store", testDatastoreVM);
+rootRouter.get("/test/folder", getFolderVM);
+rootRouter.get("/test/store", getDatastoreVM);
 
 export default rootRouter;

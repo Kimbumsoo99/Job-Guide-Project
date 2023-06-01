@@ -85,8 +85,12 @@ export const postAddBasicInfo = async (req, res) => {
     req.session.user = updatedUser;
 
     // 🟦실습환경에서 실행
-    // if (!sessionID) sessionID = await getSessionId(vs_id, vs_pw, vc_ip);
-    // req.session.sessionID = sessionID;
+    // try {
+    //     if (!sessionID) sessionID = await getSessionId(vs_id, vs_pw, vc_ip);
+    //     req.session.sessionID = sessionID;
+    // } catch (error) {
+    //     return res.render("vmRealError", { vm: "AAA" });
+    // }
     // 🟦실습환경에서 실행
 
     return res.redirect(`/vs/hosts`);
@@ -110,16 +114,20 @@ export const hostsPageRender = async (req, res) => {
     // ID, IP는 존재하지만, host 정보가 없는 경우 (첫 정상 접근)
     // Host 정보를 받아서, DB에 저장하고 render 시킨다.
     // 🟦실습환경에서 실행
-    // if (!sessionID) {
-    //     sessionID = await getSessionId(
-    //         user.vsphere.vs_id,
-    //         user.vsphere.vs_pw,
-    //         user.vsphere.vc_ip
-    //     );
-    //     req.session.sessionID = sessionID;
+    // try {
+    //     if (!sessionID) {
+    //         sessionID = await getSessionId(
+    //             user.vsphere.vs_id,
+    //             user.vsphere.vs_pw,
+    //             user.vsphere.vc_ip
+    //         );
+    //         req.session.sessionID = sessionID;
+    //     }
+    //     const vCenterIP = user.vsphere.vc_ip;
+    //     const hostList = await getHostList(sessionID, vCenterIP);
+    // } catch (error) {
+    //     return res.render("vmRealError", { vm: "AAA" });
     // }
-    // const vCenterIP = user.vsphere.vc_ip;
-    // const hostList = await getHostList(sessionID, vCenterIP);
     // 🟦실습환경에서 실행
 
     // 🟥집에서 실행
@@ -148,21 +156,28 @@ export const vmsPageRender = async (req, res) => {
     if (!hosts) res.redirect("/vs/hosts");
 
     // 🟦실습환경에서 실행
-    // if (!sessionID) {
-    //     sessionID = await getSessionId(
-    //         user.vsphere.vs_id,
-    //         user.vsphere.vs_pw,
-    //         user.vsphere.vc_ip
-    //     );
-    //     req.session.sessionID = sessionID;
-    // }
-    // const vCenterIP = user.vsphere.vc_ip;
-    // const vmList = await getVMList(hosts, sessionID, vCenterIP);
-
-    // for (const [index, vm] of vmList.value.entries()) {
-    //     const name = vm.vm;
-    //     console.log(name, sessionID);
-    //     vmList.value[index].info = await getVMInfo(name, sessionID, vCenterIP);
+    // try {
+    //     if (!sessionID) {
+    //         sessionID = await getSessionId(
+    //             user.vsphere.vs_id,
+    //             user.vsphere.vs_pw,
+    //             user.vsphere.vc_ip
+    //         );
+    //         req.session.sessionID = sessionID;
+    //     }
+    //     const vCenterIP = user.vsphere.vc_ip;
+    //     const vmList = await getVMList(hosts, sessionID, vCenterIP);
+    //     for (const [index, vm] of vmList.value.entries()) {
+    //         const name = vm.vm;
+    //         console.log(name, sessionID);
+    //         vmList.value[index].info = await getVMInfo(
+    //             name,
+    //             sessionID,
+    //             vCenterIP
+    //         );
+    //     }
+    // } catch (error) {
+    //     return res.render("vmRealError", { vm: "AAA" });
     // }
     // 🟦실습환경에서 실행
 
@@ -250,9 +265,13 @@ export const vmRealPageRender = async (req, res) => {
     console.log(username, password, vRealizeIP);
     let realUsage;
     //🟦실습환경에서 하기
-    // const token = await getToken(username, password, vRealizeIP);
-    // req.session.token = token;
-    // realUsage = await getResourceUsage(vmName, vRealizeIP, token);
+    // try {
+    //     const token = await getToken(username, password, vRealizeIP);
+    //     req.session.token = token;
+    //     realUsage = await getResourceUsage(vmName, vRealizeIP, token);
+    // } catch (error) {
+    //     return res.render("vmRealError", { vm: "AAA" });
+    // }
     //🟦실습환경에서 하기
 
     //🟥집에서 하기
@@ -409,40 +428,16 @@ export const postVmChangeSet = async (req, res) => {
             break;
         }
     }
-    //집에서 하는중
-    if (findVMInfo.info.value.memory.size_MiB != memory_size) {
-        await patchMemory(vm, sessionID, vCenterIP, memory_size);
-        // for (const [out_index, hostInfo] of user.vsphere.info.value.entries()) {
-        //     if (host == hostInfo.host) {
-        //         for (const [index, vmInfo] of hostInfo.vmList.value.entries()) {
-        //             if (vm == vmInfo.vm) {
-        //                 user.vsphere.info.value[out_index].vmList.value[
-        //                     index
-        //                 ].memory_size_MiB = memory_size;
-        //                 break;
-        //             }
-        //         }
-        //         break;
-        //     }
-        // }
+    try {
+        if (findVMInfo.info.value.memory.size_MiB != memory_size) {
+            await patchMemory(vm, sessionID, vCenterIP, memory_size);
+        }
+        if (findVMInfo.info.value.cpu.count != cpu_count) {
+            await patchCPU(vm, sessionID, vCenterIP, cpu_count);
+        }
+    } catch (error) {
+        return res.render("vmRealError", { vm: "AAA" });
     }
-    if (findVMInfo.info.value.cpu.count != cpu_count) {
-        await patchCPU(vm, sessionID, vCenterIP, cpu_count);
-        // for (const [out_index, hostInfo] of user.vsphere.info.value.entries()) {
-        //     if (host == hostInfo.host) {
-        //         for (const [index, vmInfo] of hostInfo.vmList.value.entries()) {
-        //             if (vm == vmInfo.vm) {
-        //                 user.vsphere.info.value[out_index].vmList.value[
-        //                     index
-        //                 ].cpu_count = cpu_count;
-        //                 break;
-        //             }
-        //         }
-        //         break;
-        //     }
-        // }
-    }
-    //집에서 하는중
     const changeVMInfo = await getVMInfo(vm, sessionID, vCenterIP);
 
     const updatedUser = await User.findByIdAndUpdate(
@@ -474,9 +469,11 @@ export const getDeleteVM = async (req, res) => {
     const vmName = vm;
     const vCenterIP = user.vsphere.vc_ip;
     console.log(vm, host, vCenterIP);
-
-    await deleteVM(vmName, sessionID, vCenterIP);
-
+    try {
+        await deleteVM(vmName, sessionID, vCenterIP);
+    } catch (error) {
+        return res.render("vmRealError", { vm: "AAA" });
+    }
     return res.redirect(`/vs/hosts/vms?hosts=${host}`);
 };
 
@@ -507,7 +504,11 @@ export const postCreateVM = async (req, res) => {
         cpu: cpu_count,
         memory: memory_size,
     };
-    const value = await createVM(sessionID, vCenterIP, param);
+    try {
+        const value = await createVM(sessionID, vCenterIP, param);
+    } catch (error) {
+        return res.render("vmRealError", { vm: "AAA" });
+    }
     return res.redirect(`/vs/hosts/vms?hosts=${host_name}`);
 };
 
@@ -562,15 +563,14 @@ const sendMail = (receiveEmail, vm) => {
                                     line-height: 20px;">© 2023 WatchDog.</td></tr></table></td></tr><tr><td class="footer"><img width="92" src="https://github.com/Kimbumsoo99/PrivateCloud-in-vSphere/blob/main/temp_server/uploads/logo.png?raw=true" alt="로고"></td></tr></table></body></html>
 `,
     };
-
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error);
-        } else {
+    try {
+        transporter.sendMail(mailOptions, function (error, info) {
             console.log("이메일이 성공적으로 전송되었습니다: " + info.response);
             return;
-        }
-    });
+        });
+    } catch (error) {
+        return res.render("vmRealError", { vm: "AAA" });
+    }
 };
 
 export const getSendMail = (req, res) => {
@@ -578,11 +578,12 @@ export const getSendMail = (req, res) => {
     const receiveEmail = user.email;
     const { vm } = req.query;
 
-    console.log(receiveEmail, vm);
-    console.log(process.env.MAIL_ID, process.env.MAIL_PW);
-    sendMail(receiveEmail, vm);
-
-    return res.send(`전송이 완료됐습니다.<a href="/">Main</a>`);
+    try {
+        // sendMail(receiveEmail, vm);
+    } catch (error) {
+        return res.render("vmRealError", { vm: "AAA" });
+    }
+    return res.render("mail");
 };
 //0527 Refactoring 완료
 //0527 Refactoring 완료
