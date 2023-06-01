@@ -19,7 +19,7 @@ function bbb() {
 
     // 네이버 메일 계정 정보
     var transporter = nodemailer.createTransport({
-        host: smtp.naver.com,
+        host: "smtp.naver.com",
         port: 465,
         secure: true,
         auth: {

@@ -1,8 +1,8 @@
 import { getBaseOptions, requestAPI } from "./header";
 
-const vRealUrl = "192.168.0.109";
-const username = "admin";
-const password = "123Qwer!";
+// const vRealUrl = "192.168.0.109";
+// const username = "admin";
+// const password = "123Qwer!";
 
 export const getToken = async (username, password, vRealizeIP) => {
     const requestData = { username, password }; //body에 들어갈 데이터

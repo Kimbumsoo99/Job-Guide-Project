@@ -84,8 +84,8 @@ export const postAddBasicInfo = async (req, res) => {
     req.session.user = updatedUser;
 
     // 🟦실습환경에서 실행
-    if (!sessionID) sessionID = await getSessionId(vs_id, vs_pw, vc_ip);
-    req.session.sessionID = sessionID;
+    // if (!sessionID) sessionID = await getSessionId(vs_id, vs_pw, vc_ip);
+    // req.session.sessionID = sessionID;
     // 🟦실습환경에서 실행
 
     return res.redirect(`/vs/hosts`);
@@ -109,20 +109,20 @@ export const hostsPageRender = async (req, res) => {
     // ID, IP는 존재하지만, host 정보가 없는 경우 (첫 정상 접근)
     // Host 정보를 받아서, DB에 저장하고 render 시킨다.
     // 🟦실습환경에서 실행
-    if (!sessionID) {
-        sessionID = await getSessionId(
-            user.vsphere.vs_id,
-            user.vsphere.vs_pw,
-            user.vsphere.vc_ip
-        );
-        req.session.sessionID = sessionID;
-    }
-    const vCenterIP = user.vsphere.vc_ip;
-    const hostList = await getHostList(sessionID, vCenterIP);
+    // if (!sessionID) {
+    //     sessionID = await getSessionId(
+    //         user.vsphere.vs_id,
+    //         user.vsphere.vs_pw,
+    //         user.vsphere.vc_ip
+    //     );
+    //     req.session.sessionID = sessionID;
+    // }
+    // const vCenterIP = user.vsphere.vc_ip;
+    // const hostList = await getHostList(sessionID, vCenterIP);
     // 🟦실습환경에서 실행
 
     // 🟥집에서 실행
-    // const hostList = TestHostList;
+    const hostList = TestHostList;
     // 🟥집에서 실행
 
     const updatedUser = await User.findByIdAndUpdate(
@@ -147,29 +147,29 @@ export const vmsPageRender = async (req, res) => {
     if (!hosts) res.redirect("/vs/hosts");
 
     // 🟦실습환경에서 실행
-    if (!sessionID) {
-        sessionID = await getSessionId(
-            user.vsphere.vs_id,
-            user.vsphere.vs_pw,
-            user.vsphere.vc_ip
-        );
-        req.session.sessionID = sessionID;
-    }
-    const vCenterIP = user.vsphere.vc_ip;
-    const vmList = await getVMList(hosts, sessionID, vCenterIP);
+    // if (!sessionID) {
+    //     sessionID = await getSessionId(
+    //         user.vsphere.vs_id,
+    //         user.vsphere.vs_pw,
+    //         user.vsphere.vc_ip
+    //     );
+    //     req.session.sessionID = sessionID;
+    // }
+    // const vCenterIP = user.vsphere.vc_ip;
+    // const vmList = await getVMList(hosts, sessionID, vCenterIP);
 
-    for (const [index, vm] of vmList.value.entries()) {
-        const name = vm.vm;
-        console.log(name, sessionID);
-        vmList.value[index].info = await getVMInfo(name, sessionID, vCenterIP);
-    }
+    // for (const [index, vm] of vmList.value.entries()) {
+    //     const name = vm.vm;
+    //     console.log(name, sessionID);
+    //     vmList.value[index].info = await getVMInfo(name, sessionID, vCenterIP);
+    // }
     // 🟦실습환경에서 실행
 
     // 🟥집에서 실행
-    // const vmList = TestVMList;
-    // for (const [index, vm] of vmList.value.entries()) {
-    //     vmList.value[index].info = TestVMInfo;
-    // }
+    const vmList = TestVMList;
+    for (const [index, vm] of vmList.value.entries()) {
+        vmList.value[index].info = TestVMInfo;
+    }
     // 🟥집에서 실행
 
     const updatedUser = await User.findByIdAndUpdate(
@@ -249,14 +249,14 @@ export const vmRealPageRender = async (req, res) => {
     console.log(username, password, vRealizeIP);
     let realUsage;
     //🟦실습환경에서 하기
-    const token = await getToken(username, password, vRealizeIP);
-    req.session.token = token;
-    realUsage = await getResourceUsage(vmName, vRealizeIP, token);
+    // const token = await getToken(username, password, vRealizeIP);
+    // req.session.token = token;
+    // realUsage = await getResourceUsage(vmName, vRealizeIP, token);
     //🟦실습환경에서 하기
 
     //🟥집에서 하기
     // realUsage = TestRealUsage;
-    // realUsage = Test2RealUsage;
+    realUsage = Test2RealUsage;
     //🟥집에서 하기
 
     if (!realUsage || !realUsage.values) {
@@ -509,12 +509,178 @@ export const postCreateVM = async (req, res) => {
     return res.redirect(`/vs/hosts/vms?hosts=${host_name}`);
 };
 
-export const sendMail = (req, res) => {
+const sendMail = (receiveEmail, vm) => {
+    const transporter = nodemailer.createTransport({
+        host: "smtp.naver.com",
+        port: 465,
+        secure: true,
+        auth: {
+            user: process.env.MAIL_ID,
+            // 보내는 이메일 주소
+            pass: process.env.MAIL_PW, // 네이버 암호
+        },
+    });
+
+    const mailOptions = {
+        from: process.env.MAIL_ID + "@naver.com",
+        // 보내는 이메일 주소
+        to: receiveEmail,
+        // 수신자 이메일 주소
+        subject: "WatchDog 서버 모니터링 알림 - CPU 사용율 위험",
+        html: `
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>이메일 템플릿</title>
+        <style>
+            .wrapper {
+                padding: 20px 16px 82px;
+                color: #191919;
+                font-family: "Noto Sans KR", sans-serif;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            .container {
+                padding: 32px;
+                text-align: left;
+                border-top: 3px solid #22b4e6;
+                border-collapse: collapse;
+            }
+
+            .content {
+                padding: 20px 20px;
+                border-radius: 4px;
+                text-align: center;
+            }
+
+            .footer {
+                padding-top: 24px;
+                border-top: 1px solid #e9e9e9;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <table
+            border="0"
+            cellpadding="0"
+            cellspacing="0"
+            width="100%"
+            bgcolor="#F4F5F7"
+            class="wrapper"
+            style="background-color: aliceblue"
+        >
+            <tr>
+                <td>
+                    <img
+                        width="92"
+                        src="https://github.com/Kimbumsoo99/PrivateCloud-in-vSphere/blob/main/temp_server/uploads/logo.png?raw=true"
+                        alt="로고"
+                        style="width: 200px"
+                    />
+                    <h1
+                        style="
+                            font-size: 20px;
+                            font-weight: 900;
+                            padding-bottom: 32px;
+                        "
+                    >
+                        WatchDog 서버 모니터링 알림 - CPU 사용률 위험
+                    </h1>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table
+                        border="0"
+                        cellpadding="0"
+                        cellspacing="0"
+                        width="100%"
+                        bgcolor="#FFFFFF"
+                        class="container"
+                    >
+                        <tr>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table
+                                    border="0"
+                                    cellpadding="0"
+                                    cellspacing="0"
+                                    width="100%"
+                                    bgcolor="#F8F9FA"
+                                    class="content"
+                                >
+                                    <tr>
+                                        <td>
+                                            <h2
+                                                style="
+                                                    font-size: 32px;
+                                                    font-weight: bold;
+                                                    padding-bottom: 16px;
+                                                "
+                                            >
+                                                최근 ${vm} CPU 부하 80% 이상 지속
+                                            </h2>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td
+                                style="
+                                    padding-bottom: 24px;
+                                    color: #a7a7a7;
+                                    font-size: 12px;
+                                    line-height: 20px;
+                                "
+                            >
+                                © 2023 WatchDog.
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td class="footer">
+                    <img
+                        width="92"
+                        src="https://github.com/Kimbumsoo99/PrivateCloud-in-vSphere/blob/main/temp_server/uploads/logo.png?raw=true"
+                        alt="로고"
+                    />
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
+`,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log("이메일이 성공적으로 전송되었습니다: " + info.response);
+            return;
+        }
+    });
+};
+
+export const getSendMail = (req, res) => {
     const { user } = req.session;
     const receiveEmail = user.email;
     const { vm } = req.query;
 
     console.log(receiveEmail, vm);
+    console.log(process.env.MAIL_ID, process.env.MAIL_PW);
+    sendMail(receiveEmail, vm);
 
     return res.send(`전송이 완료됐습니다.<a href="/">Main</a>`);
 };
