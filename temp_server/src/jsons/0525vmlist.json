@@ -1,1 +1,60 @@
-{"value":[{"memory_size_MiB":6144,"vm":"vm-37007","name":"ubuntu","power_state":"POWERED_OFF","cpu_count":2},{"memory_size_MiB":128,"vm":"vm-45003","name":"vCLS-a3ec7569-f720-4bcb-874e-d6fef1e8546e","power_state":"POWERED_OFF","cpu_count":1},{"memory_size_MiB":4096,"vm":"vm-45006","name":"VM02","power_state":"POWERED_ON","cpu_count":2},{"memory_size_MiB":4096,"vm":"vm-45007","name":"VM04","power_state":"POWERED_OFF","cpu_count":2},{"memory_size_MiB":4096,"vm":"vm-45008","name":"VM03","power_state":"POWERED_ON","cpu_count":2},{"memory_size_MiB":4096,"vm":"vm-46003","name":"VM05","power_state":"POWERED_OFF","cpu_count":2},{"memory_size_MiB":128,"vm":"vm-46004","name":"vCLS-90b1bfa9-395a-4014-accc-74fa58b170fc","power_state":"POWERED_OFF","cpu_count":1},{"memory_size_MiB":8192,"vm":"vm-47002","name":"VMware-vRealize-Log-Insight-8.12.0.0-21618456_OVF10","power_state":"POWERED_OFF","cpu_count":4}]}
+{
+    "value": [
+        {
+            "memory_size_MiB": 6144,
+            "vm": "vm-37007",
+            "name": "ubuntu",
+            "power_state": "POWERED_OFF",
+            "cpu_count": 2
+        },
+        {
+            "memory_size_MiB": 128,
+            "vm": "vm-45003",
+            "name": "vCLS-a3ec7569-f720-4bcb-874e-d6fef1e8546e",
+            "power_state": "POWERED_OFF",
+            "cpu_count": 1
+        },
+        {
+            "memory_size_MiB": 4096,
+            "vm": "vm-45006",
+            "name": "VM02",
+            "power_state": "POWERED_ON",
+            "cpu_count": 2
+        },
+        {
+            "memory_size_MiB": 4096,
+            "vm": "vm-45007",
+            "name": "VM04",
+            "power_state": "POWERED_OFF",
+            "cpu_count": 2
+        },
+        {
+            "memory_size_MiB": 4096,
+            "vm": "vm-45008",
+            "name": "VM03",
+            "power_state": "POWERED_ON",
+            "cpu_count": 2
+        },
+        {
+            "memory_size_MiB": 4096,
+            "vm": "vm-46003",
+            "name": "VM05",
+            "power_state": "POWERED_OFF",
+            "cpu_count": 2
+        },
+        {
+            "memory_size_MiB": 128,
+            "vm": "vm-46004",
+            "name": "vCLS-90b1bfa9-395a-4014-accc-74fa58b170fc",
+            "power_state": "POWERED_OFF",
+            "cpu_count": 1
+        },
+        {
+            "memory_size_MiB": 8192,
+            "vm": "vm-47002",
+            "name": "VMware-vRealize-Log-Insight-8.12.0.0-21618456_OVF10",
+            "power_state": "POWERED_OFF",
+            "cpu_count": 4
+        }
+    ]
+}
