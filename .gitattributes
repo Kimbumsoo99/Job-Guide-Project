@@ -1,2 +1,2 @@
-*.css binary
-server/assets/* linguist-vendored
+*.css linguist-detectable=false
+server/assets/* linguist-vendored=false
