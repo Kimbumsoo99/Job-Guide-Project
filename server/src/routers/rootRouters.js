@@ -1,9 +1,10 @@
 import express from "express";
-import { getSendMail, home } from "../controllers/vmController";
+import { home } from "../controllers/vmController";
 import {
     getJoin,
     getLogin,
     getLogout,
+    getSendMail,
     postJoin,
     postLogin,
 } from "../controllers/userController";
