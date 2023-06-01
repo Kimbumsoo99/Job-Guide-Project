@@ -5,7 +5,11 @@ import MongoStore from "connect-mongo";
 import session from "express-session";
 import vspherRouter from "./routers/vsphereRouter";
 import favicon from "serve-favicon";
-import { localsMiddleware } from "./middlewares";
+import {
+    localsMiddleware,
+    notServerURLMiddleware,
+    serverErrorMiddleware,
+} from "./middlewares";
 import path from "path";
 
 const app = express();
@@ -51,5 +55,7 @@ app.use("/uploads", express.static("uploads"));
 app.use("/assets", express.static("assets"));
 app.use("/", rootRouter);
 app.use("/vs", vspherRouter);
+app.use(notServerURLMiddleware); //404 Not Found
+app.use(serverErrorMiddleware); // 에러 처리 미들웨어
 
 export default app;

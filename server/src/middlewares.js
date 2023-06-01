@@ -22,3 +22,21 @@ export const checkVRealInfoMiddleware = (req, res, next) => {
         return res.redirect("/vs/add/real");
     }
 };
+
+export const notServerURLMiddleware = (req, res, next) => {
+    if (req.url !== "/") {
+        res.status(404).render("error", {
+            errorName: "404",
+            errorMsg: "404 Not Found",
+        });
+        return;
+    }
+    next();
+};
+
+export const serverErrorMiddleware = (err, req, res, next) => {
+    res.status(500).render("error", {
+        errorName: "500",
+        errorMsg: "Internal Server Error",
+    });
+};

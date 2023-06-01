@@ -123,7 +123,11 @@ const sendMail = (receiveEmail, vm) => {
             return;
         });
     } catch (error) {
-        return res.render("vmRealError", { vm: "AAA" });
+        return res.render("error", {
+            errorName: "Email",
+            errorMsg:
+                "이메일 전송과정에서 오류가 발생했습니다. 등록한 E-Mail이 맞는지 확인해주세요.",
+        });
     }
 };
 
@@ -135,7 +139,11 @@ export const getSendMail = (req, res) => {
     try {
         sendMail(receiveEmail, vm);
     } catch (error) {
-        return res.render("vmRealError", { vm: "AAA" });
+        return res.render("Email", {
+            errorName: "Email",
+            errorMsg:
+                "이메일 전송과정에서 오류가 발생했습니다. 등록한 E-Mail이 맞는지 확인해주세요.",
+        });
     }
     return res.render("mail");
 };

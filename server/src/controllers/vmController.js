@@ -18,7 +18,6 @@ import Test3RealUsage from "../jsons/0525real3.json";
 import { getResourceUsage, getToken } from "../apis/vRealizeAPI";
 
 function calculateAverage(numbers) {
-    console.log(numbers);
     const sum = numbers.reduce(function (total, current) {
         return parseFloat(total) + parseFloat(current);
     }, 0);
@@ -76,7 +75,11 @@ export const postAddBasicInfo = async (req, res) => {
     //     if (!sessionID) sessionID = await getSessionId(vs_id, vs_pw, vc_ip);
     //     req.session.sessionID = sessionID;
     // } catch (error) {
-    //     return res.render("vmRealError", { vm: "AAA" });
+    //     return res.render("error", {
+    //         errorName: "vCenter",
+    //         errorMsg:
+    //             "등록된 vSphere로 정보를 요청하던중 Error가 발생했습니다. 등록된 vSphere 정보를 다시 확인해주거나, vCenter에 전원이 켜져있는지 확인해 주세요.",
+    //     });
     // }
     // 🟦실습환경에서 실행
 
@@ -113,7 +116,11 @@ export const hostsPageRender = async (req, res) => {
     //     const vCenterIP = user.vsphere.vc_ip;
     //     const hostList = await getHostList(sessionID, vCenterIP);
     // } catch (error) {
-    //     return res.render("vmRealError", { vm: "AAA" });
+    //     return res.render("error", {
+    //         errorName: "vCenter",
+    //         errorMsg:
+    //             "등록된 vSphere로 정보를 요청하던중 Error가 발생했습니다. 등록된 vSphere 정보를 다시 확인해주거나, vCenter에 전원이 켜져있는지 확인해 주세요.",
+    //     });
     // }
     // 🟦실습환경에서 실행
 
@@ -156,7 +163,6 @@ export const vmsPageRender = async (req, res) => {
     //     const vmList = await getVMList(hosts, sessionID, vCenterIP);
     //     for (const [index, vm] of vmList.value.entries()) {
     //         const name = vm.vm;
-    //         console.log(name, sessionID);
     //         vmList.value[index].info = await getVMInfo(
     //             name,
     //             sessionID,
@@ -164,7 +170,11 @@ export const vmsPageRender = async (req, res) => {
     //         );
     //     }
     // } catch (error) {
-    //     return res.render("vmRealError", { vm: "AAA" });
+    //     return res.render("error", {
+    //         errorName: "vCenter",
+    //         errorMsg:
+    //             "등록된 vSphere로 정보를 요청하던중 Error가 발생했습니다. 등록된 vSphere 정보를 다시 확인해주거나, vCenter에 전원이 켜져있는지 확인해 주세요.",
+    //     });
     // }
     // 🟦실습환경에서 실행
 
@@ -242,23 +252,25 @@ export const vmRealPageRender = async (req, res) => {
     const vmName = req.query.vmName;
     const hostName = req.query.hosts;
     const { vm } = req.query;
-    console.log(vmName, hostName, vm);
 
     const { user } = req.session;
 
     const username = user.vsphere.v_real.vr_id;
     const password = user.vsphere.v_real.vr_pw;
     const vRealizeIP = user.vsphere.v_real.vr_ip;
-    console.log(username, password, vRealizeIP);
     let realUsage;
     //🟦실습환경에서 하기
-    // try {
-    //     const token = await getToken(username, password, vRealizeIP);
-    //     req.session.token = token;
-    //     realUsage = await getResourceUsage(vmName, vRealizeIP, token);
-    // } catch (error) {
-    //     return res.render("vmRealError", { vm: "AAA" });
-    // }
+    try {
+        const token = await getToken(username, password, vRealizeIP);
+        req.session.token = token;
+        realUsage = await getResourceUsage(vmName, vRealizeIP, token);
+    } catch (error) {
+        return res.render("error", {
+            errorName: "vRealize Operations",
+            errorMsg:
+                "등록된 vRealize Operations로 정보를 요청하던중 Error가 발생했습니다. 등록된 vRealize Operations 정보를 다시 확인해주거나, vRealize 가상머신에 전원이 켜져있는지 확인해 주세요.",
+        });
+    }
     //🟦실습환경에서 하기
 
     //🟥집에서 하기
@@ -273,7 +285,6 @@ export const vmRealPageRender = async (req, res) => {
     }
 
     const dataLength = realUsage.values[0]["stat-list"].stat[0].data.length;
-    // console.log("테스트");
     if (dataLength < 12) {
         //data가 12개보다 적으면 0으로 채우기
         let count = 0;
@@ -342,8 +353,6 @@ export const vmRealPageRender = async (req, res) => {
     }
 
     req.session.real = realUsage;
-    console.log(req.session.real.values[0]["stat-list"].stat[1].data[11]);
-    console.log(realUsage.values[0]["stat-list"].stat[1].data[11]);
 
     return res.render("vmReal", { hostName, vmName, realUsage });
 };
@@ -356,7 +365,6 @@ export const getVRealData = async (req, res) => {
     const username = user.vsphere.v_real.vr_id;
     const password = user.vsphere.v_real.vr_pw;
     const vRealizeIP = user.vsphere.v_real.vr_ip;
-    console.log(username, password, vRealizeIP);
 
     let cpuAvg; //Circle 차트
     let memoryAvg;
@@ -367,7 +375,6 @@ export const getVRealData = async (req, res) => {
     memoryAvg = parseFloat(
         calculateAverage(realUsage.values[0]["stat-list"].stat[0].data)
     ).toFixed(2);
-    console.log(cpuAvg, memoryAvg);
 
     realUsage.cpuAvg = cpuAvg;
     realUsage.memoryAvg = memoryAvg;
@@ -423,7 +430,11 @@ export const postVmChangeSet = async (req, res) => {
             await patchCPU(vm, sessionID, vCenterIP, cpu_count);
         }
     } catch (error) {
-        return res.render("vmRealError", { vm: "AAA" });
+        return res.render("error", {
+            errorName: "vCenter",
+            errorMsg:
+                "등록된 vCenter로 정보를 요청하던중 Error가 발생했습니다. 등록된 vSphere 정보를 다시 확인해주거나, vCenter에 전원이 켜져있는지 확인해 주세요.",
+        });
     }
     const changeVMInfo = await getVMInfo(vm, sessionID, vCenterIP);
 
@@ -455,11 +466,14 @@ export const getDeleteVM = async (req, res) => {
 
     const vmName = vm;
     const vCenterIP = user.vsphere.vc_ip;
-    console.log(vm, host, vCenterIP);
     try {
         await deleteVM(vmName, sessionID, vCenterIP);
     } catch (error) {
-        return res.render("vmRealError", { vm: "AAA" });
+        return res.render("error", {
+            errorName: "vCenter",
+            errorMsg:
+                "등록된 vCenter로 정보를 요청하던중 Error가 발생했습니다. 등록된 vSphere 정보를 다시 확인해주거나, vCenter에 전원이 켜져있는지 확인해 주세요.",
+        });
     }
     return res.redirect(`/vs/hosts/vms?hosts=${host}`);
 };
@@ -477,7 +491,7 @@ export const postCreateVM = async (req, res) => {
     else if (host_name == "host-36006") datastore = "datastore-48020";
     else if (host_name == "host-40004") datastore = "datastore-48021";
     else {
-        console.log("문제 있음");
+        console.log("vm 생성중에 hostName 관련 문제가 있음.");
         return res.redirect("/");
     }
     const param = {
@@ -494,7 +508,11 @@ export const postCreateVM = async (req, res) => {
     try {
         const value = await createVM(sessionID, vCenterIP, param);
     } catch (error) {
-        return res.render("vmRealError", { vm: "AAA" });
+        return res.render("error", {
+            errorName: "vCenter",
+            errorMsg:
+                "등록된 vCenter로 정보를 요청하던중 Error가 발생했습니다. 등록된 vSphere 정보를 다시 확인해주거나, vCenter에 전원이 켜져있는지 확인해 주세요.",
+        });
     }
     return res.redirect(`/vs/hosts/vms?hosts=${host_name}`);
 };

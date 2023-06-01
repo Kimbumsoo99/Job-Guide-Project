@@ -12,9 +12,7 @@ export const getSessionId = async (username, password, vCenterIP) => {
             "Basic " +
             Buffer.from(username + ":" + password).toString("base64");
 
-        console.log(options);
         const sessionIdJson = await requestAPI(options, data);
-        console.log(sessionIdJson.value);
         sid = sessionIdJson.value;
         return sid;
     } catch (error) {
@@ -60,7 +58,6 @@ export const getVMInfo = async (vmName, sessionID, vCenterIP) => {
         options.headers["vmware-api-session-id"] = sessionID;
         options.path = `/rest/vcenter/vm/${vmName}`;
         options.method = "GET";
-        console.log(options);
 
         const vmInfo = await requestAPI(options);
 
@@ -83,8 +80,7 @@ export const patchMemory = async (vmName, sessionID, vCenterIP, memory) => {
             },
         });
 
-        const status = await requestAPI(options, postData);
-        console.log(status);
+        await requestAPI(options, postData);
 
         return;
     } catch (error) {
@@ -105,8 +101,7 @@ export const patchCPU = async (vmName, sessionID, vCenterIP, count) => {
             },
         });
 
-        const status = await requestAPI(options, postData);
-        console.log(status);
+        await requestAPI(options, postData);
 
         return;
     } catch (error) {
@@ -138,10 +133,7 @@ export const createVM = async (sessionID, vCenterIP, param) => {
                 },
             },
         });
-        console.log(postData);
         const createVMName = await requestAPI(options, postData);
-        console.log("create success");
-        console.log(createVMName);
 
         return createVMName;
     } catch (error) {
@@ -155,9 +147,7 @@ export const deleteVM = async (vmName, sessionID, vCenterIP) => {
         options.headers["vmware-api-session-id"] = sessionID;
         options.path = `/rest/vcenter/vm/${vmName}`;
         options.method = "DELETE";
-        console.log(options);
         await requestAPI(options);
-        console.log("\ndelete VM\n");
 
         return;
     } catch (error) {
@@ -171,11 +161,9 @@ export const getFolderVM = async (req, res) => {
         const options = getBaseOptions(vCenterIP);
         const sessionID = req.session.sessionID;
         options.headers["vmware-api-session-id"] = sessionID;
-        // const vmName = "TVM01";
         options.path = `/rest/vcenter/folder`;
         options.method = "GET";
         const deletevm = await requestAPI(options);
-        // console.log("delete VM");
 
         return res.send(deletevm);
     } catch (error) {
@@ -189,11 +177,9 @@ export const getDatastoreVM = async (req, res) => {
         const options = getBaseOptions(vCenterIP);
         const sessionID = req.session.sessionID;
         options.headers["vmware-api-session-id"] = sessionID;
-        // const vmName = "TVM01";
         options.path = `/rest/vcenter/datastore`;
         options.method = "GET";
         const deletevm = await requestAPI(options);
-        // console.log("delete VM");
 
         return res.send(deletevm);
     } catch (error) {
