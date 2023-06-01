@@ -125,8 +125,9 @@ export const deleteVM = async (vmName, sessionID, vCenterIP) => {
     options.headers["vmware-api-session-id"] = sessionID;
     options.path = `/rest/vcenter/vm/${vmName}`;
     options.method = "DELETE";
+    console.log(options);
     await requestAPI(options);
-    console.log("delete VM");
+    console.log("\ndelete VM\n");
 
     return;
 };
