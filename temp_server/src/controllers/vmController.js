@@ -86,8 +86,8 @@ export const postAddBasicInfo = async (req, res) => {
     req.session.user = updatedUser;
 
     // 🟦실습환경에서 실행
-    // if (!sessionID) sessionID = await getSessionId(vs_id, vs_pw, vc_ip);
-    // req.session.sessionID = sessionID;
+    if (!sessionID) sessionID = await getSessionId(vs_id, vs_pw, vc_ip);
+    req.session.sessionID = sessionID;
     // 🟦실습환경에서 실행
 
     return res.redirect(`/vs/hosts`);
@@ -111,20 +111,20 @@ export const hostsPageRender = async (req, res) => {
     // ID, IP는 존재하지만, host 정보가 없는 경우 (첫 정상 접근)
     // Host 정보를 받아서, DB에 저장하고 render 시킨다.
     // 🟦실습환경에서 실행
-    // if (!sessionID) {
-    //     sessionID = await getSessionId(
-    //         user.vsphere.vs_id,
-    //         user.vsphere.vs_pw,
-    //         user.vsphere.vc_ip
-    //     );
-    //     req.session.sessionID = sessionID;
-    // }
-    // const vCenterIP = user.vsphere.vc_ip;
-    // const hostList = await getHostList(sessionID, vCenterIP);
+    if (!sessionID) {
+        sessionID = await getSessionId(
+            user.vsphere.vs_id,
+            user.vsphere.vs_pw,
+            user.vsphere.vc_ip
+        );
+        req.session.sessionID = sessionID;
+    }
+    const vCenterIP = user.vsphere.vc_ip;
+    const hostList = await getHostList(sessionID, vCenterIP);
     // 🟦실습환경에서 실행
 
     // 🟥집에서 실행
-    const hostList = TestHostList;
+    // const hostList = TestHostList;
     // 🟥집에서 실행
 
     const updatedUser = await User.findByIdAndUpdate(
@@ -149,29 +149,29 @@ export const vmsPageRender = async (req, res) => {
     if (!hosts) res.redirect("/vs/hosts");
 
     // 🟦실습환경에서 실행
-    // if (!sessionID) {
-    //     sessionID = await getSessionId(
-    //         user.vsphere.vs_id,
-    //         user.vsphere.vs_pw,
-    //         user.vsphere.vc_ip
-    //     );
-    //     req.session.sessionID = sessionID;
-    // }
-    // const vCenterIP = user.vsphere.vc_ip;
-    // const vmList = await getVMList(hosts, sessionID, vCenterIP);
+    if (!sessionID) {
+        sessionID = await getSessionId(
+            user.vsphere.vs_id,
+            user.vsphere.vs_pw,
+            user.vsphere.vc_ip
+        );
+        req.session.sessionID = sessionID;
+    }
+    const vCenterIP = user.vsphere.vc_ip;
+    const vmList = await getVMList(hosts, sessionID, vCenterIP);
 
-    // for (const [index, vm] of vmList.value.entries()) {
-    //     const name = vm.vm;
-    //     console.log(name, sessionID);
-    //     vmList.value[index].info = await getVMInfo(name, sessionID, vCenterIP);
-    // }
+    for (const [index, vm] of vmList.value.entries()) {
+        const name = vm.vm;
+        console.log(name, sessionID);
+        vmList.value[index].info = await getVMInfo(name, sessionID, vCenterIP);
+    }
     // 🟦실습환경에서 실행
 
     // 🟥집에서 실행
-    const vmList = TestVMList;
-    for (const [index, vm] of vmList.value.entries()) {
-        vmList.value[index].info = TestVMInfo;
-    }
+    // const vmList = TestVMList;
+    // for (const [index, vm] of vmList.value.entries()) {
+    //     vmList.value[index].info = TestVMInfo;
+    // }
     // 🟥집에서 실행
 
     const updatedUser = await User.findByIdAndUpdate(
@@ -237,28 +237,28 @@ export const postVRealBasicInfo = async (req, res) => {
 };
 
 export const vmRealPageRender = async (req, res) => {
-    const vm = req.query.vm;
+    // const vm = req.query.vm;
     const vmName = req.query.vmName;
     const hostName = req.query.hosts;
+    const { vm } = req.query;
     console.log(vmName, hostName, vm);
 
-    // const { user } = req.session;
+    const { user } = req.session;
 
-    // const username = user.vsphere.v_real.vr_id;
-    // const password = user.vsphere.v_real.vr_pw;
-    // const vRealizeIP = user.vsphere.v_real.vr_ip;
-    // console.log(username, password, vRealizeIP);
+    const username = user.vsphere.v_real.vr_id;
+    const password = user.vsphere.v_real.vr_pw;
+    const vRealizeIP = user.vsphere.v_real.vr_ip;
+    console.log(username, password, vRealizeIP);
 
     //🟦실습환경에서 하기
-    // const token = await getToken(username, password, vRealizeIP);
-    // req.session.token = token;
-    // const { vm } = req.query;
-    // const realUsage = await getResourceUsage(vmName, vRealizeIP, token);
+    const token = await getToken(username, password, vRealizeIP);
+    req.session.token = token;
+    const realUsage = await getResourceUsage(vmName, vRealizeIP, token);
     //🟦실습환경에서 하기
 
     //🟥집에서 하기
     // const realUsage = TestRealUsage;
-    const realUsage = Test2RealUsage;
+    // const realUsage = Test2RealUsage;
     //🟥집에서 하기
 
     const dataLength = realUsage.values[0]["stat-list"].stat[0].data.length;
