@@ -148,8 +148,16 @@ export const vmsPageRender = async (req, res) => {
     const { _id } = user;
 
     const { hosts } = req.query;
-
     if (!hosts) res.redirect("/vs/hosts");
+
+    if (typeof user.vsphere.info.value !== "undefined") {
+        const index = user.vsphere.info.value.findIndex(
+            (h) => h.host === hosts
+        );
+        if (index == -1) {
+            return res.redirect("/vs/hosts");
+        }
+    }
 
     // 🟦실습환경에서 실행
     // try {
