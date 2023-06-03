@@ -155,6 +155,34 @@ export const deleteVM = async (vmName, sessionID, vCenterIP) => {
     }
 };
 
+export const vmPowerOff = async (vmName, sessionID, vCenterIP) => {
+    try {
+        const options = getBaseOptions(vCenterIP);
+        options.headers["vmware-api-session-id"] = sessionID;
+        options.path = `/rest/vcenter/vm/${vmName}/power/stop`;
+        options.method = "POST";
+        await requestAPI(options);
+
+        return;
+    } catch (error) {
+        throw new Error("Request failed");
+    }
+};
+
+export const vmPowerOn = async (vmName, sessionID, vCenterIP) => {
+    try {
+        const options = getBaseOptions(vCenterIP);
+        options.headers["vmware-api-session-id"] = sessionID;
+        options.path = `/rest/vcenter/vm/${vmName}/power/start`;
+        options.method = "POST";
+        await requestAPI(options);
+
+        return;
+    } catch (error) {
+        throw new Error("Request failed");
+    }
+};
+
 export const getFolderVM = async (req, res) => {
     try {
         const vCenterIP = "192.168.0.102";

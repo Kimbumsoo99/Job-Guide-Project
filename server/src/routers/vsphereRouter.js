@@ -3,6 +3,7 @@ import {
     getAddBasicInfo,
     getCreateVM,
     getDeleteVM,
+    getVMPower,
     getVRealBasicInfo,
     getVRealData,
     getVmChangeSet,
@@ -63,5 +64,7 @@ vsphereRouter
     .all(protectorMiddleware)
     .get(getCreateVM)
     .post(postCreateVM);
+
+vsphereRouter.route("/vm/pw").all(protectorMiddleware).get(getVMPower);
 
 export default vsphereRouter;

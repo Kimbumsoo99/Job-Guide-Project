@@ -8,6 +8,8 @@ import {
     getVMList,
     patchCPU,
     patchMemory,
+    vmPowerOff,
+    vmPowerOn,
 } from "../apis/vCenterAPI";
 import TestHostList from "../jsons/0525host.json";
 import TestVMList from "../jsons/0525vmlist.json";
@@ -515,4 +517,20 @@ export const postCreateVM = async (req, res) => {
         });
     }
     return res.redirect(`/vs/hosts/vms?hosts=${host_name}`);
+};
+
+export const getVMPower = async (req, res) => {
+    const { user } = req.session;
+    const { vm, hosts, power } = req.query;
+    const vCenterIP = user.vsphere.vc_ip;
+
+    if (power == 1) {
+        // OFF -> POWER_ON
+        vmPowerOn(vm, sessionID, vCenterIP);
+    } else if (power == 0) {
+        // ON -> POWER_OFF
+        vmPowerOff(vm, sessionID, vCenterIP);
+    }
+
+    return res.redirect(`/vs/hosts/vms?hosts=${hosts}`);
 };
