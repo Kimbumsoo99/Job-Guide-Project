@@ -260,17 +260,17 @@ export const vmRealPageRender = async (req, res) => {
     const vRealizeIP = user.vsphere.v_real.vr_ip;
     let realUsage;
     //🟦실습환경에서 하기
-    try {
-        const token = await getToken(username, password, vRealizeIP);
-        req.session.token = token;
-        realUsage = await getResourceUsage(vmName, vRealizeIP, token);
-    } catch (error) {
-        return res.render("error", {
-            errorName: "vRealize Operations",
-            errorMsg:
-                "등록된 vRealize Operations로 정보를 요청하던중 Error가 발생했습니다. 등록된 vRealize Operations 정보를 다시 확인해주거나, vRealize 가상머신에 전원이 켜져있는지 확인해 주세요.",
-        });
-    }
+    // try {
+    //     const token = await getToken(username, password, vRealizeIP);
+    //     req.session.token = token;
+    //     realUsage = await getResourceUsage(vmName, vRealizeIP, token);
+    // } catch (error) {
+    //     return res.render("error", {
+    //         errorName: "vRealize Operations",
+    //         errorMsg:
+    //             "등록된 vRealize Operations로 정보를 요청하던중 Error가 발생했습니다. 등록된 vRealize Operations 정보를 다시 확인해주거나, vRealize 가상머신에 전원이 켜져있는지 확인해 주세요.",
+    //     });
+    // }
     //🟦실습환경에서 하기
 
     //🟥집에서 하기

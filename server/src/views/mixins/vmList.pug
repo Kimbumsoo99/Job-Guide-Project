@@ -12,3 +12,11 @@ mixin vmListMixin(vm)
                 div.content
                     h3 #{vm.vm}
                     p VM 이름: #{vm.name}
+                if vm.power_state=="POWERED_OFF"
+                    div.power-btn
+                        span VM 켜기&nbsp;&nbsp;
+                        i.fa-solid.fa-power-off(style='color:#00aa00')
+                else
+                    div.power-btn
+                        span VM 끄기&nbsp;&nbsp;
+                        i.fa-solid.fa-power-off(style='color:#d34242')
