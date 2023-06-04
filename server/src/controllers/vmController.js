@@ -217,7 +217,21 @@ export const vmDetailPageRender = async (req, res) => {
 
     const vmId = req.query.vm;
     const hostName = req.query.hosts;
-    const hostList = user.vsphere.info.value;
+    if (!vmId || !hostName) res.redirect("/vs/hosts");
+
+    let hostList;
+    if (typeof user.vsphere.info.value !== "undefined") {
+        hostList = user.vsphere.info.value;
+
+        const index = user.vsphere.info.value.findIndex(
+            (h) => h.host === hostName
+        );
+        if (index == -1) {
+            return res.redirect("/vs/hosts");
+        }
+    } else {
+        return res.redirect("/vs/hosts");
+    }
 
     let vmList;
     for (const [index, host] of hostList.entries()) {
@@ -284,9 +298,10 @@ export const vmRealPageRender = async (req, res) => {
     //🟦실습환경에서 하기
 
     //🟥집에서 하기
-    // realUsage = TestRealUsage;
-    // realUsage = Test2RealUsage;
-    realUsage = Test3RealUsage;
+    const TestRealUsageList = [TestRealUsage, Test2RealUsage, Test3RealUsage];
+    const randomIndex = Math.floor(Math.random() * TestRealUsageList.length);
+    const randomValue = TestRealUsageList[randomIndex];
+    realUsage = randomValue;
     //🟥집에서 하기
 
     if (!realUsage || !realUsage.values) {
@@ -528,17 +543,25 @@ export const postCreateVM = async (req, res) => {
 };
 
 export const getVMPower = async (req, res) => {
-    const { user } = req.session;
-    const { vm, hosts, power } = req.query;
-    const vCenterIP = user.vsphere.vc_ip;
+    try {
+        const { user } = req.session;
+        const { vm, hosts, power } = req.query;
+        const vCenterIP = user.vsphere.vc_ip;
 
-    if (power == 1) {
-        // OFF -> POWER_ON
-        vmPowerOn(vm, sessionID, vCenterIP);
-    } else if (power == 0) {
-        // ON -> POWER_OFF
-        vmPowerOff(vm, sessionID, vCenterIP);
+        if (power == 1) {
+            // OFF -> POWER_ON
+            await vmPowerOn(vm, sessionID, vCenterIP);
+        } else if (power == 0) {
+            // ON -> POWER_OFF
+            await vmPowerOff(vm, sessionID, vCenterIP);
+        }
+
+        return res.redirect(`/vs/hosts/vms?hosts=${hosts}`);
+    } catch (err) {
+        return res.render("error", {
+            errorName: "vCenter",
+            errorMsg:
+                "등록된 vCenter로 정보를 요청하던중 Error가 발생했습니다. 등록된 vSphere 정보를 다시 확인해주거나, vCenter에 전원이 켜져있는지 확인해 주세요.",
+        });
     }
-
-    return res.redirect(`/vs/hosts/vms?hosts=${hosts}`);
 };

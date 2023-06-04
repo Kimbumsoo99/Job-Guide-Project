@@ -5,7 +5,7 @@ import nodemailer from "nodemailer";
 
 export const getLogin = (req, res) => res.render("login");
 export const postLogin = async (req, res) => {
-    const { username, password } = req.body;
+    const { username, password } = req.body; //유저 정보 받기
 
     const user = await User.findOne({ username });
     if (!user) {
@@ -119,7 +119,7 @@ const sendMail = (receiveEmail, vm) => {
     };
     try {
         transporter.sendMail(mailOptions, function (error, info) {
-            console.log("이메일이 성공적으로 전송되었습니다: " + info.response);
+            // console.log("이메일이 성공적으로 전송되었습니다: " + info.response);
             return;
         });
     } catch (error) {

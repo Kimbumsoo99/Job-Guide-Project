@@ -20,12 +20,14 @@ head
             position: relative;
             left: 16.5rem;
             bottom: 11.5rem;
-            color: #f5cc62;
             width: 120px;
             margin: 0px;
             text-align: center;
             border: 1px solid #444444;
             padding: 4px;
+        }
+        .power-btn a{
+            color: #f5cc62;
         }
         .fa-power-off{
             padding: 4px;
@@ -33,6 +35,13 @@ head
         .power-btn:hover{
             background-color: #444444;
             border: 1px solid #444444;
+        }
+        .content{
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* 표시할 줄 수 */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
 body
@@ -62,3 +71,21 @@ body
                         +vmListMixin(vm)
                     else
                         span.empty__message No host found
+    script.
+        function showConfirmation(vm, power) {
+            console.log(vm, power)
+            if(power==1){
+                const firstConfirmation = confirm(`${vm} 전원을 킵니다.`);
+                if(firstConfirmation) return true;
+                else return false;
+            }
+            if(power==0){
+                const firstConfirmation = confirm(`전원을 끕니다.`);
+                if(firstConfirmation) {
+                    const secondConfirmation = confirm(`가상머신 ${vm}의 전원을 종료합니다.`);
+                    if(secondConfirmation) return true;
+                    else return false;
+                }
+                else return false;
+            }
+        }
