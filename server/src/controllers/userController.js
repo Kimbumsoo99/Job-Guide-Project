@@ -111,7 +111,7 @@ const sendMail = (receiveEmail, vm) => {
                             font-weight: 900;
                             padding-bottom: 32px;">WatchDog 서버 모니터링 알림 - CPU 사용률 위험</h1></td></tr><tr><td><table border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#FFFFFF" class="container"><tr><td></td></tr><tr><td></td></tr><tr><td><table border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#F8F9FA" class="content"><tr><td><h2 style="font-size: 32px;
                                                     font-weight: bold;
-                                                    padding-bottom: 16px;">최근 ${vm} CPU 부하 80% 이상 지속</h2></td></tr></table></td></tr><tr><td style="padding-bottom: 24px;
+                                                    padding-bottom: 16px;">최근 ${vm} CPU 부하 <br> 80% 이상 지속</h2></td></tr></table></td></tr><tr><td style="padding-bottom: 24px;
                                     color: #a7a7a7;
                                     font-size: 12px;
                                     line-height: 20px;">© 2023 WatchDog.</td></tr></table></td></tr><tr><td class="footer"><img width="92" src="https://github.com/Kimbumsoo99/PrivateCloud-in-vSphere/blob/main/server/uploads/logo.png?raw=true" alt="로고"></td></tr></table></body></html>
