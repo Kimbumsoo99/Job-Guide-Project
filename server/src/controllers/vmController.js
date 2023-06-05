@@ -102,7 +102,7 @@ export const hostsPageRender = async (req, res) => {
         //vsphere 정보가 존재하고, host 정보도 user에 이미 존재
         return res.render("hostPage", { hostList: user.vsphere.info });
     }
-
+    let hostList;
     // ID, IP는 존재하지만, host 정보가 없는 경우 (첫 정상 접근)
     // Host 정보를 받아서, DB에 저장하고 render 시킨다.
     // 🟦실습환경에서 실행
@@ -116,7 +116,7 @@ export const hostsPageRender = async (req, res) => {
             req.session.sessionID = sessionID;
         }
         const vCenterIP = user.vsphere.vc_ip;
-        const hostList = await getHostList(sessionID, vCenterIP);
+        hostList = await getHostList(sessionID, vCenterIP);
     } catch (error) {
         return res.render("error", {
             errorName: "vCenter",
