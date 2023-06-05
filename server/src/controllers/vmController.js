@@ -73,16 +73,16 @@ export const postAddBasicInfo = async (req, res) => {
     req.session.user = updatedUser;
 
     // 🟦실습환경에서 실행
-    // try {
-    //     if (!sessionID) sessionID = await getSessionId(vs_id, vs_pw, vc_ip);
-    //     req.session.sessionID = sessionID;
-    // } catch (error) {
-    //     return res.render("error", {
-    //         errorName: "vCenter",
-    //         errorMsg:
-    //             "등록된 vSphere로 정보를 요청하던중 Error가 발생했습니다. 등록된 vSphere 정보를 다시 확인해주거나, vCenter에 전원이 켜져있는지 확인해 주세요.",
-    //     });
-    // }
+    try {
+        if (!sessionID) sessionID = await getSessionId(vs_id, vs_pw, vc_ip);
+        req.session.sessionID = sessionID;
+    } catch (error) {
+        return res.render("error", {
+            errorName: "vCenter",
+            errorMsg:
+                "등록된 vSphere로 정보를 요청하던중 Error가 발생했습니다. 등록된 vSphere 정보를 다시 확인해주거나, vCenter에 전원이 켜져있는지 확인해 주세요.",
+        });
+    }
     // 🟦실습환경에서 실행
 
     return res.redirect(`/vs/hosts`);
@@ -106,28 +106,28 @@ export const hostsPageRender = async (req, res) => {
     // ID, IP는 존재하지만, host 정보가 없는 경우 (첫 정상 접근)
     // Host 정보를 받아서, DB에 저장하고 render 시킨다.
     // 🟦실습환경에서 실행
-    // try {
-    //     if (!sessionID) {
-    //         sessionID = await getSessionId(
-    //             user.vsphere.vs_id,
-    //             user.vsphere.vs_pw,
-    //             user.vsphere.vc_ip
-    //         );
-    //         req.session.sessionID = sessionID;
-    //     }
-    //     const vCenterIP = user.vsphere.vc_ip;
-    //     const hostList = await getHostList(sessionID, vCenterIP);
-    // } catch (error) {
-    //     return res.render("error", {
-    //         errorName: "vCenter",
-    //         errorMsg:
-    //             "등록된 vSphere로 정보를 요청하던중 Error가 발생했습니다. 등록된 vSphere 정보를 다시 확인해주거나, vCenter에 전원이 켜져있는지 확인해 주세요.",
-    //     });
-    // }
+    try {
+        if (!sessionID) {
+            sessionID = await getSessionId(
+                user.vsphere.vs_id,
+                user.vsphere.vs_pw,
+                user.vsphere.vc_ip
+            );
+            req.session.sessionID = sessionID;
+        }
+        const vCenterIP = user.vsphere.vc_ip;
+        const hostList = await getHostList(sessionID, vCenterIP);
+    } catch (error) {
+        return res.render("error", {
+            errorName: "vCenter",
+            errorMsg:
+                "등록된 vSphere로 정보를 요청하던중 Error가 발생했습니다. 등록된 vSphere 정보를 다시 확인해주거나, vCenter에 전원이 켜져있는지 확인해 주세요.",
+        });
+    }
     // 🟦실습환경에서 실행
 
     // 🟥집에서 실행
-    const hostList = TestHostList;
+    // const hostList = TestHostList;
     // 🟥집에서 실행
 
     const updatedUser = await User.findByIdAndUpdate(
@@ -160,39 +160,39 @@ export const vmsPageRender = async (req, res) => {
     }
 
     // 🟦실습환경에서 실행
-    // try {
-    //     if (!sessionID) {
-    //         sessionID = await getSessionId(
-    //             user.vsphere.vs_id,
-    //             user.vsphere.vs_pw,
-    //             user.vsphere.vc_ip
-    //         );
-    //         req.session.sessionID = sessionID;
-    //     }
-    //     const vCenterIP = user.vsphere.vc_ip;
-    //     const vmList = await getVMList(hosts, sessionID, vCenterIP);
-    //     for (const [index, vm] of vmList.value.entries()) {
-    //         const name = vm.vm;
-    //         vmList.value[index].info = await getVMInfo(
-    //             name,
-    //             sessionID,
-    //             vCenterIP
-    //         );
-    //     }
-    // } catch (error) {
-    //     return res.render("error", {
-    //         errorName: "vCenter",
-    //         errorMsg:
-    //             "등록된 vSphere로 정보를 요청하던중 Error가 발생했습니다. 등록된 vSphere 정보를 다시 확인해주거나, vCenter에 전원이 켜져있는지 확인해 주세요.",
-    //     });
-    // }
+    try {
+        if (!sessionID) {
+            sessionID = await getSessionId(
+                user.vsphere.vs_id,
+                user.vsphere.vs_pw,
+                user.vsphere.vc_ip
+            );
+            req.session.sessionID = sessionID;
+        }
+        const vCenterIP = user.vsphere.vc_ip;
+        const vmList = await getVMList(hosts, sessionID, vCenterIP);
+        for (const [index, vm] of vmList.value.entries()) {
+            const name = vm.vm;
+            vmList.value[index].info = await getVMInfo(
+                name,
+                sessionID,
+                vCenterIP
+            );
+        }
+    } catch (error) {
+        return res.render("error", {
+            errorName: "vCenter",
+            errorMsg:
+                "등록된 vSphere로 정보를 요청하던중 Error가 발생했습니다. 등록된 vSphere 정보를 다시 확인해주거나, vCenter에 전원이 켜져있는지 확인해 주세요.",
+        });
+    }
     // 🟦실습환경에서 실행
 
     // 🟥집에서 실행
-    const vmList = TestVMList;
-    for (const [index, vm] of vmList.value.entries()) {
-        vmList.value[index].info = TestVMInfo;
-    }
+    // const vmList = TestVMList;
+    // for (const [index, vm] of vmList.value.entries()) {
+    //     vmList.value[index].info = TestVMInfo;
+    // }
     // 🟥집에서 실행
 
     const updatedUser = await User.findByIdAndUpdate(
@@ -284,24 +284,24 @@ export const vmRealPageRender = async (req, res) => {
     const vRealizeIP = user.vsphere.v_real.vr_ip;
     let realUsage;
     //🟦실습환경에서 하기
-    // try {
-    //     const token = await getToken(username, password, vRealizeIP);
-    //     req.session.token = token;
-    //     realUsage = await getResourceUsage(vmName, vRealizeIP, token);
-    // } catch (error) {
-    //     return res.render("error", {
-    //         errorName: "vRealize Operations",
-    //         errorMsg:
-    //             "등록된 vRealize Operations로 정보를 요청하던중 Error가 발생했습니다. 등록된 vRealize Operations 정보를 다시 확인해주거나, vRealize 가상머신에 전원이 켜져있는지 확인해 주세요.",
-    //     });
-    // }
+    try {
+        const token = await getToken(username, password, vRealizeIP);
+        req.session.token = token;
+        realUsage = await getResourceUsage(vmName, vRealizeIP, token);
+    } catch (error) {
+        return res.render("error", {
+            errorName: "vRealize Operations",
+            errorMsg:
+                "등록된 vRealize Operations로 정보를 요청하던중 Error가 발생했습니다. 등록된 vRealize Operations 정보를 다시 확인해주거나, vRealize 가상머신에 전원이 켜져있는지 확인해 주세요.",
+        });
+    }
     //🟦실습환경에서 하기
 
     //🟥집에서 하기
-    const TestRealUsageList = [TestRealUsage, Test2RealUsage, Test3RealUsage];
-    const randomIndex = Math.floor(Math.random() * TestRealUsageList.length);
-    const randomValue = TestRealUsageList[randomIndex];
-    realUsage = randomValue;
+    // const TestRealUsageList = [TestRealUsage, Test2RealUsage, Test3RealUsage];
+    // const randomIndex = Math.floor(Math.random() * TestRealUsageList.length);
+    // const randomValue = TestRealUsageList[randomIndex];
+    // realUsage = randomValue;
     //🟥집에서 하기
 
     if (!realUsage || !realUsage.values) {
