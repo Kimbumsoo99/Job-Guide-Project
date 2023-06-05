@@ -160,6 +160,7 @@ export const vmsPageRender = async (req, res) => {
     }
 
     // 🟦실습환경에서 실행
+    let vmList;
     try {
         if (!sessionID) {
             sessionID = await getSessionId(
@@ -170,7 +171,7 @@ export const vmsPageRender = async (req, res) => {
             req.session.sessionID = sessionID;
         }
         const vCenterIP = user.vsphere.vc_ip;
-        const vmList = await getVMList(hosts, sessionID, vCenterIP);
+        vmList = await getVMList(hosts, sessionID, vCenterIP);
         for (const [index, vm] of vmList.value.entries()) {
             const name = vm.vm;
             vmList.value[index].info = await getVMInfo(
