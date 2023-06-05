@@ -511,8 +511,10 @@ export const postCreateVM = async (req, res) => {
     let datastore;
     if (host_name == "host-56004" || host_name == "host-57005")
         datastore = "datastore-48019";
-    else if (host_name == "host-36006") datastore = "datastore-48020";
-    else if (host_name == "host-40004") datastore = "datastore-48021";
+    // else if (host_name == "host-40004" || host_name == "host-59009")
+    //     datastore = "datastore-48021";
+    // else if (host_name == "host-59012" || host_name == "host-59015")
+    //     datastore = "datastore-48021";
     else {
         console.log("vm 생성중에 hostName 관련 문제가 있음.");
         return res.redirect("/");
@@ -529,7 +531,7 @@ export const postCreateVM = async (req, res) => {
         memory: memory_size,
     };
     try {
-        const value = await createVM(sessionID, vCenterIP, param);
+        await createVM(sessionID, vCenterIP, param);
     } catch (error) {
         return res.render("error", {
             errorName: "vCenter",
