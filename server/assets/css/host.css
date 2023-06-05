@@ -82,7 +82,6 @@ main h2 {
 main p {
     max-width: 500px;
     margin: 0 auto;
-    font-size: 1.25rem;
 }
 
 section {
@@ -114,12 +113,10 @@ section .do-me .do-inner {
     padding: 4rem;
     float: left;
     margin: 5%;
+    height: 18rem;
     cursor: pointer;
 }
 /* 마지막 사각형의 외부 여백 설정 */
-section .do-me .do-inner:last-child {
-    margin-right: 0;
-}
 section .do-me .do-inner .icon i {
     font-size: 2.5rem;
     color: #f5cc62;

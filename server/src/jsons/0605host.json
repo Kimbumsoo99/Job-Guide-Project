@@ -1,0 +1,40 @@
+{
+    "value": [
+        {
+            "host": "host-40004",
+            "name": "esxi03.stz.local",
+            "connection_state": "CONNECTED",
+            "power_state": "POWERED_ON"
+        },
+        {
+            "host": "host-56004",
+            "name": "esxi01.stz.local",
+            "connection_state": "CONNECTED",
+            "power_state": "POWERED_ON"
+        },
+        {
+            "host": "host-57005",
+            "name": "esxi02.stz.local",
+            "connection_state": "CONNECTED",
+            "power_state": "POWERED_ON"
+        },
+        {
+            "host": "host-59009",
+            "name": "esxi04.stz.local",
+            "connection_state": "CONNECTED",
+            "power_state": "POWERED_ON"
+        },
+        {
+            "host": "host-59012",
+            "name": "esxi05.stz.local",
+            "connection_state": "CONNECTED",
+            "power_state": "POWERED_ON"
+        },
+        {
+            "host": "host-59015",
+            "name": "esxi06.stz.local",
+            "connection_state": "CONNECTED",
+            "power_state": "POWERED_ON"
+        }
+    ]
+}

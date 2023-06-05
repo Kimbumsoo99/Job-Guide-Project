@@ -9,6 +9,11 @@ head
     script(src='https://kit.fontawesome.com/def66b134a.js' crossorigin='anonymous')
     link(rel='stylesheet' href='/assets/css/host.css')
     link(rel="icon" href="/uploads/favicon.ico")
+    style.
+        main p {
+            font-size: 1.25rem;
+            text-align: center;
+        }
 body
     header
         div.container
@@ -34,7 +39,7 @@ body
                     h2 HOST
                 div.do-me
                     div.HostIP(style='font-size:2rem')=user.vsphere.vc_ip
-                    each host in hostList.value
+                    each host in hostList.value.sort((a, b) => a.name.localeCompare(b.name))
                         +hostMixin(host)
                     else
                         span.empty__message No host found
