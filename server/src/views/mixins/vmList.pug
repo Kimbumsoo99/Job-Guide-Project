@@ -10,8 +10,8 @@ mixin vmListMixin(vm)
                         i.fa-solid.fa-desktop(style='color: #f5cc62;float:left')
                         p(style='color: #d34242;width:auto') POWERED_OFF
                 div.content
-                    h3 #{vm.vm}
-                    p VM 이름: #{vm.name}
+                    h3 #{vm.name}
+                    p #{vm.vm}
                 if vm.power_state=="POWERED_OFF"
                     div.power-btn
                         a(href=`/vs/vm/pw?vm=${vm.vm}&hosts=${hosts}&power=1` onclick=`return showConfirmation("${vm.name}", 1)`)

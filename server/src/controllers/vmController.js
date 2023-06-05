@@ -513,7 +513,8 @@ export const postCreateVM = async (req, res) => {
 
     const { host_name, vm_name, os_name, memory_size, cpu_count } = req.body;
     let datastore;
-    if (host_name == "host-37003") datastore = "datastore-48017";
+    if (host_name == "host-56004" || host_name == "host-57005")
+        datastore = "datastore-48019";
     else if (host_name == "host-36006") datastore = "datastore-48020";
     else if (host_name == "host-40004") datastore = "datastore-48021";
     else {
