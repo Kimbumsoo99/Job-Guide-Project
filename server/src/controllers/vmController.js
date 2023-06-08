@@ -75,7 +75,7 @@ export const postAddBasicInfo = async (req, res) => {
 
     // 🟦실습환경에서 실행
     try {
-        if (!sessionID) sessionID = await getSessionId(vs_id, vs_pw, vc_ip);
+        sessionID = await getSessionId(vs_id, vs_pw, vc_ip);
         req.session.sessionID = sessionID;
     } catch (error) {
         return res.render("error", {
