@@ -52,11 +52,11 @@ export const postAddBasicInfo = async (req, res) => {
 
     const isDuplicated = await User.exists({
         _id,
-        "vsphere.vc_ip": vc_ip,
+        "vsphere.vs_id": vs_id,
     });
     if (isDuplicated) {
         return res.render("addVSphere", {
-            errorMessage: "Sorry, that IP is already registered.",
+            errorMessage: "Sorry, that ID is already registered.",
         });
     }
 
