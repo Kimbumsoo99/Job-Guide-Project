@@ -74,16 +74,16 @@ export const postAddBasicInfo = async (req, res) => {
     req.session.user = updatedUser;
 
     // 🟦실습환경에서 실행
-    try {
-        sessionID = await getSessionId(vs_id, vs_pw, vc_ip);
-        req.session.sessionID = sessionID;
-    } catch (error) {
-        return res.render("error", {
-            errorName: "vCenter",
-            errorMsg:
-                "등록된 vSphere로 정보를 요청하던중 Error가 발생했습니다. 등록된 vSphere 정보를 다시 확인해주거나, vCenter에 전원이 켜져있는지 확인해 주세요.",
-        });
-    }
+    // try {
+    //     sessionID = await getSessionId(vs_id, vs_pw, vc_ip);
+    //     req.session.sessionID = sessionID;
+    // } catch (error) {
+    //     return res.render("error", {
+    //         errorName: "vCenter",
+    //         errorMsg:
+    //             "등록된 vSphere로 정보를 요청하던중 Error가 발생했습니다. 등록된 vSphere 정보를 다시 확인해주거나, vCenter에 전원이 켜져있는지 확인해 주세요.",
+    //     });
+    // }
     // 🟦실습환경에서 실행
 
     return res.redirect(`/vs/hosts`);
@@ -93,16 +93,16 @@ export const hostsPageRender = async (req, res) => {
     const { user } = req.session;
     const { _id } = user;
     // session에 있는 vspherer는 Object
-    if (!user.vsphere || typeof user.vsphere.info === "undefined") {
+    if (!user.vsphere) {
         //vsphere 정보가 존재하지 않는다면, 등록부터 하기
-        return res.redirect("/vs");
+        return res.redirect("/vs?change=1");
     }
-
-    // DB에 있는 vsphere는 Array라는 문제점이 있음. 향후 생각해보기 (0527)
     if (user.vsphere.info) {
+        // DB에 있는 vsphere는 Array라는 문제점이 있음. 향후 생각해보기 (0527)
         //vsphere 정보가 존재하고, host 정보도 user에 이미 존재
         return res.render("hostPage", { hostList: user.vsphere.info });
     }
+
     // ID, IP는 존재하지만, host 정보가 없는 경우 (첫 정상 접근)
     // Host 정보를 받아서, DB에 저장하고 render 시킨다.
     // 🟦실습환경에서 실행
@@ -548,16 +548,36 @@ export const getVMPower = async (req, res) => {
         const { vm, hosts, power } = req.query;
         const vCenterIP = user.vsphere.vc_ip;
 
-        if (power == 1) {
-            // OFF -> POWER_ON
-            await vmPowerOn(vm, sessionID, vCenterIP);
-        } else if (power == 0) {
-            // ON -> POWER_OFF
-            await vmPowerOff(vm, sessionID, vCenterIP);
-        }
+        // if (power == 1) {
+        //     // OFF -> POWER_ON
+        //     await vmPowerOn(vm, sessionID, vCenterIP);
+        // } else if (power == 0) {
+        //     // ON -> POWER_OFF
+        //     await vmPowerOff(vm, sessionID, vCenterIP);
+        // }
+        // 🟥집에서 실행
+        const updatedUser = await User.findByIdAndUpdate(
+            user._id,
+            {
+                $set: {
+                    "vsphere.info.value.$[inner].vmList.value.$[outer].power_state":
+                        power == 1 ? "POWER_ON" : "POWER_OFF",
+                },
+            },
+            {
+                new: true,
+                arrayFilters: [{ "inner.host": hosts }, { "outer.vm": vm }],
+            }
+        );
+        console.log(updatedUser);
+        console.log(updatedUser.vsphere.info.value[1].vmList.value[0]);
+        req.session.user = updatedUser;
+
+        // 🟥집에서 실행
 
         return res.redirect(`/vs/hosts/vms?hosts=${hosts}`);
     } catch (err) {
+        console.log(err);
         return res.render("error", {
             errorName: "vCenter",
             errorMsg:
