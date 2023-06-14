@@ -1,0 +1,24 @@
+mixin hostMixin(host)
+    a(href=`/vs/hosts/vms?hosts=${host.host}`)
+        div.do-inner
+            div.icon
+                i.fa-solid.fa-desktop(style='color: #f5cc62;float: left;')
+                if host.power_state=="POWERED_ON"
+                    p(style='color: #00aa00;width:auto;') POWERED_ON&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                else 
+                    p(style='color: #d34242;width:auto') POWERED_OFF&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            div.content
+                case host.name
+                    when "esxi01.stz.local"
+                        h3 Sales 1
+                    when "esxi02.stz.local" 
+                        h3 Sales 2
+                    when "esxi03.stz.local"
+                        h3 Planning 1
+                    when "esxi04.stz.local" 
+                        h3 Planning 2
+                    when "esxi05.stz.local"
+                        h3 Human Resource 1
+                    when "esxi06.stz.local" 
+                        h3 Human Resource 2
+                p #{host.name}

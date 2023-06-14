@@ -1,0 +1,134 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Varela+Round&display=swap");
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background: rgba(0, 0, 0, 0.8);
+}
+a,
+a:link,
+a:visited {
+    color: white;
+    text-decoration: none;
+}
+li {
+    list-style: none;
+}
+.container {
+    /* ① */
+    width: 1140px;
+    margin: 0 auto;
+}
+header {
+    /* ② */
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    padding: 1rem;
+    position: fixed; /* absolute -> fixed */
+    color: white; /* black -> white */
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+header nav ul {
+    display: flex;
+}
+header nav ul li {
+    padding: 10px;
+    font-size: 1.2rem;
+}
+.HostIP {
+    color: #f5cc62;
+}
+header button {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+}
+header h1 button {
+    font-size: 2rem;
+    font-weight: bold;
+}
+header nav ul li button {
+    color: white; /* 텍스트 흰색 */
+    font-size: 1.2rem;
+}
+main {
+    width: 100%;
+    color: #333333;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+#main {
+    height: 100%;
+}
+main h2 {
+    font-size: 3.5rem;
+    margin: 2rem 0;
+    letter-spacing: 3px;
+}
+main p {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+section {
+    margin-top: 140px;
+    font-family: "oppins", sans-serif;
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+        center center;
+}
+section:nth-child(2n) {
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+        center center;
+}
+section .title {
+    margin-bottom: 3rem;
+}
+section .title h2 {
+    font-size: 3.5rem;
+    color: white;
+}
+section .do-me::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+/* 사각형 크기와 간격, 내부 여백 설정 */
+section .do-me .do-inner {
+    background-color: #333333;
+    width: 40%;
+    padding: 4rem;
+    float: left;
+    margin: 5%;
+    height: 18rem;
+    cursor: pointer;
+}
+/* 마지막 사각형의 외부 여백 설정 */
+section .do-me .do-inner .icon i {
+    font-size: 2.5rem;
+    color: #f5cc62;
+}
+/* HTML5, CSS3, BootStrap v5.0 텍스트 크기와 간격 */
+section .do-me .do-inner .content h3 {
+    font-size: 2rem;
+    margin: 1rem 0;
+    color: #f5cc62;
+}
+/* 사각형 텍스트 크기 */
+section .do-me .do-inner .content p {
+    font-size: 1.15rem;
+    color: white;
+}

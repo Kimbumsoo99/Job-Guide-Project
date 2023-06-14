@@ -1,0 +1,21 @@
+header
+    div.container
+        h1
+            button#img_btn.btm_image(type='button' data-animation-scroll='true' data-target='#main')
+                img(src='uploads/logo.png')
+        nav
+            ul
+                li
+                    button(data-animation-scroll='true' data-target='#about') About
+                li
+                    button(data-animation-scroll='true' data-target='#features') Function
+                li
+                    button(data-animation-scroll='true' data-target='#portfolio') How To Use
+                li
+                    button(data-animation-scroll='true' data-target='#footer') Contact
+                if loggedIn
+                    li
+                        button(onclick="location.href='logout';") Logout
+                else
+                    li
+                        button(onclick="location.href='login';") Login

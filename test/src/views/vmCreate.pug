@@ -1,0 +1,112 @@
+doctype html
+html(lang='ko')
+    head
+        meta(charset='UTF-8')
+        title WatchDog
+        link(rel='stylesheet' href='/assets/css/login.css')
+        style.
+            .container{
+                width: 800px;
+                top: 150px;
+            }
+            .container .loginForm{
+                height: 600px
+            }
+            /* Chrome, Safari, Edge, Opera */
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+              -webkit-appearance: none;
+              margin: 0;
+            }
+            /* Firefox */
+            .box input[type=number],
+            .box input[type=text] {
+                -moz-appearance: textfield;
+                margin: 20px 30px 20px 10px;
+                text-decoration: none;
+                width: 80%;
+            }
+            .box h5{
+                margin-bottom: 30px
+            }
+            #btn1{
+                width: 38%;
+                right: 3%;
+                top: 85%;
+            }
+            #btn2{
+                top: 85%;
+                left: 14%;
+                width: 38%;
+            }
+            label{
+                color: white;
+                line-height: 100%;
+                display:inline-block; 
+                width:80px;
+                padding-left: 20px;
+                font-size: 17px;
+            }
+            .hostInput,
+            .memoryInput,
+            .nameInput,
+            .cpuInput{
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .osInput{
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+            }
+            .box select{
+                background-color: #0a0a0a;
+                border-radius: 5px;
+                border: 0px;
+                margin: 20px auto 20px 10px;
+                padding: 14px 30px 14px 10px;
+                color: white;
+            }
+            .box select option{
+                font-weight: 400;
+                line-height: 1.5;
+            }
+    body
+        div.animated.bounceInDown
+            div.container
+                div.loginForm
+                    if errorMessage
+                        span#login-msg.error=errorMessage
+                    form.box(method="POST" name='form1')
+                        div.logo(onclick="location.href='/';")
+                            h4 WATCH
+                                span DOG
+                        div.hostInput
+                            label(for="host_name") Host Name
+                            input(type='text' name='host_name' value=hosts autocomplete='off' readonly)
+                        div.nameInput
+                            label(for="vm_name") VM Name
+                            input(type='text' name='vm_name' value="TVM01" placeholder='VM Name' autocomplete='off' required)
+                        div.osInput
+                            label(for="os_name") Guest OS
+                            select(name="os_name") 
+                                option(value="none") ==선택==
+                                option(value="UBUNTU_64") UBUNTU_64 
+                                option(value="WINDOWS_9") WINDOWS_9
+                                option(value="WINDOWS_SERVER_2019") WINDOWS_SERVER_2019
+                                option(value="CENTOS_8_64") CENTOS_8_64
+                                option(value="ORACLE_LINUX_8_64") ORACLE_LINUX_8_64
+                                option(value="DARWIN_19_64") DARWIN_19_64
+                                option(value="OTHER") OTHER
+                            //- input(type='text' name='os_name' value="UBUNTU_64" placeholder='Guest OS' autocomplete='off' required)
+                        div.memoryInput
+                            label(for="memory_size") Memory
+                            input(type='number' name='memory_size' value=6144 max=8192 min=1024 required placeholder='Memory Size' autocomplete='off')
+                        div.cpuInput
+                            label(for="cpu_count") CPU 코어 
+                            input(type='number' name='cpu_count' value=2 max=8 placeholder='CPU Count' required autocomplete='off')
+                        input#btn1.btn1(type='submit' value='Create')
+                        input#btn2.btn1(type='button' value='Cancel' onclick="history.back()")

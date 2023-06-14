@@ -1,0 +1,95 @@
+doctype html
+head
+    meta(charset='UTF-8')
+    title WatchDog
+    link(rel='stylesheet' href='/assets/css/host.css')
+    link(rel="icon" href="/uploads/favicon.ico")
+    style.
+        main{
+            display: block;
+            text-align: center;
+            width: 1400px;
+            margin: 140px auto;
+            color: white;
+        }
+        .main-body{
+            background-color: rgba(0,0,0,0.8);
+            height: 1050px;
+        }
+        .title h2{
+            margin: 0;
+            padding: 2rem 0;
+            letter-spacing: 3px;
+        }
+        .card-body{
+            display: flex;
+            justify-content: center;
+        }
+        .card-graph {
+            width: 1080px;
+            height: 310px;
+            margin: 0px;
+            background-color: #333333;
+
+        }
+        .card-circle{
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            margin: 30px;
+        }
+        .chartjs-render-monitor {
+            animation: chartjs-render-animation 1ms;
+        }
+        #myCpuChart,
+        #myMemoryChart{
+            width: 720px;
+            height: 270px;
+        }
+        .y-axis-label {
+            text-align: left;
+            font-size: 17px;
+            font-weight: bold;
+            padding-bottom: 6px;
+        }
+body
+    header
+        div.container
+            h1
+                button#img_btn.btm_image(type='button')
+                    img(src='/uploads/logo.png' onclick="location.href='/';")
+            nav
+                ul
+                    li#li-1
+                        div(style='cursor: pointer;' onclick=`location.href="/vs/hosts";`)
+                            p Host List
+                    li#li-2
+                        div(style='cursor: pointer;' onclick=`location.href='/vs/hosts/vms?hosts=${hostName}';`)
+                            p VM List
+                    if realUsage.values[0]["stat-list"].stat[1].data[11]
+                        li#li-3
+                            div(style='cursor: pointer;' onclick=`location.href='/send?vm=${vmName}';`)
+                                p Mail 전송 &rarr;
+    main
+        div.main-body
+            div.cpu-real
+                div.title
+                    h2 CPU 사용률
+                div.card-body
+                    div.card-circle
+                        canvas#cpuCircle(width="1920" height="1080")
+                    div.card-graph
+                        div.y-axis-label &nbsp;&nbsp;사용률 [%]
+                        canvas#myCpuChart(width="1920" height="500")
+            div.memory-real
+                div.title
+                    h2 Memory 사용률
+                div.card-body
+                    div.card-circle
+                        canvas#memoryCircle(width="1920" height="1080")
+                    div.card-graph
+                        div.y-axis-label &nbsp;&nbsp;사용률 [%]
+                        canvas#myMemoryChart(width="1920" height="500")
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js' crossorigin='anonymous')
+    script(src="/assets/js/chart-area-demo.js") 
+    script(src="/assets/js/circle.js") 

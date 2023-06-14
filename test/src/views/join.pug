@@ -1,0 +1,26 @@
+doctype html
+html(lang='ko')
+    head
+        meta(charset='UTF-8')
+        title WatchDog
+        link(rel='stylesheet' href='/assets/css/login.css')
+    body
+        div.animated.bounceInDown
+            div.container
+                div.joinForm
+                    if errorMessage
+                        span#join-msg.error=errorMessage
+                    form.box(method="POST" name='form1' onsubmit='return checkStuff()')
+                        div.logo(onclick="location.href='/';")
+                            h4 WATCH
+                                span DOG
+                        h5 Create your account.
+                        input(name="name", type="text", required, placeholder="Name")
+                        input(type='email' name='email' required placeholder='Email' autocomplete='off')
+                        input(name="username", type="text", required, placeholder="User Name")
+                        i#eye.typcn.typcn-eye
+                        input#pwd(type='password' name='password' required placeholder='Passsword' autocomplete='off')
+                        input(name="password2", type="password", required, placeholder="Confirm Password")
+                        input.btn1(type='submit' value='Sign in')
+                    a.dnthave(href='login') Do you have an account? Sign in
+        script(src="/assets/js/login.js")

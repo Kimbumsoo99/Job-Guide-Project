@@ -1,0 +1,73 @@
+doctype html
+html(lang="ko")
+    head
+        meta(charset='UTF-8')
+        title WatchDog
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css' integrity='sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==' crossorigin='anonymous' referrerpolicy='no-referrer')
+        script(src='https://kit.fontawesome.com/def66b134a.js' crossorigin='anonymous')
+        link(rel='stylesheet' href='assets/css/home.css')
+        link(rel="icon" href="/uploads/favicon.ico")
+    body
+        include partials/header
+        main#main
+            div.container
+                h4 Welcome
+                h2 I&grave;M A 
+                    span WatchDog
+                p Monitoring 시스템과 VM 관리를 합니다.
+                button.download(onclick="location.href='/vs';") Monitoring Start
+                //button.download(onclick="location.href='/vm/host';") Monitoring Start
+                button.mouse
+                    i.fa-solid.fa-computer-mouse
+        section#about.about
+            div.container
+                div.title
+                    h4 What Am I ?
+                    h2 About Me
+                div.about-self
+                    div.left
+                        img(src='uploads/main.jpg')
+                    div.right
+                        h3 Hello, 
+                            strong I&grave;m WatchDog
+                        p I&grave;m Web VM Monitoring Service
+                        div.social
+                            a(href='#')
+                                i.fa-brands.fa-instagram
+        section#features.do
+            div.container
+                div.title
+                    h4 Function
+                    h2 What Can I Do?
+                div.do-me
+                    div.do-inner
+                        div.icon
+                            i.fa-solid.fa-desktop(style='color: #f5cc62;')
+                        div.content
+                            h3 Monitoring
+                            p CPU,메모리,디스크,네트워크,프로세스,로그,URL 사용률을 확인할 수 있습니다.
+                    div.do-inner
+                        div.icon
+                            i.fa-solid.fa-desktop(style='color: #f5cc62;')
+                        div.content
+                            h3 Supervision
+                            p CPU,메모리,디스크,네트워크,프로세스,로그,URL 사용률을 확인할 수 있습니다.
+                    div.do-inner
+                        div.icon
+                            i.fa-brands.fa-computer-mouse
+                        div.content
+                            h3 etc
+                            p ...
+        section#portfolio.portfolio
+            div.container
+                div.title
+                    h4 How To Use
+                    h2 사용법
+                div.portfolio-me
+                    div.portfolio-inner
+                        img(src='uploads/ex.png' alt='샘플이미지')
+                        strong ..
+                        h3 ..
+        script(src='assets/js/text.js')
+
+include partials/footer

@@ -1,0 +1,45 @@
+include mixins/host
+doctype html
+head
+    meta(charset='UTF-8')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    title WatchDog
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css' integrity='sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==' crossorigin='anonymous' referrerpolicy='no-referrer')
+    script(src='https://kit.fontawesome.com/def66b134a.js' crossorigin='anonymous')
+    link(rel='stylesheet' href='/assets/css/host.css')
+    link(rel="icon" href="/uploads/favicon.ico")
+    style.
+        main p {
+            font-size: 1.25rem;
+            text-align: center;
+        }
+body
+    header
+        div.container
+            h1
+                button#img_btn.btm_image(type='button')
+                    img(src='/uploads/logo.png' onclick="location.href='/';")
+            nav
+                ul
+                    //
+                        li
+                            div.HostIP HostIP
+                        li
+                            div.HostAddress=user.vsphere.vc_ip
+                    li 
+                        div(style='cursor: pointer;' onclick="location.href='/vs?change=1';")
+                            p 호스트 정보 변경
+    // end header
+    // main
+    main#main
+        section#features.do
+            div.container
+                div.title
+                    h2 HOST
+                div.do-me
+                    div.HostIP(style='font-size:2rem')=user.vsphere.vc_ip
+                    each host in hostList.value.sort((a, b) => a.name.localeCompare(b.name))
+                        +hostMixin(host)
+                    else
+                        span.empty__message No host found

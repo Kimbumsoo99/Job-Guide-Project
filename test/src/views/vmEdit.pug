@@ -1,0 +1,71 @@
+doctype html
+html(lang='ko')
+    head
+        meta(charset='UTF-8')
+        title WatchDog
+        link(rel='stylesheet' href='/assets/css/login.css')
+        style.
+            .container{
+                width: 800px;
+                top: 150px;
+            }
+            /* Chrome, Safari, Edge, Opera */
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+              -webkit-appearance: none;
+              margin: 0;
+            }
+            /* Firefox */
+            .box input[type=number] {
+                -moz-appearance: textfield;
+                margin: 20px 30px 20px 0px;
+                text-decoration: none;
+                width: 80%;
+            }
+            .box h5{
+                margin-bottom: 30px
+            }
+            #btn1{
+                width: 38%;
+                right: 3%;
+                top: 85%;
+            }
+            #btn2{
+                top: 85%;
+                left: 14%;
+                width: 38%;
+            }
+            label{
+                color: white;
+                line-height: 100%;
+                display:inline-block; 
+                width:80px;
+                padding-left: 30px;
+            }
+            .memoryInput,
+            .cpuInput{
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+    body
+        div.animated.bounceInDown
+            div.container
+                div.loginForm
+                    if errorMessage
+                        span#login-msg.error=errorMessage
+                    form.box(method="POST" name='form1')
+                        div.logo(onclick="location.href='/';")
+                            h4 WATCH
+                                span DOG
+                        h5 Please enter the information you want to change.
+                        div.memoryInput
+                            label(for="memory_size") Memory
+                            input(type='number' name='memory_size' value=`${findVmInfo.memory_size_MiB}` max=8192 min=1024 placeholder='Memory Size' autocomplete='off')
+                        div.cpuInput
+                            label(for="cpu_count") CPU 코어 
+                            input#pwd(type='number' name='cpu_count' value=`${findVmInfo.cpu_count}` max=8 placeholder='CPU Count' autocomplete='off')
+                        input#btn1.btn1(type='submit' value='Change')
+                        input#btn2.btn1(type='button' value='Cancel' onclick="history.back()")
+        script(src="/assets/js/login.js") 

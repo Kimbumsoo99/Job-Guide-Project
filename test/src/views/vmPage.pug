@@ -1,0 +1,92 @@
+include mixins/vmList
+doctype html
+head
+    meta(charset='UTF-8')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    title WatchDog
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css' integrity='sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==' crossorigin='anonymous' referrerpolicy='no-referrer')
+    script(src='https://kit.fontawesome.com/def66b134a.js' crossorigin='anonymous')
+    link(rel='stylesheet' href='/assets/css/host.css')
+    style.
+        #li-1:hover,
+        #li-2:hover{
+            background-color: #222222;
+        }
+        .power-btn{
+            position: relative;
+            left: 16.5rem;
+            bottom: 11.5rem;
+            width: 120px;
+            margin: 0px;
+            text-align: center;
+            border: 1px solid #444444;
+            padding: 4px;
+        }
+        .power-btn a{
+            color: #f5cc62;
+        }
+        main p {
+            font-size: 1.25rem;
+        }
+        .fa-power-off{
+            padding: 4px;
+        }
+        /*
+        .content{
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }*/
+        .power-btn:hover{
+            background-color: #444444;
+            border: 1px solid #444444;
+        }
+        
+body
+    header
+        div.container
+            h1
+                button#img_btn.btm_image(type='button')
+                    img(src='/uploads/logo.png' onclick="location.href='/';")
+            nav
+                ul
+                    li#li-1
+                        div(style='cursor: pointer;' onclick=`location.href="/vs/hosts";`)
+                            p Host List
+                    li#li-2
+                        div(style='cursor: pointer;' onclick=`location.href='/vs/hosts/create?hosts=${hosts}';`)
+                            p VM 생성 &rarr;
+    // end header
+    // main
+    main#main
+        section#features.do
+            div.container
+                div.title
+                    h2 Host Name: 
+                        span.HostIP #{hosts}
+                div.do-me
+                    each vm in vmList.value
+                        +vmListMixin(vm)
+                    else
+                        span.empty__message No host found
+    script.
+        function showConfirmation(vm, power) {
+            console.log(vm, power)
+            if(power==1){
+                const firstConfirmation = confirm(`${vm} 전원을 킵니다.`);
+                if(firstConfirmation) return true;
+                else return false;
+            }
+            if(power==0){
+                const firstConfirmation = confirm(`전원을 끕니다.`);
+                if(firstConfirmation) {
+                    const secondConfirmation = confirm(`가상머신 ${vm}의 전원을 종료합니다.`);
+                    if(secondConfirmation) return true;
+                    else return false;
+                }
+                else return false;
+            }
+        }

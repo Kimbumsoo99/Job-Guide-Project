@@ -1,0 +1,24 @@
+mixin vmListMixin(vm)
+    if !vm.name.includes("vCLS")
+        a(href=`/vs/hosts/vms/detail?vm=${vm.vm}&hosts=${hosts}`)  
+            div.do-inner
+                div.icon
+                    i.fa-solid.fa-desktop(style='color: #f5cc62;float:left')
+                    if vm.power_state=="POWERED_ON"
+                        p(style='color: #00aa00;width:auto;') POWERED_ON&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    else 
+                        p(style='color: #d34242;width:auto') POWERED_OFF&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                div.content
+                    h3 #{vm.name}
+                    p #{vm.vm}
+                if vm.power_state=="POWERED_OFF"
+                    div.power-btn
+                        a(href=`/vs/vm/pw?vm=${vm.vm}&hosts=${hosts}&power=1` onclick=`return showConfirmation("${vm.name}", 1)`)
+                            span VM 켜기&nbsp;&nbsp;
+                            i.fa-solid.fa-power-off(style='color:#00aa00')
+                else
+                    div.power-btn
+                        a(href=`/vs/vm/pw?vm=${vm.vm}&hosts=${hosts}&power=0` onclick=`return showConfirmation("${vm.name}", 0)`)
+                            span VM 끄기&nbsp;&nbsp;
+                            i.fa-solid.fa-power-off(style='color:#d34242')
+                            

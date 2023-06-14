@@ -1,0 +1,168 @@
+doctype html
+head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    title WatchDog
+    link(href='https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css' rel='stylesheet')
+    link(href='/assets/css/detail.css' rel='stylesheet')
+    link(rel='icon' href='/uploads/favicon.ico')
+    script(src='https://use.fontawesome.com/releases/v6.3.0/js/all.js' crossorigin='anonymous')
+    style.
+        body {
+            background-color: #333333;
+            height: auto;
+        }
+        a{
+            text-decoration-line: none;
+        }
+        .container-fluid {
+            padding: auto 60px;
+        }
+        .datatable-top {
+            display: none;
+        }
+        .datatable-bottom {
+            display: none;
+        }
+        .datatable-sorter::after {
+            display: none;
+        }
+        .datatable-sorter::before {
+            display: none;
+        }
+        .mt-4 {
+            color: #f5cc62;
+            text-align: center;
+        }
+        thead {
+            background-color: #111111;
+        }
+        tr{
+            border: 0.2px solid #a08031;
+        }
+        .card-header {
+            background-color: #111111;
+        }
+        #layoutSidenav_content{
+            margin-top: 140px;
+        }
+        .container{
+            margin: 0;
+        }
+        #li-1:hover,
+        #li-2:hover,
+        #li-3:hover{
+            background-color: #222222;
+        }
+        .btn1{
+            border: 0;
+            background: #f5cc62;
+            color: #000;
+            border-radius: 100px;
+            width: 280px;
+            height: 49px;
+            margin: auto 20px;
+            font-size: 16px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .btn1:hover {
+            background: #5d33e6;
+        }
+        .btn-block{
+            text-align: center;
+        }
+body
+    header
+        div.container
+            h1
+                button#img_btn.btm_image(type='button')
+                    img(src='/uploads/logo.png' onclick="location.href='/';")
+            nav
+                ul
+                    //
+                        li
+                            div.HostIP HostIP
+                        li
+                            div.HostAddress=user.vsphere.vc_ip
+                    li#li-1
+                        div(style='cursor: pointer;' onclick=`location.href="/vs/hosts";`)
+                            p Host List
+                    li#li-2
+                        div(style='cursor: pointer;' onclick=`location.href='/vs/hosts/vms?hosts=${hostName}';`)
+                            p VM List
+                    li#li-3
+                        div(style='cursor: pointer;' onclick=`location.href='real?vmName=${vmInfo.name}&hosts=${hostName}&vm=${vmId}';`)
+                            if user.vsphere.v_real
+                                p 실시간 사용률 확인 &rarr;
+                            else 
+                                p vRealize 정보등록 &rarr;
+    div#layoutSidenav_content
+        main
+            div.container-fluid.px-4
+                h1.mt-4 #{vmInfo.name} Detail
+                div.card.mb-4
+                    div.card-header
+                        i.fas.fa-table.me-1
+                        span #{vmId} 정적 정보
+                    div.card-body
+                        table#datatablesSimple
+                            thead
+                                tr(height="200")
+                                    th 이름
+                                    th Spec
+                                    th 기타
+                            tfoot
+                                tr(height="200")
+                                    th 이름
+                                    th Spec
+                                    th 기타
+                            tbody
+                                tr(height="200")
+                                    td Host 정보
+                                    td 
+                                        a(href=`/vs/hosts/vms?hosts=${hostName}`) #{hostName}
+                                    td
+                                tr(height="200")
+                                    td CPU 코어 개수
+                                    td #{vmInfo.info.value.cpu.count} CORE
+                                    td
+                                tr(height="200")
+                                    td Memory 크기
+                                    td #{vmInfo.info.value.memory.size_MiB} Mib
+                                    td
+                                if vmInfo.info.value.disks[0]
+                                    tr(height="200")
+                                        td disk.vmdk_file
+                                        td #{vmInfo.info.value.disks[0].value.backing.vmdk_file}
+                                        td
+                                    tr(height="200")
+                                        td 남은 Disk 용량
+                                        td #{(vmInfo.info.value.disks[0].value.capacity / 1000000000).toFixed(2)} GB
+                                        td
+                                if vmInfo.info.value.nics[0]
+                                    tr(height="200")
+                                        td Network Name
+                                        td #{vmInfo.info.value.nics[0].value.backing.network_name}
+                                        td #{vmInfo.info.value.nics[0].value.state}
+                                tr(height="200")
+                                    td GuestOS
+                                    td #{vmInfo.info.value.guest_OS}
+                                    td
+                div.btn-block
+                    input.btn1(type="button", value="수정" onclick=`location.href="edit?vm=${vmId}&host=${hostName}";`)
+                    input.btn1#deleteBtn(type="button", value="삭제" onclick=`confirmDelete("${vmId}", "${hostName}")`)
+      
+
+            //- const deleteBtn = document.getElementById("deleteBtn");
+            //- deleteBtn.addEventListener("click", confirmDelete);
+    script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js' crossorigin='anonymous')
+    // <script src="js/scripts.js"></script>
+    script(src='https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js' crossorigin='anonymous')
+    script(src='/assets/js/datatables-simple-demo.js')
+    script.
+        function confirmDelete(vmId,hostName) {
+            if (confirm("정말로 삭제하시겠습니까?")) {
+                location.href = `delete?vm=${vmId}&host=${hostName}`;
+            }
+        }
