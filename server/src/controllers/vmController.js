@@ -21,10 +21,6 @@ function calculateAverage(numbers) {
     return sum / numbers.length;
 }
 
-//0527 Refactoring 완료
-//0527 Refactoring 완료
-//0527 Refactoring 완료
-
 let sessionID;
 
 export const home = (req, res) => res.render("home");
