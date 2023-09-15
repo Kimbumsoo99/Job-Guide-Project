@@ -1,4 +1,7 @@
 import User from "../models/User";
+import TestRealUsage from "../../../test/src/jsons/0525real.json";
+import Test2RealUsage from "../../../test/src/jsons/0525real2.json";
+import Test3RealUsage from "../../../test/src/jsons/0525real3.json";
 import {
     createVM,
     deleteVM,
@@ -262,18 +265,25 @@ export const vmRealPageRender = async (req, res) => {
     const vRealizeIP = user.vsphere.v_real.vr_ip;
     let realUsage;
     //🟦실습환경에서 하기
-    try {
-        const token = await getToken(username, password, vRealizeIP);
-        req.session.token = token;
-        realUsage = await getResourceUsage(vmName, vRealizeIP, token);
-    } catch (error) {
-        return res.render("error", {
-            errorName: "vRealize Operations",
-            errorMsg:
-                "등록된 vRealize Operations로 정보를 요청하던중 Error가 발생했습니다. 등록된 vRealize Operations 정보를 다시 확인해주거나, vRealize 가상머신에 전원이 켜져있는지 확인해 주세요.",
-        });
-    }
+    // try {
+    //     const token = await getToken(username, password, vRealizeIP);
+    //     req.session.token = token;
+    //     realUsage = await getResourceUsage(vmName, vRealizeIP, token);
+    // } catch (error) {
+    //     return res.render("error", {
+    //         errorName: "vRealize Operations",
+    //         errorMsg:
+    //             "등록된 vRealize Operations로 정보를 요청하던중 Error가 발생했습니다. 등록된 vRealize Operations 정보를 다시 확인해주거나, vRealize 가상머신에 전원이 켜져있는지 확인해 주세요.",
+    //     });
+    // }
     //🟦실습환경에서 하기
+
+    //🟥집에서 하기
+    const TestRealUsageList = [TestRealUsage, Test2RealUsage, Test3RealUsage];
+    const randomIndex = Math.floor(Math.random() * TestRealUsageList.length);
+    const randomValue = TestRealUsageList[randomIndex];
+    realUsage = Test2RealUsage;
+    //🟥집에서 하기
 
     if (!realUsage || !realUsage.values) {
         req.session.real = null;
