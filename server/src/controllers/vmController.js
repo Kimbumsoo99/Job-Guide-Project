@@ -279,7 +279,7 @@ export const vmRealPageRender = async (req, res) => {
     //🟦실습환경에서 하기
 
     //🟥집에서 하기
-    const TestRealUsageList = [TestRealUsage, Test2RealUsage, Test3RealUsage];
+    const TestRealUsageList = [TestRealUsage];
     const randomIndex = Math.floor(Math.random() * TestRealUsageList.length);
     const randomValue = TestRealUsageList[randomIndex];
     realUsage = Test2RealUsage;
