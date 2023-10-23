@@ -100,14 +100,14 @@ export const hostsPageRender = async (req, res) => {
     // 🟦실습환경에서 실행
     let hostList;
     try {
-        if (!sessionID) {
-            sessionID = await getSessionId(
-                user.vsphere.vs_id,
-                user.vsphere.vs_pw,
-                user.vsphere.vc_ip
-            );
-            req.session.sessionID = sessionID;
-        }
+        // if (!sessionID) {
+        sessionID = await getSessionId(
+            user.vsphere.vs_id,
+            user.vsphere.vs_pw,
+            user.vsphere.vc_ip
+        );
+        req.session.sessionID = sessionID;
+        // }
         const vCenterIP = user.vsphere.vc_ip;
         hostList = await getHostList(sessionID, vCenterIP);
     } catch (error) {
